@@ -1,0 +1,76 @@
+# Auto-detect text files and perform LF normalization
+* text=auto
+
+# Text files
+*.py text
+*.html text
+*.css text
+*.js text
+*.json text
+*.md text
+*.txt text
+*.yml text
+*.yaml text
+*.xml text
+*.csv text
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+*.mp4 binary
+*.mp3 binary
+*.zip binary
+
+# Django specific
+*.po text
+*.mo binary
+
+# SQLite databases (treat as binary)
+*.sqlite3 binary
+*.db binary
+
+# Environment files (protect from normalization)
+.env -text
+.env.local -text
+.env.prod -text
+
+# Windows specific
+*.bat text eol=crlf
+
+# Shell scripts
+*.sh text eol=lf
+
+# Python - ensure LF line endings
+*.py text eol=lf
+
+# HTML/CSS/JS - ensure LF line endings
+*.html text eol=lf
+*.css text eol=lf
+*.js text eol=lf
+
+# Django templates
+*.html text eol=lf
+
+# Markdown files
+*.md text eol=lf
+
+# Export-ignore files for archives
+/.github export-ignore
+/docs export-ignore
+/tests export-ignore
+/.vscode export-ignore
+/.idea export-ignore
+
+# Linguist attributes (for GitHub language detection)
+*.html linguist-detectable
+*.css linguist-detectable
+*.js linguist-detectable
+*.py linguist-detectable

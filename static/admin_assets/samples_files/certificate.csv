@@ -1,0 +1,4 @@
+S.No,Certificate Title,Company,Category,Exam Code,Actual Cost,Final Cost,Languages,Duration,Exam Mode,Website,com_name,Contact,Email,examemail,Alt contact,short_desc,long_desc,Status
+1,AWS Certified Solutions Architect,Microsoft,python,SA-001,15000,12000,English,180,Online,https://aws.amazon.com,Ramu,+919876543210,aws@support.com,exam@aws.com,+918765432101,"AWS Cloud basics","Covers core AWS services and architecture.",Active
+2,Microsoft Azure Fundamentals,Google,python,AZ-900,10000,8500,English,90,Online,https://azure.microsoft.com,Somu,+919812345678,azure@support.com,exam@azure.com,+918765432102,"Azure cloud introduction","Introduction to Azure services and cloud basics.",Active
+

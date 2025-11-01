@@ -1,0 +1,632 @@
+{% extends 'AI_tech/base.html' %}
+{% load static %}
+
+{% block title %}AI Tech - Premier AI Solutions & Data Science Services{% endblock %}
+
+{% block content %}
+
+<style>
+.testimonial-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid #f0f0f0;
+    margin: 0 50px;
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.rating-stars {
+    font-size: 1.2rem;
+}
+
+.client-info h6 {
+    color: var(--dark-color);
+    font-weight: 600;
+}
+
+.carousel-indicators button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    opacity: 0.5;
+}
+
+.carousel-indicators button.active {
+    opacity: 1;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 50px;
+    opacity: 0.8;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .testimonial-card {
+        margin: 0 20px;
+        min-height: 400px;
+    }
+}
+</style>
+<!-- Hero Section -->
+<section class="hero-section" id="home">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right">
+                <span class="feature-badge">Transforming Businesses with AI Since 2015</span>
+                <h1 class="display-4 fw-bold mb-4">Intelligent Solutions for the Digital Age</h1>
+                <p class="lead mb-4">At AI Tech, we specialize in developing cutting-edge artificial intelligence and machine learning solutions that drive innovation, optimize operations, and unlock new growth opportunities for businesses across industries.</p>
+                <p class="mb-4">Our team of expert data scientists, AI engineers, and business strategists work collaboratively to deliver tailored solutions that address your unique challenges and objectives.</p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="{% url 'services' %}" class="btn btn-primary-custom">Explore Our Services</a>
+                    <a href="{% url 'contact' %}" class="btn btn-outline-light">Schedule Consultation</a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center" data-aos="fade-left" data-aos-delay="200">
+                <div class="hero-image-container">
+                    <img src="{% static 'admin_assets/images/AI_tech01.jpg' %}" alt="AI Technology" class="hero-image">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-3 col-6 mb-4" data-aos="fade-up">
+                <div class="stat-item">
+                    <h2 class="stat-number">200+</h2>
+                    <p class="stat-label">AI Projects Completed</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="stat-item">
+                    <h2 class="stat-number">97%</h2>
+                    <p class="stat-label">Client Satisfaction Rate</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="stat-item">
+                    <h2 class="stat-number">65+</h2>
+                    <p class="stat-label">AI & Data Experts</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="stat-item">
+                    <h2 class="stat-number">12+</h2>
+                    <p class="stat-label">Years of Excellence</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="py-5" id="about">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right">
+                <h2 class="section-title">About AI Tech</h2>
+                <p class="lead">Pioneering AI innovation since 2012, we've established ourselves as a trusted partner for businesses seeking to leverage artificial intelligence and data science.</p>
+                <p>Our journey began with a simple mission: to make advanced AI technologies accessible and beneficial for organizations of all sizes. Today, we're proud to have helped over 150 companies transform their operations, enhance customer experiences, and drive measurable business outcomes through our AI solutions.</p>
+                <p>What sets us apart is our holistic approach to AI implementation. We don't just build models; we develop comprehensive solutions that integrate seamlessly with your existing systems, empower your teams, and deliver sustainable value long after deployment.</p>
+                <div class="mt-4">
+                    <a href="{% url 'aboutus' %}" class="btn btn-primary-custom me-3">Learn More About Us</a>
+                    <a href="#portfolio" class="btn btn-outline-primary">View Case Studies</a>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="row mt-4 mt-lg-0">
+                    <div class="col-6 mb-4">
+                        <div class="text-center p-4 bg-light rounded">
+                            <i class="fas fa-rocket fa-2x mb-3" style="color: var(--accent-color);"></i>
+                            <h5>Innovation Focus</h5>
+                            <p class="small">Continuously researching and implementing the latest AI advancements</p>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-4">
+                        <div class="text-center p-4 bg-light rounded">
+                            <i class="fas fa-handshake fa-2x mb-3" style="color: var(--accent-color);"></i>
+                            <h5>Partnership Approach</h5>
+                            <p class="small">Working collaboratively as an extension of your team</p>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-4">
+                        <div class="text-center p-4 bg-light rounded">
+                            <i class="fas fa-shield-alt fa-2x mb-3" style="color: var(--accent-color);"></i>
+                            <h5>Ethical AI</h5>
+                            <p class="small">Committed to responsible, transparent, and fair AI practices</p>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-4">
+                        <div class="text-center p-4 bg-light rounded">
+                            <i class="fas fa-graduation-cap fa-2x mb-3" style="color: var(--accent-color);"></i>
+                            <h5>Knowledge Transfer</h5>
+                            <p class="small">Empowering your team with AI understanding and capabilities</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center mb-5">
+                <h2 class="section-title" data-aos="fade-up">Our AI Services</h2>
+                <p class="lead" data-aos="fade-up" data-aos-delay="100">Comprehensive AI and data science services tailored to your business needs</p>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <!-- Service 1 -->
+            <div class="col-lg-6 mb-4" data-aos="fade-up">
+                <div class="service-detail">
+                    <div class="icon-container">
+                        <i class="fas fa-brain fa-2x"></i>
+                    </div>
+                    <h4>Machine Learning Solutions</h4>
+                    <p>Develop and deploy sophisticated machine learning models that learn from your data to make accurate predictions, automate decisions, and uncover valuable insights.</p>
+                    <ul class="service-feature-list">
+                        <li>Predictive analytics and forecasting models</li>
+                        <li>Recommendation engines for personalized experiences</li>
+                        <li>Anomaly detection for fraud and risk management</li>
+                        <li>Customer segmentation and behavior analysis</li>
+                        <li>Demand forecasting and inventory optimization</li>
+                        <li>Model deployment and MLOps implementation</li>
+                    </ul>
+                    <div class="mt-4">
+                        <a href="{% url 'contact' %}" class="btn btn-sm btn-primary-custom">Discuss Your Project</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 2 -->
+            <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="service-detail">
+                    <div class="icon-container">
+                        <i class="fas fa-comments fa-2x"></i>
+                    </div>
+                    <h4>Natural Language Processing</h4>
+                    <p>Transform unstructured text data into actionable intelligence with our advanced NLP solutions that understand, interpret, and generate human language.</p>
+                    <ul class="service-feature-list">
+                        <li>Intelligent chatbots and virtual assistants</li>
+                        <li>Sentiment analysis and opinion mining</li>
+                        <li>Document classification and information extraction</li>
+                        <li>Text summarization and content generation</li>
+                        <li>Multilingual translation and localization</li>
+                        <li>Voice recognition and speech-to-text solutions</li>
+                    </ul>
+                    <div class="mt-4">
+                        <a href="{% url 'contact' %}" class="btn btn-sm btn-primary-custom">Discuss Your Project</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 3 -->
+            <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="service-detail">
+                    <div class="icon-container">
+                        <i class="fas fa-eye fa-2x"></i>
+                    </div>
+                    <h4>Computer Vision</h4>
+                    <p>Enable machines to interpret and understand visual information from images and videos, automating visual inspection, recognition, and analysis tasks.</p>
+                    <ul class="service-feature-list">
+                        <li>Object detection and recognition systems</li>
+                        <li>Facial recognition and biometric authentication</li>
+                        <li>Image classification and tagging automation</li>
+                        <li>Quality control and defect detection</li>
+                        <li>Medical imaging analysis and diagnostics</li>
+                        <li>Autonomous vehicle perception systems</li>
+                    </ul>
+                    <div class="mt-4">
+                        <a href="{% url 'contact' %}" class="btn btn-sm btn-primary-custom">Discuss Your Project</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 4 -->
+            <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="service-detail">
+                    <div class="icon-container">
+                        <i class="fas fa-chart-line fa-2x"></i>
+                    </div>
+                    <h4>Data Analytics & BI</h4>
+                    <p>Transform raw data into actionable business intelligence with our comprehensive analytics solutions that drive informed decision-making across your organization.</p>
+                    <ul class="service-feature-list">
+                        <li>Advanced data visualization and dashboards</li>
+                        <li>Business intelligence platform implementation</li>
+                        <li>Data warehouse design and optimization</li>
+                        <li>Real-time analytics and reporting</li>
+                        <li>KPI tracking and performance monitoring</li>
+                        <li>Predictive analytics for strategic planning</li>
+                    </ul>
+                    <div class="mt-4">
+                        <a href="{% url 'contact' %}" class="btn btn-sm btn-primary-custom">Discuss Your Project</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Additional Services Row -->
+        <div class="row mt-4">
+            <div class="col-lg-4 mb-4" data-aos="fade-up">
+                <div class="card card-custom p-4 text-center h-100">
+                    <div class="icon-container">
+                        <i class="fas fa-robot fa-2x"></i>
+                    </div>
+                    <h5>AI Strategy & Consulting</h5>
+                    <p>Develop comprehensive AI roadmaps aligned with your business objectives. Our experts help you identify opportunities, assess feasibility, and create implementation plans.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card card-custom p-4 text-center h-100">
+                    <div class="icon-container">
+                        <i class="fas fa-cogs fa-2x"></i>
+                    </div>
+                    <h5>AI Integration & Deployment</h5>
+                    <p>Seamlessly integrate AI solutions into your existing systems and workflows. We ensure smooth deployment, performance optimization, and ongoing maintenance.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card card-custom p-4 text-center h-100">
+                    <div class="icon-container">
+                        <i class="fas fa-users fa-2x"></i>
+                    </div>
+                    <h5>AI Training & Workshops</h5>
+                    <p>Empower your team with AI knowledge through customized training programs and workshops. Build internal capabilities to sustain and expand your AI initiatives.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Process Section -->
+<section class="py-5" id="process">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center mb-5">
+                <h2 class="section-title" data-aos="fade-up">Our AI Development Process</h2>
+                <p class="lead" data-aos="fade-up" data-aos-delay="100">A structured, collaborative approach to ensure successful AI implementation and maximum business value</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h5>Discovery & Strategy</h5>
+                    <p>We begin by deeply understanding your business challenges, objectives, and data landscape. Through workshops and analysis, we define clear AI goals, success metrics, and develop a comprehensive strategy aligned with your business priorities.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h5>Data Preparation</h5>
+                    <p>Our data engineers collect, clean, and prepare your data for AI model training. We assess data quality, address gaps, create pipelines, and ensure proper labeling and annotation. This critical phase lays the foundation for accurate and reliable AI models.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h5>Model Development</h5>
+                    <p>Our AI experts design, train, and optimize models tailored to your specific requirements. We employ state-of-the-art techniques, conduct rigorous testing and validation, and iteratively refine models to achieve optimal performance for your use case.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <h5>Deployment & Support</h5>
+                    <p>We deploy the AI solution into your production environment, ensuring seamless integration with existing systems. Our team provides comprehensive training, documentation, and ongoing support to maintain optimal performance and adapt to evolving needs.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Portfolio Section -->
+<section class="py-5 bg-light" id="portfolio">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center mb-5">
+                <h2 class="section-title" data-aos="fade-up">Success Stories</h2>
+                <p class="lead" data-aos="fade-up" data-aos-delay="100">Explore how we've helped businesses transform with AI solutions</p>
+            </div>
+        </div>
+        <div class="row">
+            {% for project in portfolio %}
+            <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up">
+                <div class="card card-custom h-100">
+                    <img src="{% static project.img %}" class="card-img-top" alt="{{ project.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ project.title }}</h5>
+                        <p class="card-text">{{ project.desc }}</p>
+                        <div class="mt-3">
+                            <span class="badge bg-primary me-1">Machine Learning</span>
+                            <span class="badge bg-secondary">Data Analytics</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="row mt-5">
+            <div class="col-12 text-center" data-aos="fade-up">
+                <h3>Client Results & Impact</h3>
+            </div>
+            <div class="col-md-4 text-center mt-4" data-aos="fade-up">
+                <h2 class="text-primary">45%</h2>
+                <p>Average increase in operational efficiency</p>
+            </div>
+            <div class="col-md-4 text-center mt-4" data-aos="fade-up" data-aos-delay="100">
+                <h2 class="text-primary">$3.2M</h2>
+                <p>Average annual cost savings for clients</p>
+            </div>
+            <div class="col-md-4 text-center mt-4" data-aos="fade-up" data-aos-delay="200">
+                <h2 class="text-primary">68%</h2>
+                <p>Faster decision-making with AI insights</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Industries Section -->
+<section class="py-5" id="industries">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center mb-5">
+                <h2 class="section-title" data-aos="fade-up">Industries We Serve</h2>
+                <p class="lead" data-aos="fade-up" data-aos-delay="100">We deliver AI solutions across diverse sectors to drive innovation and efficiency</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up">
+                <div class="industry-card">
+                    <i class="fas fa-heartbeat fa-2x mb-3" style="color: #e91e63;"></i>
+                    <h5>Healthcare</h5>
+                    <p>Medical diagnosis assistance, drug discovery acceleration, patient care optimization, medical imaging analysis, and personalized treatment recommendations.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="industry-card">
+                    <i class="fas fa-shopping-cart fa-2x mb-3" style="color: #4caf50;"></i>
+                    <h5>Retail & E-commerce</h5>
+                    <p>Demand forecasting, personalized recommendations, inventory optimization, customer sentiment analysis, and dynamic pricing strategies.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="industry-card">
+                    <i class="fas fa-university fa-2x mb-3" style="color: #ff9800;"></i>
+                    <h5>Finance & Banking</h5>
+                    <p>Fraud detection, risk assessment, algorithmic trading, credit scoring, customer service automation, and regulatory compliance monitoring.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="industry-card">
+                    <i class="fas fa-industry fa-2x mb-3" style="color: #795548;"></i>
+                    <h5>Manufacturing</h5>
+                    <p>Predictive maintenance, quality control automation, supply chain optimization, production planning, and energy consumption optimization.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up">
+                <div class="industry-card">
+                    <i class="fas fa-truck fa-2x mb-3" style="color: #2196f3;"></i>
+                    <h5>Logistics & Supply Chain</h5>
+                    <p>Route optimization, demand forecasting, warehouse automation, delivery time prediction, and inventory management.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="industry-card">
+                    <i class="fas fa-graduation-cap fa-2x mb-3" style="color: #9c27b0;"></i>
+                    <h5>Education</h5>
+                    <p>Personalized learning paths, student performance prediction, content recommendation, and automated assessment systems.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="industry-card">
+                    <i class="fas fa-film fa-2x mb-3" style="color: #f44336;"></i>
+                    <h5>Media & Entertainment</h5>
+                    <p>Content recommendation, audience analytics, content generation, copyright protection, and trend prediction.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="industry-card">
+                    <i class="fas fa-seedling fa-2x mb-3" style="color: #4caf50;"></i>
+                    <h5>Agriculture</h5>
+                    <p>Crop yield prediction, pest detection, soil analysis, irrigation optimization, and harvest planning.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Technologies Section -->
+<section class="tech-stack" id="tech">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center mb-5">
+                <h2 class="section-title" data-aos="fade-up">Technologies We Use</h2>
+                <p class="lead" data-aos="fade-up" data-aos-delay="100">We leverage the latest technologies and frameworks to build robust, scalable AI solutions</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 col-md-3 col-lg-2 mb-4" data-aos="fade-up">
+                <div class="tech-item">
+                    <i class="fab fa-python tech-icon"></i>
+                    <h6>Python</h6>
+                </div>
+            </div>
+            <div class="col-6 col-md-3 col-lg-2 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="tech-item">
+                    <i class="fas fa-brain tech-icon"></i>
+                    <h6>TensorFlow</h6>
+                </div>
+            </div>
+            <div class="col-6 col-md-3 col-lg-2 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="tech-item">
+                    <i class="fas fa-project-diagram tech-icon"></i>
+                    <h6>PyTorch</h6>
+                </div>
+            </div>
+            <div class="col-6 col-md-3 col-lg-2 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="tech-item">
+                    <i class="fas fa-chart-line tech-icon"></i>
+                    <h6>Scikit-learn</h6>
+                </div>
+            </div>
+            <div class="col-6 col-md-3 col-lg-2 mb-4" data-aos="fade-up" data-aos-delay="400">
+                <div class="tech-item">
+                    <i class="fas fa-database tech-icon"></i>
+                    <h6>SQL & NoSQL</h6>
+                </div>
+            </div>
+            <div class="col-6 col-md-3 col-lg-2 mb-4" data-aos="fade-up" data-aos-delay="500">
+                <div class="tech-item">
+                    <i class="fab fa-aws tech-icon"></i>
+                    <h6>AWS/Azure</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="py-5" id="testimonials">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center mb-5">
+                <h2 class="section-title" data-aos="fade-up">What Our Clients Say</h2>
+                <p class="lead" data-aos="fade-up" data-aos-delay="100">Hear from businesses that have transformed with our AI solutions</p>
+            </div>
+        </div>
+        
+        <div id="testimonialCarousel" class="carousel slide mt-5" data-bs-ride="carousel" data-aos="fade-up">
+            <!-- Carousel Indicators -->
+            <div class="carousel-indicators">
+                {% for testimonial in testimonials %}
+                <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="{{ forloop.counter0 }}" 
+                        class="{% if forloop.first %}active{% endif %}" aria-current="{% if forloop.first %}true{% endif %}" 
+                        aria-label="Slide {{ forloop.counter }}"></button>
+                {% endfor %}
+            </div>
+            
+            <div class="carousel-inner">
+                {% for testimonial in testimonials %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <div class="testimonial-card text-center p-4">
+                        <!-- Rating Stars -->
+                        <div class="rating-stars mb-3">
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= testimonial.rating %}
+                                    <i class="fas fa-star text-warning"></i>
+                                {% else %}
+                                    <i class="far fa-star text-warning"></i>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        
+                        <!-- Quote Icon -->
+                        <div class="icon-container mb-4" style="width: 70px; height: 70px; background: linear-gradient(135deg, var(--accent-color), var(--secondary-color)); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-quote-left text-white"></i>
+                        </div>
+                        
+                        <!-- Testimonial Text -->
+                        <p class="lead fst-italic mb-4">"{{ testimonial.text }}"</p>
+                        
+                        <!-- Client Info -->
+                        <div class="client-info">
+                            <h6 class="mb-1">{{ testimonial.name }}</h6>
+                            <p class="text-muted mb-1">{{ testimonial.role }}</p>
+                            {% if testimonial.company %}
+                            <small class="text-primary">{{ testimonial.company }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <!-- Fallback testimonials if no testimonials in database -->
+                <div class="carousel-item active">
+                    <div class="testimonial-card text-center p-4">
+                        <div class="rating-stars mb-3">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                        </div>
+                        <div class="icon-container mb-4" style="width: 70px; height: 70px; background: linear-gradient(135deg, var(--accent-color), var(--secondary-color)); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-quote-left text-white"></i>
+                        </div>
+                        <p class="lead fst-italic mb-4">"AI Tech transformed our business operations with their machine learning solutions. Our efficiency increased by 45% and customer satisfaction skyrocketed."</p>
+                        <div class="client-info">
+                            <h6 class="mb-1">Sarah Johnson</h6>
+                            <p class="text-muted mb-1">CEO at TechInnovate</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="testimonial-card text-center p-4">
+                        <div class="rating-stars mb-3">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                        </div>
+                        <div class="icon-container mb-4" style="width: 70px; height: 70px; background: linear-gradient(135deg, var(--accent-color), var(--secondary-color)); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-quote-left text-white"></i>
+                        </div>
+                        <p class="lead fst-italic mb-4">"The AI-powered analytics platform developed by AI Tech gave us insights we never thought possible. It's like having a crystal ball for our business."</p>
+                        <div class="client-info">
+                            <h6 class="mb-1">Michael Chen</h6>
+                            <p class="text-muted mb-1">Operations Director at GlobalRetail</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Carousel Controls -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Contact / CTA Section -->
+<section class="py-5 bg-dark text-white" id="contact">
+    <div class="container text-center">
+        <h2 class="section-title text-white" data-aos="fade-up">Ready to Transform Your Business with AI?</h2>
+        <p class="lead mb-4" data-aos="fade-up" data-aos-delay="100">Get in touch with our experts for a free consultation and discover how AI can drive your business forward.</p>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <p data-aos="fade-up" data-aos-delay="200">Whether you're just beginning your AI journey or looking to enhance existing capabilities, our team is ready to help you navigate the possibilities and develop a strategy tailored to your unique needs.</p>
+            </div>
+        </div>
+        <a href="{% url 'contact' %}" class="btn btn-primary-custom mt-3" data-aos="fade-up" data-aos-delay="300">Schedule a Free Consultation</a>
+    </div>
+</section>
+
+{% endblock %}

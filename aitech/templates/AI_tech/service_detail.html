@@ -1,0 +1,603 @@
+{% extends 'AI_tech/base.html' %}
+{% load static %}
+
+{% block title %}{{ service.title }} - AI Tech Solutions{% endblock %}
+
+{% block content %}
+
+<style>
+    /* Service Detail Hero Section */
+    .service-detail-hero {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        padding: 150px 0 80px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    .service-detail-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .service-icon-hero {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 30px;
+        color: white;
+        font-size: 2.5rem;
+        box-shadow: 0 10px 25px rgba(0, 188, 212, 0.4);
+    }
+
+    /* Service Content Section */
+    .service-content-section {
+        padding: 80px 0;
+        background: #f8f9fa;
+    }
+
+    .service-detail-card {
+        background: white;
+        border-radius: 20px;
+        padding: 50px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        border: 1px solid #f0f0f0;
+    }
+
+    .service-feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
+        margin: 40px 0;
+    }
+
+    .service-feature-item {
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        padding: 25px;
+        border-radius: 15px;
+        text-align: center;
+        transition: all 0.3s ease;
+        border-left: 4px solid var(--accent-color);
+    }
+
+    .service-feature-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 15px;
+        color: white;
+        font-size: 1.5rem;
+    }
+
+    /* Process Timeline */
+    .process-timeline {
+        position: relative;
+        margin: 50px 0;
+        padding-left: 30px;
+    }
+
+    .process-timeline::before {
+        content: '';
+        position: absolute;
+        left: 15px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(to bottom, var(--accent-color), var(--primary-color));
+    }
+
+    .timeline-item {
+        position: relative;
+        margin-bottom: 40px;
+        padding-left: 30px;
+    }
+
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: -23px;
+        top: 5px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--accent-color);
+        border: 3px solid white;
+        box-shadow: 0 0 0 3px var(--accent-color);
+    }
+
+    .timeline-step {
+        background: var(--accent-color);
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 0.9rem;
+        position: absolute;
+        left: -38px;
+        top: -2px;
+    }
+
+    /* Related Services */
+    .related-services {
+        padding: 60px 0;
+        background: white;
+    }
+
+    .related-service-card {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        text-align: center;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        height: 100%;
+        border: 1px solid #f0f0f0;
+    }
+
+    .related-service-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .related-service-icon {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        color: white;
+        font-size: 1.8rem;
+    }
+
+    /* CTA Section */
+    .service-cta {
+        background: linear-gradient(135deg, var(--dark-color), var(--primary-color));
+        color: white;
+        padding: 80px 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .service-cta::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M0 0h40v40H0V0zm1 1h38v38H1V1z'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .btn-service-primary {
+        background: var(--accent-color);
+        color: white;
+        padding: 15px 40px;
+        border-radius: 30px;
+        font-weight: 600;
+        border: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0, 188, 212, 0.3);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .btn-service-primary:hover {
+        background: #0097a7;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 188, 212, 0.4);
+        color: white;
+    }
+
+    .btn-service-outline {
+        background: transparent;
+        color: white;
+        padding: 15px 40px;
+        border-radius: 30px;
+        font-weight: 600;
+        border: 2px solid white;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .btn-service-outline:hover {
+        background: white;
+        color: var(--primary-color);
+        transform: translateY(-3px);
+    }
+
+    /* Back Button */
+    .back-btn {
+        color: var(--accent-color);
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        margin-bottom: 30px;
+    }
+
+    .back-btn:hover {
+        color: var(--primary-color);
+        gap: 12px;
+    }
+        /* Add the same message styles as in services.html */
+    .alert-container {
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        z-index: 9999;
+        min-width: 350px;
+    }
+
+    .alert {
+        border-radius: 10px;
+        border: none;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        padding: 15px 20px;
+        margin-bottom: 15px;
+        animation: slideInRight 0.5s ease-out;
+    }
+
+    .alert-success {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+        border-left: 4px solid #1e7e34;
+    }
+
+    .alert-error {
+        background: linear-gradient(135deg, #dc3545, #e83e8c);
+        color: white;
+        border-left: 4px solid #c82333;
+    }
+</style>
+
+<div class="alert-container">
+    {% for message in messages %}
+        <div class="alert alert-dismissible {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %} fade show" role="alert">
+            <div class="d-flex align-items-center">
+                <i class="fas 
+                    {% if message.tags == 'success' %}fa-check-circle
+                    {% elif message.tags == 'error' %}fa-exclamation-circle
+                    {% else %}fa-info-circle{% endif %}
+                    me-2"></i>
+                <div class="flex-grow-1">
+                    {{ message }}
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<!-- Hero Section -->
+<section class="service-detail-hero">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="service-icon-hero" data-aos="zoom-in">
+                    <i class="fas {{ service.icon }}"></i>
+                </div>
+                <span class="feature-badge" data-aos="fade-down" style="background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); color: white; padding: 8px 20px; border-radius: 25px; font-size: 0.9rem; font-weight: 600; display: inline-block; margin-bottom: 20px; border: 1px solid rgba(255, 255, 255, 0.3);">AI-Powered Solution</span>
+                <h1 class="display-4 fw-bold mb-4" data-aos="fade-up">{{ service.title }}</h1>
+                <p class="lead mb-4" data-aos="fade-up" data-aos-delay="100">
+                    Transform your business with our cutting-edge {{ service.title|lower }} solutions powered by advanced artificial intelligence.
+                </p>
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <a href="#service-details" class="btn btn-primary-custom me-3">Explore Details</a>
+                    <a href="#consultation" class="btn btn-outline-light">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Service Content Section -->
+<section class="service-content-section" id="service-details">
+    <div class="container">
+        <a href="{% url 'services' %}" class="back-btn" data-aos="fade-right">
+            <i class="fas fa-arrow-left"></i> Back to All Services
+        </a>
+        
+        <div class="service-detail-card" data-aos="fade-up">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h2 class="section-title mb-4">About Our {{ service.title }} Service</h2>
+                    <div class="service-description" style="font-size: 1.1rem; line-height: 1.8; color: #555;">
+                        {{ service.description|linebreaks }}
+                    </div>
+
+                    <!-- Service Features Grid -->
+                    <div class="service-feature-grid">
+                        <div class="service-feature-item" data-aos="zoom-in" data-aos-delay="100">
+                            <div class="feature-icon">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <h5>Custom AI Models</h5>
+                            <p class="mb-0">Tailored algorithms designed specifically for your business needs and data structure.</p>
+                        </div>
+                        
+                        <div class="service-feature-item" data-aos="zoom-in" data-aos-delay="200">
+                            <div class="feature-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <h5>Rapid Deployment</h5>
+                            <p class="mb-0">Quick implementation with minimal disruption to your existing workflows.</p>
+                        </div>
+                        
+                        <div class="service-feature-item" data-aos="zoom-in" data-aos-delay="300">
+                            <div class="feature-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h5>Enterprise Security</h5>
+                            <p class="mb-0">Bank-level security protocols to protect your data and intellectual property.</p>
+                        </div>
+                        
+                        <div class="service-feature-item" data-aos="zoom-in" data-aos-delay="400">
+                            <div class="feature-icon">
+                                <i class="fas fa-sync-alt"></i>
+                            </div>
+                            <h5>Continuous Optimization</h5>
+                            <p class="mb-0">Ongoing monitoring and improvement to ensure peak performance.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="service-highlights" data-aos="fade-left">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body text-center">
+                                <h5 class="card-title mb-4">Service Highlights</h5>
+                                
+                                <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+                                    <span class="text-muted">Delivery Time</span>
+                                    <strong class="text-primary">2-6 Weeks</strong>
+                                </div>
+                                
+                                <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+                                    <span class="text-muted">Success Rate</span>
+                                    <strong class="text-primary">97%</strong>
+                                </div>
+                                
+                                <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+                                    <span class="text-muted">Support</span>
+                                    <strong class="text-primary">24/7</strong>
+                                </div>
+                                
+                                <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+                                    <span class="text-muted">Scalability</span>
+                                    <strong class="text-primary">Enterprise</strong>
+                                </div>
+                                
+                                <a href="#consultation" class="btn btn-primary-custom w-100">
+                                    <i class="fas fa-calendar-check me-2"></i>Start Project
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Implementation Process -->
+            <div class="mt-5 pt-4">
+                <h3 class="section-title mb-4" data-aos="fade-up">Implementation Process</h3>
+                <div class="process-timeline" data-aos="fade-up">
+                    <div class="timeline-item">
+                        <div class="timeline-step">1</div>
+                        <h5>Discovery & Requirements Analysis</h5>
+                        <p class="text-muted mb-0">We begin with comprehensive analysis of your business needs, data infrastructure, and specific requirements to define clear project objectives and success metrics.</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-step">2</div>
+                        <h5>Solution Design & Architecture</h5>
+                        <p class="text-muted mb-0">Our AI experts design a tailored solution architecture, select appropriate algorithms, and create a detailed implementation plan aligned with your technical environment.</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-step">3</div>
+                        <h5>Development & Model Training</h5>
+                        <p class="text-muted mb-0">We develop custom AI models, train them on your data, and rigorously test for accuracy, performance, and reliability before deployment.</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-step">4</div>
+                        <h5>Deployment & Integration</h5>
+                        <p class="text-muted mb-0">Seamless integration into your existing systems with comprehensive testing, documentation, and team training for smooth adoption.</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-step">5</div>
+                        <h5>Ongoing Support & Optimization</h5>
+                        <p class="text-muted mb-0">Continuous monitoring, performance optimization, and regular updates to ensure your AI solution evolves with your business needs.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Related Services Section -->
+<section class="related-services">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-title" data-aos="fade-up">Explore Our Other AI Services</h2>
+                <p class="lead" data-aos="fade-up" data-aos-delay="100">
+                    Discover more ways we can help transform your business with artificial intelligence
+                </p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <!-- These would typically be dynamically generated from your services -->
+            <div class="col-md-4" data-aos="fade-up">
+                <div class="related-service-card">
+                    <div class="related-service-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h5>AI Agent Development</h5>
+                    <p class="text-muted">Intelligent autonomous agents that automate complex business processes and decision-making.</p>
+                    <a href="#" class="btn btn-sm btn-primary-custom">Learn More</a>
+                </div>
+            </div>
+            
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="related-service-card">
+                    <div class="related-service-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h5>Generative AI Solutions</h5>
+                    <p class="text-muted">Create, innovate, and transform content with cutting-edge generative AI models.</p>
+                    <a href="#" class="btn btn-sm btn-primary-custom">Learn More</a>
+                </div>
+            </div>
+            
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="related-service-card">
+                    <div class="related-service-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h5>Data Science & Analytics</h5>
+                    <p class="text-muted">Transform raw data into actionable insights with advanced analytics and machine learning.</p>
+                    <a href="#" class="btn btn-sm btn-primary-custom">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="service-cta" id="consultation">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <div class="cta-content" data-aos="fade-up">
+                    <h2 class="display-5 fw-bold mb-4">Ready to Implement {{ service.title }}?</h2>
+                    <p class="lead mb-5">
+                        Let's discuss how our {{ service.title|lower }} solutions can drive innovation, efficiency, and growth for your organization. 
+                        Schedule a free consultation with our AI experts today.
+                    </p>
+                    <div class="d-flex flex-wrap justify-content-center gap-3">
+                        <a href="#" class="btn-service-primary" data-bs-toggle="modal" data-bs-target="#consultationModal">
+                            <i class="fas fa-calendar-check"></i> Book Free Consultation
+                        </a>
+                        <a href="{% url 'services' %}" class="btn-service-outline">
+                            <i class="fas fa-arrow-left"></i> All Services
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Consultation Modal (Same as services page) -->
+<div class="modal fade consultation-modal" id="consultationModal" tabindex="-1" aria-labelledby="consultationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="consultationModalLabel">
+                    <i class="fas fa-robot me-2"></i>Free AI Consultation - {{ service.title }}
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'services' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="service" value="{{ service.title }}">
+                    <div class="mb-3">
+                        <label class="form-label">Full Name *</label>
+                        <input type="text" class="form-control" name="name" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email Address *</label>
+                        <input type="email" class="form-control" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Phone Number</label>
+                        <input type="text" class="form-control" name="phone" placeholder="Enter your phone number">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Company</label>
+                        <input type="text" class="form-control" name="company" placeholder="Enter your company name">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Project Requirements *</label>
+                        <textarea class="form-control" name="message" rows="4" placeholder="Describe your {{ service.title|lower }} project requirements..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary-custom w-100 py-3">
+                        <i class="fas fa-paper-plane me-2"></i>Submit Consultation Request
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Smooth scrolling for anchor links
+        $('a[href^="#"]').on('click', function(e) {
+            e.preventDefault();
+            var target = this.hash;
+            var $target = $(target);
+            
+            $('html, body').animate({
+                'scrollTop': $target.offset().top - 80
+            }, 800, 'swing');
+        });
+
+        // Form validation for consultation modal
+        $("#consultationModal form").validate({
+            rules: {
+                name: { required: true, minlength: 3 },
+                email: { required: true, email: true },
+                message: { required: true, minlength: 10 }
+            },
+            messages: {
+                name: { required: "Please enter your name", minlength: "Name must be at least 3 characters" },
+                email: { required: "Please enter your email", email: "Please enter a valid email address" },
+                message: { required: "Please describe your project requirements", minlength: "Please provide more details" }
+            },
+            errorClass: "error",
+            errorPlacement: function (error, element) { error.insertAfter(element); },
+            highlight: function (element) { $(element).addClass("is-invalid"); },
+            unhighlight: function (element) { $(element).removeClass("is-invalid"); }
+        });
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,1907 @@
+.hero-section {
+    position: relative;
+    padding: 100px 0;
+    color: white;
+    overflow: hidden;
+
+    /* Gradient + Image background */
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)), 
+                url("{% static 'admin_assets/images/AI02.jpg' %}") center/cover no-repeat;
+
+    /* Blend image with gradient */
+    background-blend-mode: overlay;
+}
+
+/* Optional subtle pattern overlay */
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23000' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+    opacity: 0.08;
+    pointer-events: none;
+}
+
+{% extends 'AI_tech/home.html' %}
+{% load static %}
+
+{% block title %} Contact{% endblock %}
+
+{% block content %}
+
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f7fa;
+    color: #000;
+  }
+
+  /* ===== Hero Section ===== */
+  .contact-hero {
+    background: url('{% static "admin_assets/images/contact03.jpg" %}');
+    color: #fff;
+    height: 40vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+  }
+  .contact-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  .contact-hero h1 {
+    position: relative;
+    font-size: 3rem;
+    font-weight: 700;
+    z-index: 1;
+    animation: fadeInUp 1s ease forwards;
+  }
+
+  /* ===== Fade In Animation ===== */
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 1s forwards;
+  }
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ===== Contact Section ===== */
+  .contact-section {
+    padding: 80px 0;
+  }
+  .contact-text h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+  .contact-text p {
+    font-size: 15px;
+    color: #555;
+  }
+  .contact-info h6 {
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .contact-info a {
+    color: #000;
+    text-decoration: none;
+    transition: 0.3s;
+  }
+  .contact-info a:hover {
+    color: #ff3c00;
+  }
+
+  /* ===== Form Section ===== */
+  .contact-form {
+    background: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+  }
+  .contact-form:hover {
+    transform: translateY(-5px);
+  }
+  .contact-form h4 {
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+  .contact-form input,
+  .contact-form textarea {
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    padding: 12px;
+    width: 100%;
+    margin-bottom: 15px;
+    transition: 0.3s;
+  }
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    border-color: #ff3c00;
+    box-shadow: 0 0 5px rgba(255,60,0,0.5);
+    outline: none;
+  }
+  .contact-form button {
+    background: #ff3c00;
+    color: #fff;
+    border-radius: 25px;
+    padding: 12px 30px;
+    border: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  .contact-form button:hover {
+    background: #000;
+  }
+
+  /* ===== Map Section ===== */
+  .map-section iframe {
+    border: none;
+    width: 100%;
+    height: 400px;
+    border-radius: 15px;
+    filter: grayscale(100%);
+    transition: all 0.3s;
+  }
+  .map-section iframe:hover {
+    filter: grayscale(0%);
+  }
+
+  /* ===== Social Icons ===== */
+  .contact-info .fab {
+    margin-right: 10px;
+    font-size: 1.2rem;
+    color: #000;
+    transition: all 0.3s ease;
+  }
+  .contact-info .fab:hover {
+    color: #ff3c00;
+    transform: scale(1.2);
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 768px) {
+    .contact-hero h1 {
+      font-size: 2rem;
+    }
+    .contact-form {
+      padding: 30px 20px;
+    }
+  }
+</style>
+
+<!-- ===== Hero Section ===== -->
+<section class="contact-hero" 
+         style="background: url('{% static "admin_assets/images/contact05.jpg" %}') center/cover no-repeat;">
+  <h1>Contact Us</h1>
+</section>
+
+<!-- ===== Contact Section ===== -->
+<section class="contact-section">
+  <div class="container">
+    <div class="row align-items-start">
+      
+      <!-- Left Side - Info -->
+<div class="col-lg-6 mb-5" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+  <div style="padding: 20px; border-radius: 12px; background-color: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; animation: fadeInUp 1s forwards; animation-delay: 0.2s;">
+    
+    <div>
+      <p style="text-transform: uppercase; color: #888888; margin-bottom: 10px;">/ Get in Touch /</p>
+      <div style="margin-bottom: 20px;">
+        <h2 style="font-weight: 700; font-size: 1.8rem; margin-bottom: 10px;">We Are Always Ready to Assist You</h2>
+        <p style="color: #555; font-size: 0.95rem; line-height: 1.6;">
+          Explore how our AI-driven solutions can transform your business. Connect with our experts to get personalized guidance and actionable insights.
+        </p>
+      </div>
+
+      <div>
+        <div style="margin-bottom: 15px;">
+          <h6 style="font-weight: 600; margin-bottom: 5px;">Call Center</h6>
+          <p style="margin: 0;"><br>+1 (341) 336-4213</p>
+        </div>
+        <div style="margin-bottom: 15px;">
+          <h6 style="font-weight: 600; margin-bottom: 5px;">Our Location</h6>
+          <p style="margin: 0;">India,USA,New York - 1060<br>Str. First Avenue 1</p>
+        </div>
+        <div style="margin-bottom: 15px;">
+          <h6 style="font-weight: 600; margin-bottom: 5px;">Email</h6>
+          <p style="margin: 0;"><a href="mailto:neuros@mail.co" style="color:#007bff; text-decoration:none;">neuros@mail.co</a></p>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 20px;">
+      <h6 style="font-weight: 600; margin-bottom: 10px;">Social Network</h6>
+      <div style="display: flex; gap: 10px;">
+        <a href="#" style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:#f1f1f1;color:#ff3c00;border-radius:50%;transition: all 0.3s;"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:#f1f1f1;color:#ff3c00;border-radius:50%;transition: all 0.3s;"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:#f1f1f1;color:#ff3c00;border-radius:50%;transition: all 0.3s;"><i class="fab fa-twitter"></i></a>
+        <a href="#" style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:#f1f1f1;color:#ff3c00;border-radius:50%;transition: all 0.3s;"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Inline animation keyframes -->
+<script>
+  const style = document.createElement('style');
+  style.innerHTML = `
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  `;
+  document.head.appendChild(style);
+</script>
+
+
+      <!-- Right Side - Form -->
+      <div class="col-lg-6 fade-in-up">
+        <div class="contact-form">
+          <h4>Get in Touch</h4>
+          <p class="text-muted small mb-4">
+            Define your goals and identify areas where AI can add value to your business.
+          </p>
+          <form>
+            <input type="text" class="form-control" placeholder="Full name" required>
+            <input type="email" class="form-control" placeholder="Email" required>
+            <input type="text" class="form-control" placeholder="Subject" required>
+            <textarea class="form-control" rows="4" placeholder="Message" required></textarea>
+            <button type="submit"><i class="fas fa-paper-plane me-2"></i> Send Message</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== Map Section ===== -->
+<section class="map-section fade-in-up">
+  <div class="container">
+    <iframe 
+      src="https://www.google.com/maps/@17.4357,78.5872,9z?entry=ttu&g_ep=EgoyMDI1MTAxNC4wIKXMDSoASAFQAw%3D%3D"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+</section>
+
+{% endblock %}
+
+data give me dynamically
+
+{% extends 'AI_tech/home.html' %}
+{% load static %}
+{% block title %}Contact | AI Tech{% endblock %}
+{% block content %}
+
+<!-- Hero Section -->
+<section class="contact-hero d-flex align-items-center justify-content-center text-center text-white">
+  <div class="hero-content fade-in">
+    <h1 class="fw-bold display-4 mb-2">Get in Touch</h1>
+    <p class="lead">Let's build the future of intelligence together</p>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact-section py-5">
+  <div class="container">
+    <div class="row align-items-start g-4">
+
+      <!-- LEFT SIDE -->
+      <div class="col-lg-6">
+        <div class="contact-card fade-up p-4">
+          <p class="text-uppercase text-accent mb-2">/ Connect With Us /</p>
+          <h2 class="fw-bold mb-3 text-gradient">{{ contact_data.company_name }}</h2>
+          <p class="text-secondary mb-4">We help organizations leverage AI to drive digital transformation, accelerate growth, and unlock new possibilities.</p>
+
+          <div class="info-block mb-3">
+            <i class="fas fa-phone-alt text-danger me-2"></i> 
+            <span class="fw-semibold">{{ contact_data.phone }}</span>
+          </div>
+          <div class="info-block mb-3">
+            <i class="fas fa-envelope text-danger me-2"></i> 
+            <a href="mailto:{{ contact_data.email }}" class="fw-semibold text-decoration-none text-primary">{{ contact_data.email }}</a>
+          </div>
+          <div class="info-block mb-3">
+            <i class="fas fa-map-marker-alt text-danger me-2"></i> 
+            <span>{{ contact_data.address }} - {{ contact_data.location }}</span>
+          </div>
+
+          <h6 class="fw-semibold mt-4 mb-2">Follow Us</h6>
+          <div class="d-flex gap-2">
+            {% if contact_data.facebook %}
+            <a href="{{ contact_data.facebook }}" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+            {% endif %}
+            {% if contact_data.linkedin %}
+            <a href="{{ contact_data.linkedin }}" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+            {% endif %}
+            {% if contact_data.twitter %}
+            <a href="{{ contact_data.twitter }}" class="social-icon"><i class="fab fa-twitter"></i></a>
+            {% endif %}
+            {% if contact_data.instagram %}
+            <a href="{{ contact_data.instagram }}" class="social-icon"><i class="fab fa-instagram"></i></a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT SIDE -->
+      <div class="col-lg-6">
+        <div class="contact-card fade-up p-4">
+          <h4 class="fw-bold mb-3 text-gradient">Send Us a Message</h4>
+
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-success fade-in">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+
+          <form method="POST" id="contactForm" novalidate>
+            {% csrf_token %}
+            <div class="mb-3">
+              <input type="text" name="name" class="form-control input-neo" placeholder="Full Name" required>
+              <div class="invalid-feedback">Please enter your full name.</div>
+            </div>
+            <div class="mb-3">
+              <input type="email" name="email" class="form-control input-neo" placeholder="Email" required>
+              <div class="invalid-feedback">Please enter a valid email address.</div>
+            </div>
+            <div class="mb-3">
+              <input type="text" name="subject" class="form-control input-neo" placeholder="Subject" required>
+              <div class="invalid-feedback">Please provide a subject.</div>
+            </div>
+            <div class="mb-3">
+              <textarea name="message" class="form-control input-neo" rows="4" placeholder="Message" required></textarea>
+              <div class="invalid-feedback">Please enter your message.</div>
+            </div>
+            <button class="btn btn-danger btn-glow w-100">
+              <i class="fas fa-paper-plane me-2"></i> Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Map Section -->
+<section class="map-section mt-5 fade-up">
+  <div class="container">
+    <iframe src="{{ contact_data.map_link }}" width="100%" height="400" style="border-radius:15px;" allowfullscreen></iframe>
+  </div>
+</section>
+
+<!-- Custom Styles -->
+<style>
+  .contact-hero {
+    background: linear-gradient(135deg, rgba(12,12,30,0.8), rgba(25,25,60,0.8)), 
+                url('{% static "admin_assets/images/contact05.jpg" %}') center/cover no-repeat;
+    height: 45vh;
+  }
+  .hero-content {
+    animation: fadeIn 1.5s ease-in-out;
+  }
+  .text-gradient {
+    background: linear-gradient(90deg, #dc3545, #8e44ad);
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+  .contact-card {
+    backdrop-filter: blur(10px);
+    background: rgba(255,255,255,0.8);
+    border-radius: 20px;
+    transition: all 0.4s ease;
+  }
+  .contact-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  }
+  .social-icon {
+    width: 38px;
+    height: 38px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .3s ease;
+    color: #dc3545;
+    font-size: 16px;
+  }
+  .social-icon:hover {
+    background: #dc3545;
+    color: #fff;
+    transform: scale(1.1);
+  }
+  .input-neo {
+    border-radius: 10px;
+    box-shadow: inset 3px 3px 6px #d1d9e6, inset -3px -3px 6px #ffffff;
+    transition: all 0.3s ease;
+  }
+  .input-neo:focus {
+    box-shadow: 0 0 8px rgba(220, 53, 69, 0.3);
+    border-color: #dc3545;
+  }
+  .btn-glow {
+    transition: all 0.3s ease;
+    border-radius: 8px;
+  }
+  .btn-glow:hover {
+    box-shadow: 0 0 15px rgba(220, 53, 69, 0.6);
+    transform: translateY(-2px);
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from {opacity:0; transform: translateY(30px);}
+    to {opacity:1; transform: translateY(0);}
+  }
+  .fade-in {animation: fadeIn 1s ease-in;}
+  .fade-up {animation: fadeIn 1.2s ease-in;}
+</style>
+
+<!-- JS Validation -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.getElementById('contactForm');
+  form.addEventListener('submit', function (event) {
+    if (!form.checkValidity()) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    form.classList.add('was-validated');
+  });
+});
+</script>
+
+{% endblock %}
+
+
+
+{% extends 'AI_tech/home.html' %}
+{% load static %}
+
+{% block title %}AI Tech - Premier AI Solutions & Data Science Services{% endblock %}
+
+{% block content %}
+
+<style>
+  /* ===== Enhanced Homepage Styles ===== */
+  :root {
+    --primary-color: #1a237e;
+    --secondary-color: #3949ab;
+    --accent-color: #00bcd4;
+    --dark-color: #0d1440;
+    --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  }
+
+  .home-hero {
+    background: linear-gradient(rgba(10,15,50,0.85), rgba(10,15,50,0.9)), 
+                url('{% static "admin_assets/images/ai-hero-bg.jpg" %}') center/cover no-repeat;
+    color: #fff;
+    padding: 180px 0 100px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-badge {
+    background: rgba(0, 188, 212, 0.2);
+    color: #00bcd4;
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 20px;
+    border: 1px solid rgba(0, 188, 212, 0.3);
+  }
+
+  .stat-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .service-card {
+    background: #fff;
+    border-radius: 15px;
+    padding: 40px 30px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: 1px solid #f0f0f0;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--gradient);
+  }
+
+  .service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .service-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    color: white;
+    font-size: 2rem;
+  }
+
+  .industry-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    position: relative;
+  }
+
+  .industry-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    height: 100%;
+  }
+
+  .industry-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  .process-step {
+    background: #fff;
+    border-radius: 15px;
+    padding: 40px 30px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+    transition: all 0.3s ease;
+    height: 100%;
+  }
+
+  .process-step:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  }
+
+  .step-number {
+    width: 50px;
+    height: 50px;
+    background: var(--gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 0 auto 20px;
+  }
+
+  .tech-stack-item {
+    text-align: center;
+    padding: 20px;
+    transition: all 0.3s ease;
+  }
+
+  .tech-stack-item:hover {
+    transform: translateY(-5px);
+  }
+
+  .tech-icon {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+  }
+
+  .testimonial-card {
+    background: #fff;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    margin: 15px;
+    position: relative;
+  }
+
+  .testimonial-card::before {
+    content: '"';
+    font-size: 4rem;
+    color: var(--accent-color);
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    opacity: 0.2;
+    font-family: Georgia, serif;
+  }
+
+  .client-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+  }
+
+  .cta-section {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .btn-primary-custom {
+    background: var(--accent-color);
+    border: none;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary-custom:hover {
+    background: #0097a7;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .section-title {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 50px;
+  }
+
+  .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: var(--accent-color);
+    border-radius: 2px;
+  }
+
+  /* Animation classes */
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease;
+  }
+
+  .fade-in-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    .home-hero {
+      padding: 150px 0 80px;
+    }
+    
+    .display-4 {
+      font-size: 2.2rem;
+    }
+  }
+</style>
+
+<!-- Hero Section -->
+<section class="home-hero">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6" data-aos="fade-right">
+        <span class="hero-badge">Transforming Businesses with AI Since 2015</span>
+        <h1 class="display-4 fw-bold mb-4">Intelligent Solutions for the Digital Age</h1>
+        <p class="lead mb-4">At AI Tech, we specialize in developing cutting-edge artificial intelligence and machine learning solutions that drive innovation, optimize operations, and unlock new growth opportunities.</p>
+        <p class="mb-4">Our team of expert data scientists, AI engineers, and business strategists work collaboratively to deliver tailored solutions that address your unique challenges and objectives.</p>
+        <div class="d-flex flex-wrap gap-3">
+          <a href="#services" class="btn btn-primary-custom">Explore Our Services</a>
+          <a href="#contact" class="btn btn-outline-light">Schedule Consultation</a>
+        </div>
+      </div>
+      <div class="col-lg-6" data-aos="fade-left">
+        <div class="row mt-5 mt-lg-0">
+          <div class="col-6 mb-4">
+            <div class="stat-card">
+              <h3 class="fw-bold">200+</h3>
+              <p>AI Projects Completed</p>
+            </div>
+          </div>
+          <div class="col-6 mb-4">
+            <div class="stat-card">
+              <h3 class="fw-bold">97%</h3>
+              <p>Client Satisfaction</p>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="stat-card">
+              <h3 class="fw-bold">65+</h3>
+              <p>AI Experts</p>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="stat-card">
+              <h3 class="fw-bold">12+</h3>
+              <p>Years Experience</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section id="services" class="py-5 bg-light">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="badge bg-info bg-opacity-10 text-info px-3 py-2 rounded-pill">OUR SERVICES</span>
+      <h2 class="fw-bold mt-3 section-title">AI-Powered Solutions</h2>
+      <p class="text-muted w-75 mx-auto">We deliver comprehensive AI services that transform businesses across industries, from startups to enterprises.</p>
+    </div>
+
+    <div class="row g-4">
+      <!-- Service 1 -->
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-brain"></i>
+          </div>
+          <h4 class="fw-bold mb-3">Machine Learning</h4>
+          <p class="text-muted mb-4">Develop and deploy sophisticated machine learning models that learn from your data to make accurate predictions and automate decisions.</p>
+          <ul class="list-unstyled text-start">
+            <li class="mb-2"><i class="fas fa-check text-info me-2"></i> Predictive Analytics</li>
+            <li class="mb-2"><i class="fas fa-check text-info me-2"></i> Recommendation Engines</li>
+            <li class="mb-2"><i class="fas fa-check text-info me-2"></i> Anomaly Detection</li>
+            <li><i class="fas fa-check text-info me-2"></i> Customer Segmentation</li>
+          </ul>
+          <a href="{% url 'service_detail' 'machine-learning' %}" class="btn btn-outline-primary mt-3">Learn More</a>
+        </div>
+      </div>
+
+      <!-- Service 2 -->
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-comments"></i>
+          </div>
+          <h4 class="fw-bold mb-3">Natural Language Processing</h4>
+          <p class="text-muted mb-4">Transform unstructured text data into actionable intelligence with our advanced NLP solutions that understand and interpret human language.</p>
+          <ul class="list-unstyled text-start">
+            <li class="mb-2"><i class="fas fa-check text-info me-2"></i> Intelligent Chatbots</li>
+            <li class="mb-2"><i class="fas fa-check text-info me-2"></i> Sentiment Analysis</li>
+            <li class="mb-2"><i class="fas fa-check text-info me-2"></i> Document Classification</li>
+            <li><i class="fas fa-check text-info me-2"></i> Text Summarization</li>
+          </ul>
+          <a href="{% url 'service_detail' 'natural-language-processing' %}" class="btn btn-outline-primary mt-3">Learn More</a>
+        </div>
+      </div>
+
+      <!-- Service 3 -->
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-eye"></i>
+          </div>
+          <h4 class="fw-bold mb-3">Computer Vision</h4>
+          <p class="text-muted mb-4">Enable machines to interpret and understand visual information from images and videos, automating visual inspection and analysis tasks.</p>
+          <ul class="list-unstyled text-start">
+            <li class="mb-2"><i class="fas fa-check text-info me-2"></i> Object Detection</li>
+            <li class="mb-2"><i class="fas fa-check text-info me-2"></i> Facial Recognition</li>
+            <li class="mb-2"><i class="fas fa-check text-info me-2"></i> Quality Control</li>
+            <li><i class="fas fa-check text-info me-2"></i> Medical Imaging</li>
+          </ul>
+          <a href="{% url 'service_detail' 'computer-vision' %}" class="btn btn-outline-primary mt-3">Learn More</a>
+        </div>
+      </div>
+
+      <!-- Service 4 -->
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h4 class="fw-bold mb-3">Data Analytics</h4>
+          <p class="text-muted mb-4">Transform raw data into actionable business intelligence with our comprehensive analytics solutions that drive informed decision-making.</p>
+          <ul class="list-unstyled text-start">
+            <li class="mb-2"><i class="fas fa-check text-info me-2"></i> Advanced Visualization</li>
+            <li class="mb-2"><i class="fas fa-check text-info me-2"></i> Business Intelligence</li>
+            <li class="mb-2"><i class="fas fa-check text-info me-2"></i> Real-time Analytics</li>
+            <li><i class="fas fa-check text-info me-2"></i> KPI Tracking</li>
+          </ul>
+          <a href="{% url 'service_detail' 'data-analytics' %}" class="btn btn-outline-primary mt-3">Learn More</a>
+        </div>
+      </div>
+
+      <!-- Service 5 -->
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-robot"></i>
+          </div>
+          <h4 class="fw-bold mb-3">AI Consulting</h4>
+          <p class="text-muted mb-4">Develop comprehensive AI roadmaps aligned with your business objectives. Our experts help identify opportunities and create implementation plans.</p>
+          <ul class="list-unstyled text-start">
+            <li class="mb-2"><i class="fas fa-check text-info me-2"></i> AI Strategy Development</li>
+            <li class="mb-2"><i class="fas fa-check text-info me-2"></i> Feasibility Assessment</li>
+            <li class="mb-2"><i class="fas fa-check text-info me-2"></i> Implementation Planning</li>
+            <li><i class="fas fa-check text-info me-2"></i> ROI Analysis</li>
+          </ul>
+          <a href="{% url 'service_detail' 'ai-consulting' %}" class="btn btn-outline-primary mt-3">Learn More</a>
+        </div>
+      </div>
+
+      <!-- Service 6 -->
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-cogs"></i>
+          </div>
+          <h4 class="fw-bold mb-3">AI Integration</h4>
+          <p class="text-muted mb-4">Seamlessly integrate AI solutions into your existing systems and workflows. We ensure smooth deployment, optimization, and ongoing maintenance.</p>
+          <ul class="list-unstyled text-start">
+            <li class="mb-2"><i class="fas fa-check text-info me-2"></i> System Integration</li>
+            <li class="mb-2"><i class="fas fa-check text-info me-2"></i> Performance Optimization</li>
+            <li class="mb-2"><i class="fas fa-check text-info me-2"></i> Ongoing Maintenance</li>
+            <li><i class="fas fa-check text-info me-2"></i> Technical Support</li>
+          </ul>
+          <a href="{% url 'service_detail' 'ai-integration' %}" class="btn btn-outline-primary mt-3">Learn More</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-5" data-aos="fade-up">
+      <a href="{% url 'services' %}" class="btn btn-primary-custom px-4">View All Services</a>
+    </div>
+  </div>
+</section>
+
+<!-- Industries Section -->
+<section class="industry-section py-5">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="badge bg-light bg-opacity-20 text-white px-3 py-2 rounded-pill">INDUSTRIES WE SERVE</span>
+      <h2 class="fw-bold mt-3 text-white">Transforming Industries with AI</h2>
+      <p class="w-75 mx-auto opacity-75">We deliver AI solutions across diverse sectors to drive innovation, efficiency, and competitive advantage.</p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="industry-card">
+          <i class="fas fa-heartbeat fa-2x mb-3"></i>
+          <h5>Healthcare</h5>
+          <p class="opacity-75">Medical diagnosis, drug discovery, patient care optimization, and medical imaging analysis.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="industry-card">
+          <i class="fas fa-shopping-cart fa-2x mb-3"></i>
+          <h5>Retail</h5>
+          <p class="opacity-75">Demand forecasting, personalized recommendations, inventory optimization, and customer analytics.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="industry-card">
+          <i class="fas fa-university fa-2x mb-3"></i>
+          <h5>Finance</h5>
+          <p class="opacity-75">Fraud detection, risk assessment, algorithmic trading, and customer service automation.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+        <div class="industry-card">
+          <i class="fas fa-industry fa-2x mb-3"></i>
+          <h5>Manufacturing</h5>
+          <p class="opacity-75">Predictive maintenance, quality control, supply chain optimization, and production planning.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Process Section -->
+<section class="py-5">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="badge bg-info bg-opacity-10 text-info px-3 py-2 rounded-pill">OUR PROCESS</span>
+      <h2 class="fw-bold mt-3 section-title">How We Deliver AI Solutions</h2>
+      <p class="text-muted w-75 mx-auto">A structured, collaborative approach to ensure successful AI implementation and maximum business value.</p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="process-step">
+          <div class="step-number">1</div>
+          <h5 class="fw-bold mb-3">Discovery & Strategy</h5>
+          <p class="text-muted">We begin by understanding your business challenges, objectives, and data landscape to define clear AI goals and success metrics.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="process-step">
+          <div class="step-number">2</div>
+          <h5 class="fw-bold mb-3">Data Preparation</h5>
+          <p class="text-muted">Our data engineers collect, clean, and prepare your data for AI model training, ensuring quality and addressing gaps.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="process-step">
+          <div class="step-number">3</div>
+          <h5 class="fw-bold mb-3">Model Development</h5>
+          <p class="text-muted">Our AI experts design, train, and optimize models tailored to your requirements using state-of-the-art techniques.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+        <div class="process-step">
+          <div class="step-number">4</div>
+          <h5 class="fw-bold mb-3">Deployment & Support</h5>
+          <p class="text-muted">We deploy the AI solution into your production environment and provide ongoing support to maintain optimal performance.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Technologies Section -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="badge bg-info bg-opacity-10 text-info px-3 py-2 rounded-pill">OUR TECHNOLOGIES</span>
+      <h2 class="fw-bold mt-3 section-title">Technology Stack</h2>
+      <p class="text-muted w-75 mx-auto">We leverage the latest technologies and frameworks to build robust, scalable AI solutions.</p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-6 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="100">
+        <div class="tech-stack-item">
+          <i class="fab fa-python tech-icon"></i>
+          <h6>Python</h6>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="200">
+        <div class="tech-stack-item">
+          <i class="fas fa-brain tech-icon"></i>
+          <h6>TensorFlow</h6>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="300">
+        <div class="tech-stack-item">
+          <i class="fas fa-project-diagram tech-icon"></i>
+          <h6>PyTorch</h6>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="400">
+        <div class="tech-stack-item">
+          <i class="fas fa-chart-line tech-icon"></i>
+          <h6>Scikit-learn</h6>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="500">
+        <div class="tech-stack-item">
+          <i class="fas fa-database tech-icon"></i>
+          <h6>SQL & NoSQL</h6>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="600">
+        <div class="tech-stack-item">
+          <i class="fab fa-aws tech-icon"></i>
+          <h6>AWS/Azure</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="py-5">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="badge bg-info bg-opacity-10 text-info px-3 py-2 rounded-pill">TESTIMONIALS</span>
+      <h2 class="fw-bold mt-3 section-title">What Our Clients Say</h2>
+      <p class="text-muted w-75 mx-auto">Hear from businesses that have transformed with our AI solutions.</p>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="testimonial-card">
+          <p class="mb-4">"AI Tech transformed our business operations with their predictive analytics solution. Our efficiency improved by 40% within just three months of implementation."</p>
+          <div class="d-flex align-items-center">
+            <img src="{% static 'admin_assets/images/client1.jpg' %}" alt="Client" class="client-image">
+            <div>
+              <h6 class="fw-bold mb-0">Sarah Johnson</h6>
+              <small class="text-muted">CEO, TechInnovate Inc.</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="testimonial-card">
+          <p class="mb-4">"The machine learning models developed by AI Tech have given us a significant competitive advantage. Their expertise is unmatched in the industry."</p>
+          <div class="d-flex align-items-center">
+            <img src="{% static 'admin_assets/images/client2.jpg' %}" alt="Client" class="client-image">
+            <div>
+              <h6 class="fw-bold mb-0">Michael Chen</h6>
+              <small class="text-muted">CTO, DataDrive Solutions</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="testimonial-card">
+          <p class="mb-4">"Working with AI Tech was seamless. They understood our needs perfectly and delivered beyond our expectations. The ROI was evident within the first quarter."</p>
+          <div class="d-flex align-items-center">
+            <img src="{% static 'admin_assets/images/client3.jpg' %}" alt="Client" class="client-image">
+            <div>
+              <h6 class="fw-bold mb-0">Emily Rodriguez</h6>
+              <small class="text-muted">Operations Director, RetailPlus</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section id="contact" class="cta-section py-5">
+  <div class="container text-center position-relative">
+    <div data-aos="fade-up">
+      <h2 class="fw-bold mb-3">Ready to Transform Your Business with AI?</h2>
+      <p class="mb-4 lead w-75 mx-auto">Get in touch with our experts for a free consultation and discover how AI can drive your business forward.</p>
+      <a href="#" class="btn btn-light px-4 py-2 me-3" data-bs-toggle="modal" data-bs-target="#consultationModal">Book Free Consultation</a>
+      <a href="{% url 'contact' %}" class="btn btn-outline-light px-4 py-2">Contact Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- Consultation Modal -->
+<div class="modal fade" id="consultationModal" tabindex="-1" aria-labelledby="consultationModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="consultationModalLabel">Book Your Free AI Consultation</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4">
+        <form method="POST" action="{% url 'home' %}">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label class="form-label">Full Name</label>
+            <input type="text" class="form-control" name="name" placeholder="Enter your name" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-control" name="email" placeholder="Enter your email" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Phone Number</label>
+            <input type="text" class="form-control" name="phone" placeholder="Enter your phone">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Company</label>
+            <input type="text" class="form-control" name="company" placeholder="Enter your company name">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Message</label>
+            <textarea class="form-control" name="message" rows="3" placeholder="Describe your AI needs"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary w-100 py-2">
+            Submit Request
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AOS Animation Script -->
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  // Initialize AOS
+  AOS.init({
+    duration: 1000,
+    once: true,
+    offset: 100
+  });
+
+  // Scroll animation for elements
+  document.addEventListener('DOMContentLoaded', function() {
+    const fadeElements = document.querySelectorAll('.fade-in-up');
+    
+    const fadeInOnScroll = function() {
+      fadeElements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const elementVisible = 150;
+        
+        if (elementTop < window.innerHeight - elementVisible) {
+          element.classList.add('visible');
+        }
+      });
+    };
+    
+    // Check on load
+    fadeInOnScroll();
+    
+    // Check on scroll
+    window.addEventListener('scroll', fadeInOnScroll);
+  });
+
+  // Form validation for consultation modal
+  $(document).ready(function() {
+    $("#consultationModal form").validate({
+      rules: {
+        name: { required: true, minlength: 3 },
+        email: { required: true, email: true },
+        phone: { required: true, digits: true, minlength: 10, maxlength: 15 },
+        company: { required: true, minlength: 2 },
+        message: { required: true, minlength: 10 }
+      },
+      messages: {
+        name: { required: "Please enter your name", minlength: "Name must be at least 3 characters" },
+        email: { required: "Please enter your email", email: "Enter a valid email address" },
+        phone: { required: "Please enter your phone number", digits: "Only digits allowed", minlength: "Minimum 10 digits", maxlength: "Max 15 digits" },
+        company: { required: "Please enter your company name", minlength: "Company name must be at least 2 characters" },
+        message: { required: "Please enter your message", minlength: "At least 10 characters required" }
+      },
+      errorClass: "text-danger small",
+      errorPlacement: function(error, element) { 
+        error.insertAfter(element); 
+      },
+      highlight: function(element) { 
+        $(element).addClass("is-invalid"); 
+      },
+      unhighlight: function(element) { 
+        $(element).removeClass("is-invalid"); 
+      }
+    });
+  });
+</script>
+
+{% endblock %}
+
+
+
+############################################aboutus.html############################################
+
+{% extends 'AI_tech/home.html' %}
+{% load static %}
+
+{% block title %}About Us{% endblock %}
+
+{% block content %}
+<section class="about-hero text-center text-white d-flex align-items-center justify-content-center"
+         style="background: linear-gradient(rgba(10,15,50,0.7),rgba(10,15,50,0.8)), url('{% static "admin_assets/images/aboutus01.jpg" %}') center/cover no-repeat; height:45vh;">
+  <div data-aos="fade-up" data-aos-duration="1200">
+    <h1 class="fw-bold display-5">Empowering Businesses with Artificial Intelligence</h1>
+    <p class="lead mt-3 w-75 mx-auto">Driving innovation with AI-powered automation, deep analytics, and intelligent design — shaping the future of digital transformation.</p>
+  </div>
+</section>
+
+<section class="container py-5">
+  <div class="text-center mb-5" data-aos="fade-up" data-aos-duration="1000">
+    <span class="badge bg-info-subtle text-info px-3 py-1 rounded-pill">OUR MISSION</span>
+    <h2 class="fw-bold mt-3 text-dark">Innovating Through Intelligence</h2>
+    <p class="text-secondary w-75 mx-auto">We combine deep learning, automation, and analytics to empower global enterprises with next-generation AI technology and smarter decision-making systems.</p>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
+      <div class="card border-0 shadow-lg h-100 text-center p-4 rounded-4">
+        <div class="bg-light mx-auto mb-3 rounded-circle d-flex align-items-center justify-content-center" style="width:70px; height:70px;">
+          <i class="fas fa-robot text-info fs-3"></i>
+        </div>
+        <h5 class="fw-semibold">AI-Driven Solutions</h5>
+        <p class="text-muted">Custom-built AI algorithms to optimize workflows and automate business processes intelligently.</p>
+      </div>
+    </div>
+
+    <div class="col-md-4" data-aos="zoom-in" data-aos-delay="400">
+      <div class="card border-0 shadow-lg h-100 text-center p-4 rounded-4">
+        <div class="bg-light mx-auto mb-3 rounded-circle d-flex align-items-center justify-content-center" style="width:70px; height:70px;">
+          <i class="fas fa-brain text-info fs-3"></i>
+        </div>
+        <h5 class="fw-semibold">Predictive Intelligence</h5>
+        <p class="text-muted">Empower your business with AI-based predictive analytics and data-driven insights.</p>
+      </div>
+    </div>
+
+    <div class="col-md-4" data-aos="zoom-in" data-aos-delay="600">
+      <div class="card border-0 shadow-lg h-100 text-center p-4 rounded-4">
+        <div class="bg-light mx-auto mb-3 rounded-circle d-flex align-items-center justify-content-center" style="width:70px; height:70px;">
+          <i class="fas fa-users-cog text-info fs-3"></i>
+        </div>
+        <h5 class="fw-semibold">Expert AI Team</h5>
+        <p class="text-muted">A global team of certified AI developers, data scientists, and automation engineers.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container-fluid py-5 bg-light">
+  <div class="row align-items-center">
+    <div class="col-md-6" data-aos="fade-right" data-aos-duration="1000">
+      <img src="{% static 'admin_assets/images/team work.jpg' %}" alt="AI Collaboration"
+           class="img-fluid rounded-4 shadow-lg w-100">
+    </div>
+    <div class="col-md-6" data-aos="fade-left" data-aos-duration="1000">
+      <div class="px-4">
+        <h2 class="fw-bold text-dark mb-3">Building the Future with AI Innovation</h2>
+        <p class="text-muted">We help organizations harness the power of artificial intelligence through custom development, machine learning, and data analytics. Our solutions are scalable, intelligent, and designed to transform complex data into real-world insights.</p>
+        <ul class="list-unstyled mt-3 text-muted">
+          <li><i class="fas fa-check-circle text-info me-2"></i>AI Automation & Chatbots</li>
+          <li><i class="fas fa-check-circle text-info me-2"></i>Predictive Data Analytics</li>
+          <li><i class="fas fa-check-circle text-info me-2"></i>Cloud & Edge AI Solutions</li>
+        </ul>
+        <a href="{% url 'services' %}" class="btn btn-info text-white mt-4 px-4 py-2 rounded-pill">
+          <i class="fas fa-arrow-right me-2"></i>Explore Services
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container py-5">
+  <div class="text-center mb-5" data-aos="fade-up">
+    <span class="badge bg-info-subtle text-info px-3 py-1 rounded-pill">OUR TEAM</span>
+    <h2 class="fw-bold text-dark mt-3">Meet the Innovators</h2>
+    <p class="text-secondary w-75 mx-auto">The experts behind our AI success — innovators who turn complex ideas into intelligent solutions.</p>
+  </div>
+  <div class="row g-4 justify-content-center">
+    {% for member in team_members %}
+    <div class="col-md-3" data-aos="zoom-in" data-aos-delay="{{ forloop.counter|add:200 }}">
+      <div class="card border-0 shadow-lg text-center p-4 rounded-4">
+        <img src="{{ member.image.url }}" alt="{{ member.name }}" class="rounded-circle mx-auto mb-3"
+             style="width:100px; height:100px; object-fit:cover;">
+        <h6 class="fw-bold">{{ member.name }}</h6>
+        <p class="text-muted small mb-3">{{ member.role }}</p>
+        <div class="d-flex justify-content-center gap-2">
+          {% if member.fb %}<a href="{{ member.fb }}" class="text-info"><i class="fab fa-facebook"></i></a>{% endif %}
+          {% if member.li %}<a href="{{ member.li }}" class="text-info"><i class="fab fa-linkedin"></i></a>{% endif %}
+          {% if member.tw %}<a href="{{ member.tw }}" class="text-info"><i class="fab fa-twitter"></i></a>{% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="text-center py-5" 
+         style="background: linear-gradient(90deg, #0d47a1, #1976d2); color:#fff;">
+  <div data-aos="fade-up">
+    <h2 class="fw-bold mb-3">Ready to Embrace the AI Revolution?</h2>
+    <p class="mb-4 lead">Let’s build intelligent, data-driven systems that take your business to the next level.</p>
+    <a href="{% url 'contact' %}" class="btn btn-light px-4 py-2 me-2 rounded-pill">Contact Us</a>
+    <a href="{% url 'services' %}" class="btn btn-outline-light px-4 py-2 rounded-pill">Learn More</a>
+  </div>
+</section>
+
+<!-- Include AOS Animation Library -->
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 1000, once: true });
+</script>
+{% endblock %}
+
+
+
+################################services##################################################
+
+{% extends 'AI_tech/base.html' %}
+{% load static %}
+
+{% block title %}AI Services - Premier AI Solutions{% endblock %}
+
+{% block content %}
+
+<style>
+    /* Services Hero Section */
+    .services-hero {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        padding: 150px 0 100px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    .services-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .services-hero .feature-badge {
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        color: white;
+        padding: 8px 20px;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        display: inline-block;
+        margin-bottom: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    /* Services Grid Section */
+    .services-grid-section {
+        padding: 80px 0;
+        background: #f8f9fa;
+    }
+
+    .service-card-ai {
+        background: white;
+        border-radius: 15px;
+        padding: 40px 30px;
+        text-align: center;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        height: 100%;
+        border: 1px solid #f0f0f0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .service-card-ai::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+    }
+
+    .service-card-ai:hover::before {
+        transform: scaleX(1);
+    }
+
+    .service-card-ai:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .service-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 25px;
+        color: white;
+        font-size: 2rem;
+        box-shadow: 0 8px 20px rgba(0, 188, 212, 0.3);
+        transition: all 0.3s ease;
+    }
+
+    .service-card-ai:hover .service-icon {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    .service-card-ai h4 {
+        color: var(--dark-color);
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+
+    .service-card-ai p {
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    .service-features {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        text-align: left;
+    }
+
+    .service-features li {
+        padding: 8px 0;
+        color: #555;
+        position: relative;
+        padding-left: 25px;
+    }
+
+    .service-features li:before {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        color: var(--accent-color);
+        font-weight: bold;
+    }
+
+    .service-link {
+        color: var(--accent-color);
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .service-link:hover {
+        color: var(--primary-color);
+        gap: 12px;
+    }
+
+    /* CTA Section */
+    .services-cta {
+        background: linear-gradient(135deg, var(--dark-color), var(--primary-color));
+        color: white;
+        padding: 80px 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .services-cta::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M0 0h40v40H0V0zm1 1h38v38H1V1z'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .cta-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .btn-consultation {
+        background: var(--accent-color);
+        color: white;
+        padding: 15px 40px;
+        border-radius: 30px;
+        font-weight: 600;
+        border: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0, 188, 212, 0.3);
+    }
+
+    .btn-consultation:hover {
+        background: #0097a7;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 188, 212, 0.4);
+        color: white;
+    }
+
+    /* Process Section */
+    .process-section-ai {
+        padding: 80px 0;
+        background: white;
+    }
+
+    .process-step-ai {
+        text-align: center;
+        padding: 30px 20px;
+        position: relative;
+    }
+
+    .process-number {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin: 0 auto 20px;
+        box-shadow: 0 5px 15px rgba(0, 188, 212, 0.3);
+    }
+
+    .process-step-ai h5 {
+        color: var(--dark-color);
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+
+    .process-step-ai p {
+        color: #666;
+        line-height: 1.6;
+    }
+
+    /* Modal Styles */
+    .consultation-modal .modal-content {
+        border-radius: 15px;
+        border: none;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .consultation-modal .modal-header {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        border-radius: 15px 15px 0 0;
+        border: none;
+        padding: 25px 30px;
+    }
+
+    .consultation-modal .modal-body {
+        padding: 30px;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        padding: 12px 15px;
+        border: 1px solid #e0e0e0;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 0.2rem rgba(0, 188, 212, 0.25);
+    }
+
+    .error {
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 5px;
+    }
+
+    .is-invalid {
+        border-color: #dc3545 !important;
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="services-hero">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <span class="feature-badge" data-aos="fade-down">AI-Powered Solutions</span>
+                <h1 class="display-4 fw-bold mb-4" data-aos="fade-up">Transform Your Business with Advanced AI</h1>
+                <p class="lead mb-4" data-aos="fade-up" data-aos-delay="100">
+                    Leverage cutting-edge artificial intelligence technologies to automate processes, gain insights, 
+                    and drive innovation across your organization.
+                </p>
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <a href="#services-grid" class="btn btn-primary-custom me-3">Explore Services</a>
+                    <a href="#consultation" class="btn btn-outline-light">Get Free Consultation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Grid Section -->
+<section class="services-grid-section" id="services-grid">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-title" data-aos="fade-up">Our AI Service Portfolio</h2>
+                <p class="lead" data-aos="fade-up" data-aos-delay="100">
+                    Comprehensive AI solutions tailored to drive digital transformation and business growth
+                </p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            {% for s in services %}
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{% widthratio forloop.counter0 1 100 %}">
+                <a href="{% url 'service_detail' s.slug %}" style="text-decoration: none;">
+                    <div class="service-card-ai">
+                        <div class="service-icon">
+                            <i class="fas {{ s.icon }}"></i>
+                        </div>
+                        <h4>{{ s.title }}</h4>
+                        <p>{{ s.description|truncatewords:20 }}</p>
+                        
+                        <ul class="service-features">
+                            <li>Custom AI model development</li>
+                            <li>Real-time data processing</li>
+                            <li>Scalable architecture</li>
+                            <li>Continuous optimization</li>
+                        </ul>
+                        
+                        <div class="mt-4">
+                            <span class="service-link">
+                                Learn More <i class="fas fa-arrow-right"></i>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% empty %}
+            <!-- Fallback services if no services are in database -->
+            <div class="col-lg-4 col-md-6" data-aos="fade-up">
+                <div class="service-card-ai">
+                    <div class="service-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h4>AI Agent Development</h4>
+                    <p>Intelligent autonomous agents that automate complex business processes and decision-making.</p>
+                    <ul class="service-features">
+                        <li>Custom AI agent design</li>
+                        <li>Process automation</li>
+                        <li>Decision support systems</li>
+                        <li>Continuous learning</li>
+                    </ul>
+                    <div class="mt-4">
+                        <span class="service-link">
+                            Learn More <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="service-card-ai">
+                    <div class="service-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h4>Generative AI Solutions</h4>
+                    <p>Create, innovate, and transform content with cutting-edge generative AI models.</p>
+                    <ul class="service-features">
+                        <li>Content generation</li>
+                        <li>Image synthesis</li>
+                        <li>Text-to-speech</li>
+                        <li>Creative automation</li>
+                    </ul>
+                    <div class="mt-4">
+                        <span class="service-link">
+                            Learn More <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="service-card-ai">
+                    <div class="service-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4>Data Science & Analytics</h4>
+                    <p>Transform raw data into actionable insights with advanced analytics and machine learning.</p>
+                    <ul class="service-features">
+                        <li>Predictive modeling</li>
+                        <li>Data visualization</li>
+                        <li>Statistical analysis</li>
+                        <li>Business intelligence</li>
+                    </ul>
+                    <div class="mt-4">
+                        <span class="service-link">
+                            Learn More <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="services-cta" id="consultation">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <div class="cta-content" data-aos="fade-up">
+                    <h2 class="display-5 fw-bold mb-4">Ready to Transform Your Business with AI?</h2>
+                    <p class="lead mb-5">
+                        Schedule a free consultation with our AI experts to discover how our solutions can drive 
+                        innovation, efficiency, and growth for your organization.
+                    </p>
+                    <button class="btn btn-consultation" data-bs-toggle="modal" data-bs-target="#consultationModal">
+                        <i class="fas fa-calendar-check me-2"></i>Book Free Consultation
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Process Section -->
+<section class="process-section-ai">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-title" data-aos="fade-up">Our AI Implementation Process</h2>
+                <p class="lead" data-aos="fade-up" data-aos-delay="100">
+                    A structured approach to ensure successful AI integration and maximum business value
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4" data-aos="fade-up">
+                <div class="process-step-ai">
+                    <div class="process-number">01</div>
+                    <h5>Discovery & Analysis</h5>
+                    <p>We conduct in-depth analysis of your business needs, data infrastructure, and AI opportunities to define clear objectives and success metrics.</p>
+                </div>
+            </div>
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="process-step-ai">
+                    <div class="process-number">02</div>
+                    <h5>Solution Design</h5>
+                    <p>Our experts design tailored AI architectures and models specifically optimized for your use case and technical environment.</p>
+                </div>
+            </div>
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="process-step-ai">
+                    <div class="process-number">03</div>
+                    <h5>Deployment & Support</h5>
+                    <p>We implement the AI solution with seamless integration, provide comprehensive training, and offer ongoing support and optimization.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Consultation Modal -->
+<div class="modal fade consultation-modal" id="consultationModal" tabindex="-1" aria-labelledby="consultationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="consultationModalLabel">
+                    <i class="fas fa-robot me-2"></i>Free AI Consultation
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'services' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label">Full Name *</label>
+                        <input type="text" class="form-control" name="name" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email Address *</label>
+                        <input type="email" class="form-control" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Phone Number</label>
+                        <input type="text" class="form-control" name="phone" placeholder="Enter your phone number">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Company</label>
+                        <input type="text" class="form-control" name="company" placeholder="Enter your company name">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">How can we help you? *</label>
+                        <textarea class="form-control" name="message" rows="4" placeholder="Describe your AI needs and objectives..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary-custom w-100 py-3">
+                        <i class="fas fa-paper-plane me-2"></i>Submit Consultation Request
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Form validation
+        $("#consultationModal form").validate({
+            rules: {
+                name: { 
+                    required: true, 
+                    minlength: 3 
+                },
+                email: { 
+                    required: true, 
+                    email: true 
+                },
+                phone: { 
+                    digits: true, 
+                    minlength: 10, 
+                    maxlength: 15 
+                },
+                message: { 
+                    required: true, 
+                    minlength: 10 
+                }
+            },
+            messages: {
+                name: { 
+                    required: "Please enter your name", 
+                    minlength: "Name must be at least 3 characters" 
+                },
+                email: { 
+                    required: "Please enter your email", 
+                    email: "Please enter a valid email address" 
+                },
+                phone: { 
+                    digits: "Please enter only digits", 
+                    minlength: "Phone number must be at least 10 digits", 
+                    maxlength: "Phone number cannot exceed 15 digits" 
+                },
+                message: { 
+                    required: "Please describe your AI needs", 
+                    minlength: "Please provide more details (at least 10 characters)" 
+                }
+            },
+            errorClass: "error",
+            errorPlacement: function (error, element) { 
+                error.insertAfter(element); 
+            },
+            highlight: function (element) { 
+                $(element).addClass("is-invalid"); 
+            },
+            unhighlight: function (element) { 
+                $(element).removeClass("is-invalid"); 
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        $('a[href^="#"]').on('click', function(e) {
+            e.preventDefault();
+            var target = this.hash;
+            var $target = $(target);
+            
+            $('html, body').animate({
+                'scrollTop': $target.offset().top - 80
+            }, 800, 'swing');
+        });
+    });
+</script>
+
+{% endblock %}

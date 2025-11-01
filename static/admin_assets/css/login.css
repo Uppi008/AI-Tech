@@ -1,0 +1,84 @@
+/* login.css */
+
+html, body {
+  background-color: #f7f9fc;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+.header, .footer {
+  height: 56px;
+  font-size: 1.25rem;
+}
+
+.login-container {
+  flex: 1;
+  min-height: calc(100vh - 112px); /* header + footer height */
+}
+
+.left-section,
+.right-section {
+  flex: 1;
+  min-height: 400px;
+}
+
+.login-box {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+
+.object-fit-cover {
+  object-fit: cover;
+}
+
+.carousel-dots .dot {
+  width: 10px;
+  height: 10px;
+  margin: 0 4px;
+  background-color: #343a40;
+  border: none;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.input-group {
+  position: relative;
+}
+
+#togglePassword {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #6c757d;
+  font-size: 1rem;
+  z-index: 10;
+  cursor: pointer;
+}
+
+#togglePassword:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+@media (max-width: 768px) {
+  .left-section {
+    display: none;
+  }
+
+  .right-section {
+    flex: 1 0 100%;
+    padding: 2rem 1rem;
+  }
+
+  .login-box {
+    padding: 1.5rem;
+  }
+}

@@ -1,0 +1,555 @@
+{% extends 'AI_tech/base.html' %}
+{% load static %}
+
+{% block title %}Our Portfolio - AI Tech Success Stories{% endblock %}
+
+{% block content %}
+
+<style>
+    /* Portfolio Hero Section */
+    .portfolio-hero-section {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        padding: 150px 0 80px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    .portfolio-hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    /* Portfolio Grid */
+    .portfolio-grid-section {
+        padding: 80px 0;
+        background: #f8f9fa;
+    }
+
+    .portfolio-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        height: 100%;
+        border: 1px solid #f0f0f0;
+    }
+
+    .portfolio-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .portfolio-image {
+        position: relative;
+        overflow: hidden;
+        height: 280px;
+    }
+
+    .portfolio-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .portfolio-card:hover .portfolio-image img {
+        transform: scale(1.1);
+    }
+
+    .portfolio-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(26, 35, 126, 0.9), rgba(0, 188, 212, 0.9));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: all 0.3s ease;
+        padding: 30px;
+    }
+
+    .portfolio-card:hover .portfolio-overlay {
+        opacity: 1;
+    }
+
+    .portfolio-content {
+        text-align: center;
+        color: white;
+        transform: translateY(20px);
+        transition: transform 0.3s ease;
+    }
+
+    .portfolio-card:hover .portfolio-content {
+        transform: translateY(0);
+    }
+
+    .portfolio-tech {
+        margin: 15px 0;
+    }
+
+    .tech-badge {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 6px 12px;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        margin: 3px;
+        font-weight: 500;
+    }
+
+    .portfolio-info {
+        padding: 30px;
+    }
+
+    .category-badge {
+        display: inline-block;
+        padding: 6px 15px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+    }
+
+    /* Portfolio Filters */
+    .portfolio-filters {
+        margin-bottom: 40px;
+    }
+
+    .filter-btn {
+        background: white;
+        border: 2px solid var(--accent-color);
+        color: var(--accent-color);
+        padding: 12px 25px;
+        border-radius: 25px;
+        font-weight: 600;
+        margin: 5px;
+        transition: all 0.3s ease;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+        background: var(--accent-color);
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    /* Results Section */
+    .results-section {
+        padding: 80px 0;
+        background: white;
+    }
+
+    .result-card {
+        text-align: center;
+        padding: 30px;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border-radius: 15px;
+        transition: all 0.3s ease;
+    }
+
+    .result-card:hover {
+        transform: translateY(-5px);
+        background: linear-gradient(135deg, var(--light-color), #e3f2fd);
+    }
+
+    .result-number {
+        font-size: 3.5rem;
+        font-weight: 700;
+        color: var(--accent-color);
+        margin-bottom: 10px;
+    }
+
+    /* CTA Section */
+    .portfolio-cta {
+        background: linear-gradient(135deg, var(--dark-color), var(--primary-color));
+        color: white;
+        padding: 80px 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .portfolio-cta::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M0 0h40v40H0V0zm1 1h38v38H1V1z'/%3E%3C/g%3E%3C/svg%3E");
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="portfolio-hero-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div data-aos="fade-up">
+                    <span class="feature-badge" style="background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); color: white; padding: 8px 20px; border-radius: 25px; font-size: 0.9rem; font-weight: 600; display: inline-block; margin-bottom: 20px; border: 1px solid rgba(255, 255, 255, 0.3);">OUR SUCCESS STORIES</span>
+                    <h1 class="display-4 fw-bold mb-4">AI Innovation in Action</h1>
+                    <p class="lead mb-4">
+                        Explore our portfolio of transformative AI solutions that have helped businesses 
+                        across industries achieve remarkable results through artificial intelligence.
+                    </p>
+                    <div data-aos="fade-up" data-aos-delay="200">
+                        <a href="#portfolio-grid" class="btn btn-primary-custom me-3">View Projects</a>
+                        <a href="#results" class="btn btn-outline-light">See Results</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Portfolio Grid Section -->
+<section class="portfolio-grid-section" id="portfolio-grid">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-title" data-aos="fade-up">Featured AI Projects</h2>
+                <p class="lead" data-aos="fade-up" data-aos-delay="100">
+                    Discover how we've transformed businesses with cutting-edge AI solutions
+                </p>
+            </div>
+        </div>
+
+        <!-- Portfolio Filters -->
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <div class="portfolio-filters" data-aos="fade-up">
+                    <button class="filter-btn active" data-filter="all">All Projects</button>
+                    {% for category in categories %}
+                    <button class="filter-btn" data-filter="{{ category.slug }}">
+                        {% if category.icon %}
+                        <i class="{{ category.icon }} me-2"></i>
+                        {% endif %}
+                        {{ category.name }}
+                    </button>
+                    {% empty %}
+                    <!-- Fallback categories if no categories in database -->
+                    <button class="filter-btn" data-filter="machine-learning">
+                        <i class="fas fa-brain me-2"></i>Machine Learning
+                    </button>
+                    <button class="filter-btn" data-filter="natural-language-processing">
+                        <i class="fas fa-comments me-2"></i>Natural Language Processing
+                    </button>
+                    <button class="filter-btn" data-filter="computer-vision">
+                        <i class="fas fa-eye me-2"></i>Computer Vision
+                    </button>
+                    <button class="filter-btn" data-filter="data-analytics">
+                        <i class="fas fa-chart-line me-2"></i>Data Analytics
+                    </button>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Portfolio Grid -->
+        <div class="row g-4 portfolio-container">
+            {% for project in portfolio_projects %}
+            <div class="col-lg-4 col-md-6 portfolio-item" data-category="{{ project.category.slug }}" data-aos="fade-up" data-aos-delay="{% widthratio forloop.counter0 1 100 %}">
+                <div class="portfolio-card">
+                    <div class="portfolio-image">
+                        {% if project.image %}
+                        <img src="{{ project.image.url }}" alt="{{ project.title }}" class="img-fluid">
+                        {% else %}
+                        <img src="{% static 'admin_assets/images/ai01.jpg' %}" alt="{{ project.title }}" class="img-fluid">
+                        {% endif %}
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-content">
+                                <h4 class="mb-3">{{ project.title }}</h4>
+                                <p class="mb-4">{{ project.short_description|default:project.description|truncatewords:20 }}</p>
+                                <div class="portfolio-tech">
+                                    {% for tech in project.get_technologies_list|slice:":4" %}
+                                    <span class="tech-badge">{{ tech }}</span>
+                                    {% endfor %}
+                                </div>
+                                <div class="mt-4">
+                                    <a href="{% url 'portfolio_detail' project.id %}" class="btn btn-primary-custom btn-sm">
+                                        <i class="fas fa-eye me-2"></i>View Case Study
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-info">
+                        <span class="category-badge" style="background: {{ project.category.color }}; color: white;">
+                            {% if project.category.icon %}
+                            <i class="{{ project.category.icon }} me-1"></i>
+                            {% endif %}
+                            {{ project.category.name }}
+                        </span>
+                        <h5 class="mb-2">{{ project.title }}</h5>
+                        <p class="text-muted mb-3">{{ project.short_description|default:project.description|truncatewords:15 }}</p>
+                        {% if project.client %}
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-building text-muted me-2"></i>
+                            <small class="text-muted">{{ project.client }}</small>
+                        </div>
+                        {% endif %}
+                        {% if project.project_date %}
+                        <div class="d-flex align-items-center mt-2">
+                            <i class="fas fa-calendar text-muted me-2"></i>
+                            <small class="text-muted">{{ project.project_date|date:"M Y" }}</small>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Fallback Portfolio Projects (shown only when no projects in database) -->
+            <div class="col-lg-4 col-md-6 portfolio-item" data-category="machine-learning" data-aos="fade-up">
+                <div class="portfolio-card">
+                    <div class="portfolio-image">
+                        <img src="{% static 'admin_assets/images/ai01.jpg' %}" alt="Predictive Maintenance System" class="img-fluid">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-content">
+                                <h4 class="mb-3">Predictive Maintenance System</h4>
+                                <p class="mb-4">AI-powered system that predicts equipment failures before they occur, reducing downtime by 65%.</p>
+                                <div class="portfolio-tech">
+                                    <span class="tech-badge">Python</span>
+                                    <span class="tech-badge">TensorFlow</span>
+                                    <span class="tech-badge">IoT</span>
+                                    <span class="tech-badge">MLOps</span>
+                                </div>
+                                <div class="mt-4">
+                                    <a href="#" class="btn btn-primary-custom btn-sm">
+                                        <i class="fas fa-eye me-2"></i>View Case Study
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-info">
+                        <span class="category-badge" style="background: #1976d2; color: white;">
+                            <i class="fas fa-brain me-1"></i>Machine Learning
+                        </span>
+                        <h5 class="mb-2">Predictive Maintenance System</h5>
+                        <p class="text-muted mb-3">Reduced equipment downtime by 65% with AI-powered predictive maintenance.</p>
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-building text-muted me-2"></i>
+                            <small class="text-muted">Manufacturing Corp</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 portfolio-item" data-category="natural-language-processing" data-aos="fade-up" data-aos-delay="100">
+                <div class="portfolio-card">
+                    <div class="portfolio-image">
+                        <img src="{% static 'admin_assets/images/ai01.jpg' %}" alt="Intelligent Customer Support" class="img-fluid">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-content">
+                                <h4 class="mb-3">Intelligent Customer Support</h4>
+                                <p class="mb-4">AI chatbot handling 80% of customer queries automatically with 95% satisfaction rate.</p>
+                                <div class="portfolio-tech">
+                                    <span class="tech-badge">Python</span>
+                                    <span class="tech-badge">BERT</span>
+                                    <span class="tech-badge">Dialogflow</span>
+                                    <span class="tech-badge">NLP</span>
+                                </div>
+                                <div class="mt-4">
+                                    <a href="#" class="btn btn-primary-custom btn-sm">
+                                        <i class="fas fa-eye me-2"></i>View Case Study
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-info">
+                        <span class="category-badge" style="background: #7b1fa2; color: white;">
+                            <i class="fas fa-comments me-1"></i>Natural Language Processing
+                        </span>
+                        <h5 class="mb-2">Intelligent Customer Support</h5>
+                        <p class="text-muted mb-3">AI chatbot handling 80% of customer queries with 95% satisfaction.</p>
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-building text-muted me-2"></i>
+                            <small class="text-muted">E-commerce Platform</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 portfolio-item" data-category="computer-vision" data-aos="fade-up" data-aos-delay="200">
+                <div class="portfolio-card">
+                    <div class="portfolio-image">
+                        <img src="{% static 'admin_assets/images/ai01.jpg' %}" alt="Quality Control Automation" class="img-fluid">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-content">
+                                <h4 class="mb-3">Quality Control Automation</h4>
+                                <p class="mb-4">Computer vision system for real-time defect detection with 99.5% accuracy.</p>
+                                <div class="portfolio-tech">
+                                    <span class="tech-badge">Python</span>
+                                    <span class="tech-badge">OpenCV</span>
+                                    <span class="tech-badge">YOLO</span>
+                                    <span class="tech-badge">PyTorch</span>
+                                </div>
+                                <div class="mt-4">
+                                    <a href="#" class="btn btn-primary-custom btn-sm">
+                                        <i class="fas fa-eye me-2"></i>View Case Study
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-info">
+                        <span class="category-badge" style="background: #388e3c; color: white;">
+                            <i class="fas fa-eye me-1"></i>Computer Vision
+                        </span>
+                        <h5 class="mb-2">Quality Control Automation</h5>
+                        <p class="text-muted mb-3">Real-time defect detection with 99.5% accuracy using computer vision.</p>
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-building text-muted me-2"></i>
+                            <small class="text-muted">Automotive Manufacturer</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Results Section -->
+<section class="results-section" id="results">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-title" data-aos="fade-up">Measurable Impact</h2>
+                <p class="lead" data-aos="fade-up" data-aos-delay="100">
+                    The results speak for themselves - see how our AI solutions drive real business value
+                </p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            {% for stat in result_stats %}
+            <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="{% widthratio forloop.counter0 1 100 %}">
+                <div class="result-card">
+                    <div class="result-number">{{ stat.value }}</div>
+                    <p class="fw-semibold">{{ stat.title }}</p>
+                    {% if stat.description %}
+                    <small class="text-muted">{{ stat.description }}</small>
+                    {% endif %}
+                </div>
+            </div>
+            {% empty %}
+            <!-- Fallback statistics -->
+            <div class="col-md-3 col-6" data-aos="fade-up">
+                <div class="result-card">
+                    <div class="result-number">45%</div>
+                    <p class="fw-semibold">Average Increase in Operational Efficiency</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="result-card">
+                    <div class="result-number">$3.2M</div>
+                    <p class="fw-semibold">Average Annual Cost Savings</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="result-card">
+                    <div class="result-number">68%</div>
+                    <p class="fw-semibold">Faster Decision-Making</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="result-card">
+                    <div class="result-number">94%</div>
+                    <p class="fw-semibold">Client Satisfaction Rate</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="portfolio-cta">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <div data-aos="fade-up">
+                    <h2 class="display-5 fw-bold mb-4">Ready to Start Your AI Journey?</h2>
+                    <p class="lead mb-5">
+                        Let's discuss how we can transform your business with artificial intelligence. 
+                        Our team is ready to help you achieve similar success stories.
+                    </p>
+                    <div class="d-flex flex-wrap justify-content-center gap-3">
+                        <a href="{% url 'contact' %}" class="btn btn-primary-custom btn-lg">
+                            <i class="fas fa-calendar-check me-2"></i>Start Your Project
+                        </a>
+                        <a href="{% url 'services' %}" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-arrow-right me-2"></i>Explore Services
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+// Portfolio Filtering
+document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            this.classList.add('active');
+
+            const filterValue = this.getAttribute('data-filter');
+
+            portfolioItems.forEach(item => {
+                if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                    item.style.display = 'block';
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.transform = 'scale(1)';
+                    }, 50);
+                } else {
+                    item.style.opacity = '0';
+                    item.style.transform = 'scale(0.8)';
+                    setTimeout(() => {
+                        item.style.display = 'none';
+                    }, 300);
+                }
+            });
+        });
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+});
+</script>
+
+{% endblock %}

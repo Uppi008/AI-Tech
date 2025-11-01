@@ -1,0 +1,390 @@
+{% extends 'AI_tech/base.html' %}
+{% load static %}
+
+{% block title %}{{ project.title }} - AI Tech Portfolio{% endblock %}
+
+{% block content %}
+
+<style>
+    /* Project Hero Section */
+    .project-hero-section {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        padding: 150px 0 80px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .project-hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    /* Project Content */
+    .project-content-section {
+        padding: 80px 0;
+    }
+
+    .project-sidebar {
+        position: sticky;
+        top: 100px;
+    }
+
+    .project-info-card {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        margin-bottom: 30px;
+    }
+
+    .info-item {
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .info-item:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+
+    .info-label {
+        font-weight: 600;
+        color: var(--dark-color);
+        margin-bottom: 5px;
+    }
+
+    .tech-badge {
+        display: inline-block;
+        background: var(--light-color);
+        color: var(--dark-color);
+        padding: 6px 12px;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        margin: 3px;
+        font-weight: 500;
+    }
+
+    .category-badge {
+        display: inline-block;
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .category-badge.ml { background: #e3f2fd; color: #1976d2; }
+    .category-badge.nlp { background: #f3e5f5; color: #7b1fa2; }
+    .category-badge.cv { background: #e8f5e8; color: #388e3c; }
+    .category-badge.analytics { background: #fff3e0; color: #f57c00; }
+    .category-badge.automation { background: #fce4ec; color: #c2185b; }
+
+    /* Challenge/Solution/Results Sections */
+    .project-section {
+        margin-bottom: 60px;
+    }
+
+    .section-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        font-size: 1.5rem;
+    }
+
+    .challenge-icon { background: #ffebee; color: #d32f2f; }
+    .solution-icon { background: #e8f5e8; color: #388e3c; }
+    .results-icon { background: #e3f2fd; color: #1976d2; }
+
+    /* Gallery Section */
+    .gallery-section {
+        padding: 60px 0;
+        background: #f8f9fa;
+    }
+
+    .gallery-item {
+        margin-bottom: 30px;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .gallery-item img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .gallery-item:hover img {
+        transform: scale(1.05);
+    }
+
+    .gallery-caption {
+        padding: 15px;
+        background: white;
+    }
+
+    /* Navigation */
+    .project-navigation {
+        padding: 60px 0;
+        background: white;
+        border-top: 1px solid #f0f0f0;
+    }
+
+    .nav-card {
+        display: block;
+        padding: 30px;
+        background: #f8f9fa;
+        border-radius: 15px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .nav-card:hover {
+        background: var(--light-color);
+        transform: translateY(-5px);
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .nav-label {
+        font-size: 0.9rem;
+        color: var(--accent-color);
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+</style>
+
+<!-- Project Hero Section -->
+<section class="project-hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <div data-aos="fade-right">
+                    <span class="category-badge {{ project.category.slug }}">{{ project.category.name }}</span>
+                    <h1 class="display-4 fw-bold mb-4 mt-3">{{ project.title }}</h1>
+                    <p class="lead mb-4">{{ project.short_description|default:project.description }}</p>
+                    <div class="d-flex flex-wrap align-items-center gap-3">
+                        {% if project.client %}
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-building me-2"></i>
+                            <span>{{ project.client }}</span>
+                        </div>
+                        {% endif %}
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-calendar me-2"></i>
+                            <span>{{ project.project_date|date:"F Y" }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Project Content Section -->
+<section class="project-content-section">
+    <div class="container">
+        <div class="row">
+            <!-- Main Content -->
+            <div class="col-lg-8">
+                <!-- Project Image -->
+                <div class="mb-5" data-aos="fade-up">
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}" class="img-fluid rounded-3 shadow">
+                </div>
+
+                <!-- Project Description -->
+                <div class="mb-5" data-aos="fade-up">
+                    <h3 class="mb-4">Project Overview</h3>
+                    <div class="project-description">
+                        {{ project.description|linebreaks }}
+                    </div>
+                </div>
+
+                <!-- Challenge Section -->
+                {% if project.challenge %}
+                <div class="project-section" data-aos="fade-up">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="section-icon challenge-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h3 class="mb-0 ms-3">The Challenge</h3>
+                    </div>
+                    <div class="challenge-content">
+                        {{ project.challenge|linebreaks }}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Solution Section -->
+                {% if project.solution %}
+                <div class="project-section" data-aos="fade-up">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="section-icon solution-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3 class="mb-0 ms-3">Our AI Solution</h3>
+                    </div>
+                    <div class="solution-content">
+                        {{ project.solution|linebreaks }}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Results Section -->
+                {% if project.results %}
+                <div class="project-section" data-aos="fade-up">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="section-icon results-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="mb-0 ms-3">Results & Impact</h3>
+                    </div>
+                    <div class="results-content">
+                        {{ project.results|linebreaks }}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <div class="project-sidebar">
+                    <!-- Project Info Card -->
+                    <div class="project-info-card" data-aos="fade-left">
+                        <h4 class="mb-4">Project Details</h4>
+                        
+                        <!-- Category -->
+                        <div class="info-item">
+                            <div class="info-label">Category</div>
+                            <span class="category-badge {{ project.category.slug }}">{{ project.category.name }}</span>
+                        </div>
+                        
+                        <!-- Client -->
+                        {% if project.client %}
+                        <div class="info-item">
+                            <div class="info-label">Client</div>
+                            <div>{{ project.client }}</div>
+                        </div>
+                        {% endif %}
+                        
+                        <!-- Date -->
+                        <div class="info-item">
+                            <div class="info-label">Project Date</div>
+                            <div>{{ project.project_date|date:"F j, Y" }}</div>
+                        </div>
+                        
+                        <!-- Technologies -->
+                        <div class="info-item">
+                            <div class="info-label">Technologies Used</div>
+                            <div class="tech-tags">
+                                {% for tech in project.get_technologies_list %}
+                                <span class="tech-badge">{{ tech }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        
+                        <!-- Project URL -->
+                        {% if project.project_url %}
+                        <div class="info-item">
+                            <div class="info-label">Live Project</div>
+                            <a href="{{ project.project_url }}" target="_blank" class="btn btn-primary-custom btn-sm">
+                                <i class="fas fa-external-link-alt me-2"></i>View Project
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- CTA Card -->
+                    <div class="project-info-card" data-aos="fade-left" data-aos-delay="100">
+                        <h4 class="mb-3">Ready to Start Your Project?</h4>
+                        <p class="mb-4">Let's discuss how we can implement similar AI solutions for your business.</p>
+                        <a href="{% url 'contact' %}" class="btn btn-primary-custom w-100">
+                            <i class="fas fa-calendar-check me-2"></i>Get Started
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Gallery Section -->
+{% if project.additional_images.exists %}
+<section class="gallery-section">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h2 class="section-title" data-aos="fade-up">Project Gallery</h2>
+                <p class="lead" data-aos="fade-up" data-aos-delay="100">
+                    Additional visuals from the project implementation
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            {% for image in project.additional_images.all %}
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{% widthratio forloop.counter0 1 100 %}">
+                <div class="gallery-item">
+                    <img src="{{ image.image.url }}" alt="{{ image.caption|default:project.title }}">
+                    {% if image.caption %}
+                    <div class="gallery-caption">
+                        <p class="mb-0">{{ image.caption }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Project Navigation -->
+<section class="project-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                {% with prev_project=project.get_previous_by_project_date %}
+                {% if prev_project and prev_project.is_active %}
+                <a href="{% url 'portfolio_detail' prev_project.id %}" class="nav-card text-start">
+                    <div class="nav-label">Previous Project</div>
+                    <h5 class="mb-0">{{ prev_project.title }}</h5>
+                </a>
+                {% endif %}
+                {% endwith %}
+            </div>
+            <div class="col-6">
+                {% with next_project=project.get_next_by_project_date %}
+                {% if next_project and next_project.is_active %}
+                <a href="{% url 'portfolio_detail' next_project.id %}" class="nav-card text-end">
+                    <div class="nav-label">Next Project</div>
+                    <h5 class="mb-0">{{ next_project.title }}</h5>
+                </a>
+                {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <a href="{% url 'portfolio' %}" class="btn btn-outline-primary">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Portfolio
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

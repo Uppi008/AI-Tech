@@ -1,0 +1,657 @@
+{% extends 'AI_tech/base.html' %}
+{% load static %}
+
+{% block title %}AI Services - Premier AI Solutions{% endblock %}
+
+{% block content %}
+
+<style>
+    /* Services Hero Section */
+    .services-hero {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        padding: 150px 0 100px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    .services-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .services-hero .feature-badge {
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        color: white;
+        padding: 8px 20px;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        display: inline-block;
+        margin-bottom: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    /* Services Grid Section */
+    .services-grid-section {
+        padding: 80px 0;
+        background: #f8f9fa;
+    }
+
+    .service-card-ai {
+        background: white;
+        border-radius: 15px;
+        padding: 40px 30px;
+        text-align: center;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        height: 100%;
+        border: 1px solid #f0f0f0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .service-card-ai::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+    }
+
+    .service-card-ai:hover::before {
+        transform: scaleX(1);
+    }
+
+    .service-card-ai:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .service-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 25px;
+        color: white;
+        font-size: 2rem;
+        box-shadow: 0 8px 20px rgba(0, 188, 212, 0.3);
+        transition: all 0.3s ease;
+    }
+
+    .service-card-ai:hover .service-icon {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    .service-card-ai h4 {
+        color: var(--dark-color);
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+
+    .service-card-ai p {
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    .service-features {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        text-align: left;
+    }
+
+    .service-features li {
+        padding: 8px 0;
+        color: #555;
+        position: relative;
+        padding-left: 25px;
+    }
+
+    .service-features li:before {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        color: var(--accent-color);
+        font-weight: bold;
+    }
+
+    .service-link {
+        color: var(--accent-color);
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .service-link:hover {
+        color: var(--primary-color);
+        gap: 12px;
+    }
+
+    /* CTA Section */
+    .services-cta {
+        background: linear-gradient(135deg, var(--dark-color), var(--primary-color));
+        color: white;
+        padding: 80px 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .services-cta::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M0 0h40v40H0V0zm1 1h38v38H1V1z'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .cta-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .btn-consultation {
+        background: var(--accent-color);
+        color: white;
+        padding: 15px 40px;
+        border-radius: 30px;
+        font-weight: 600;
+        border: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0, 188, 212, 0.3);
+    }
+
+    .btn-consultation:hover {
+        background: #0097a7;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 188, 212, 0.4);
+        color: white;
+    }
+
+    /* Process Section */
+    .process-section-ai {
+        padding: 80px 0;
+        background: white;
+    }
+
+    .process-step-ai {
+        text-align: center;
+        padding: 30px 20px;
+        position: relative;
+    }
+
+    .process-number {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin: 0 auto 20px;
+        box-shadow: 0 5px 15px rgba(0, 188, 212, 0.3);
+    }
+
+    .process-step-ai h5 {
+        color: var(--dark-color);
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+
+    .process-step-ai p {
+        color: #666;
+        line-height: 1.6;
+    }
+
+    /* Modal Styles */
+    .consultation-modal .modal-content {
+        border-radius: 15px;
+        border: none;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .consultation-modal .modal-header {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        border-radius: 15px 15px 0 0;
+        border: none;
+        padding: 25px 30px;
+    }
+
+    .consultation-modal .modal-body {
+        padding: 30px;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        padding: 12px 15px;
+        border: 1px solid #e0e0e0;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 0.2rem rgba(0, 188, 212, 0.25);
+    }
+
+    .error {
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 5px;
+    }
+
+    .is-invalid {
+        border-color: #dc3545 !important;
+    }
+
+    .alert-container {
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        z-index: 9999;
+        min-width: 350px;
+    }
+
+    .alert {
+        border-radius: 10px;
+        border: none;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        padding: 15px 20px;
+        margin-bottom: 15px;
+        animation: slideInRight 0.5s ease-out;
+    }
+
+    .alert-success {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+        border-left: 4px solid #1e7e34;
+    }
+
+    .alert-error {
+        background: linear-gradient(135deg, #dc3545, #e83e8c);
+        color: white;
+        border-left: 4px solid #c82333;
+    }
+
+    .alert-warning {
+        background: linear-gradient(135deg, #ffc107, #fd7e14);
+        color: white;
+        border-left: 4px solid #e0a800;
+    }
+
+    .alert-info {
+        background: linear-gradient(135deg, #17a2b8, #6f42c1);
+        color: white;
+        border-left: 4px solid #138496;
+    }
+
+    @keyframes slideInRight {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    .alert-dismissible .btn-close {
+        filter: invert(1);
+        opacity: 0.8;
+    }
+
+    .alert-dismissible .btn-close:hover {
+        opacity: 1;
+    }
+</style>
+
+<!-- Messages Container -->
+<div class="alert-container">
+    {% for message in messages %}
+    <div class="alert alert-dismissible {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %} fade show"
+        role="alert">
+        <div class="d-flex align-items-center">
+            <i class="fas 
+                    {% if message.tags == 'success' %}fa-check-circle
+                    {% elif message.tags == 'error' %}fa-exclamation-circle
+                    {% elif message.tags == 'warning' %}fa-exclamation-triangle
+                    {% else %}fa-info-circle{% endif %}
+                    me-2"></i>
+            <div class="flex-grow-1">
+                {{ message }}
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+<!-- Hero Section -->
+<section class="services-hero">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <span class="feature-badge" data-aos="fade-down">AI-Powered Solutions</span>
+                <h1 class="display-4 fw-bold mb-4" data-aos="fade-up">Transform Your Business with Advanced AI</h1>
+                <p class="lead mb-4" data-aos="fade-up" data-aos-delay="100">
+                    Leverage cutting-edge artificial intelligence technologies to automate processes, gain insights,
+                    and drive innovation across your organization.
+                </p>
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <a href="#services-grid" class="btn btn-primary-custom me-3">Explore Services</a>
+                    <a href="#consultation" class="btn btn-outline-light">Get Free Consultation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Grid Section -->
+<section class="services-grid-section" id="services-grid">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-title" data-aos="fade-up">Our AI Service Portfolio</h2>
+                <p class="lead" data-aos="fade-up" data-aos-delay="100">
+                    Comprehensive AI solutions tailored to drive digital transformation and business growth
+                </p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            {% for s in services %}
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{% widthratio forloop.counter0 1 100 %}">
+                <a href="{% url 'service_detail' s.slug %}" style="text-decoration: none;">
+                    <div class="service-card-ai">
+                        <div class="service-icon">
+                            <i class="fas {{ s.icon }}"></i>
+                        </div>
+                        <h4>{{ s.title }}</h4>
+                        <p>{{ s.description|truncatewords:20 }}</p>
+
+                        <ul class="service-features">
+                            <li>Custom AI model development</li>
+                            <li>Real-time data processing</li>
+                            <li>Scalable architecture</li>
+                            <li>Continuous optimization</li>
+                        </ul>
+
+                        <div class="mt-4">
+                            <span class="service-link">
+                                Learn More <i class="fas fa-arrow-right"></i>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% empty %}
+            <!-- Fallback services if no services are in database -->
+            <div class="col-lg-4 col-md-6" data-aos="fade-up">
+                <div class="service-card-ai">
+                    <div class="service-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h4>AI Agent Development</h4>
+                    <p>Intelligent autonomous agents that automate complex business processes and decision-making.</p>
+                    <ul class="service-features">
+                        <li>Custom AI agent design</li>
+                        <li>Process automation</li>
+                        <li>Decision support systems</li>
+                        <li>Continuous learning</li>
+                    </ul>
+                    <div class="mt-4">
+                        <span class="service-link">
+                            Learn More <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="service-card-ai">
+                    <div class="service-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h4>Generative AI Solutions</h4>
+                    <p>Create, innovate, and transform content with cutting-edge generative AI models.</p>
+                    <ul class="service-features">
+                        <li>Content generation</li>
+                        <li>Image synthesis</li>
+                        <li>Text-to-speech</li>
+                        <li>Creative automation</li>
+                    </ul>
+                    <div class="mt-4">
+                        <span class="service-link">
+                            Learn More <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="service-card-ai">
+                    <div class="service-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4>Data Science & Analytics</h4>
+                    <p>Transform raw data into actionable insights with advanced analytics and machine learning.</p>
+                    <ul class="service-features">
+                        <li>Predictive modeling</li>
+                        <li>Data visualization</li>
+                        <li>Statistical analysis</li>
+                        <li>Business intelligence</li>
+                    </ul>
+                    <div class="mt-4">
+                        <span class="service-link">
+                            Learn More <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="services-cta" id="consultation">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <div class="cta-content" data-aos="fade-up">
+                    <h2 class="display-5 fw-bold mb-4">Ready to Transform Your Business with AI?</h2>
+                    <p class="lead mb-5">
+                        Schedule a free consultation with our AI experts to discover how our solutions can drive
+                        innovation, efficiency, and growth for your organization.
+                    </p>
+                    <button class="btn btn-consultation" data-bs-toggle="modal" data-bs-target="#consultationModal">
+                        <i class="fas fa-calendar-check me-2"></i>Book Free Consultation
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Process Section -->
+<section class="process-section-ai">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-title" data-aos="fade-up">Our AI Implementation Process</h2>
+                <p class="lead" data-aos="fade-up" data-aos-delay="100">
+                    A structured approach to ensure successful AI integration and maximum business value
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4" data-aos="fade-up">
+                <div class="process-step-ai">
+                    <div class="process-number">01</div>
+                    <h5>Discovery & Analysis</h5>
+                    <p>We conduct in-depth analysis of your business needs, data infrastructure, and AI opportunities to
+                        define clear objectives and success metrics.</p>
+                </div>
+            </div>
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="process-step-ai">
+                    <div class="process-number">02</div>
+                    <h5>Solution Design</h5>
+                    <p>Our experts design tailored AI architectures and models specifically optimized for your use case
+                        and technical environment.</p>
+                </div>
+            </div>
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="process-step-ai">
+                    <div class="process-number">03</div>
+                    <h5>Deployment & Support</h5>
+                    <p>We implement the AI solution with seamless integration, provide comprehensive training, and offer
+                        ongoing support and optimization.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Consultation Modal -->
+<div class="modal fade consultation-modal" id="consultationModal" tabindex="-1" aria-labelledby="consultationModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="consultationModalLabel">
+                    <i class="fas fa-robot me-2"></i>Free AI Consultation
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'services' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label">Full Name *</label>
+                        <input type="text" class="form-control" name="name" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email Address *</label>
+                        <input type="email" class="form-control" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Phone Number</label>
+                        <input type="text" class="form-control" name="phone" placeholder="Enter your phone number">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Company</label>
+                        <input type="text" class="form-control" name="company" placeholder="Enter your company name">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">How can we help you? *</label>
+                        <textarea class="form-control" name="message" rows="4"
+                            placeholder="Describe your AI needs and objectives..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary-custom w-100 py-3">
+                        <i class="fas fa-paper-plane me-2"></i>Submit Consultation Request
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Form validation
+        $("#consultationModal form").validate({
+            rules: {
+                name: {
+                    required: true,
+                    minlength: 3
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                phone: {
+                    digits: true,
+                    minlength: 10,
+                    maxlength: 15
+                },
+                message: {
+                    required: true,
+                    minlength: 10
+                }
+            },
+            messages: {
+                name: {
+                    required: "Please enter your name",
+                    minlength: "Name must be at least 3 characters"
+                },
+                email: {
+                    required: "Please enter your email",
+                    email: "Please enter a valid email address"
+                },
+                phone: {
+                    digits: "Please enter only digits",
+                    minlength: "Phone number must be at least 10 digits",
+                    maxlength: "Phone number cannot exceed 15 digits"
+                },
+                message: {
+                    required: "Please describe your AI needs",
+                    minlength: "Please provide more details (at least 10 characters)"
+                }
+            },
+            errorClass: "error",
+            errorPlacement: function (error, element) {
+                error.insertAfter(element);
+            },
+            highlight: function (element) {
+                $(element).addClass("is-invalid");
+            },
+            unhighlight: function (element) {
+                $(element).removeClass("is-invalid");
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        $('a[href^="#"]').on('click', function (e) {
+            e.preventDefault();
+            var target = this.hash;
+            var $target = $(target);
+
+            $('html, body').animate({
+                'scrollTop': $target.offset().top - 80
+            }, 800, 'swing');
+        });
+    });
+</script>
+
+{% endblock %}

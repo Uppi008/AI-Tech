@@ -1,0 +1,613 @@
+{% extends 'AI_tech/base.html' %}
+{% load static %}
+
+{% block title %}About Us - AI Tech Solutions{% endblock %}
+
+{% block content %}
+
+<style>
+    /* About Hero Section */
+    .about-hero-section {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        padding: 150px 0 80px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    .about-hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .about-hero-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    /* Mission Section */
+    .mission-section {
+        padding: 80px 0;
+        background: #f8f9fa;
+    }
+
+    .mission-card {
+        background: white;
+        border-radius: 20px;
+        padding: 50px 40px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        border: 1px solid #f0f0f0;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .mission-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .feature-card-ai {
+        background: white;
+        border-radius: 15px;
+        padding: 40px 30px;
+        text-align: center;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        height: 100%;
+        border: 1px solid #f0f0f0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .feature-card-ai::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+    }
+
+    .feature-card-ai:hover::before {
+        transform: scaleX(1);
+    }
+
+    .feature-card-ai:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .feature-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 25px;
+        color: white;
+        font-size: 2rem;
+        box-shadow: 0 8px 20px rgba(0, 188, 212, 0.3);
+        transition: all 0.3s ease;
+    }
+
+    .feature-card-ai:hover .feature-icon {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    /* Story Section */
+    .story-section {
+        padding: 80px 0;
+        background: white;
+    }
+
+    .story-content {
+        padding-right: 40px;
+    }
+
+    .story-image-container {
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .story-image {
+        width: 100%;
+        height: 500px;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .story-image-container:hover .story-image {
+        transform: scale(1.05);
+    }
+
+    .stats-container {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: 40px;
+        border-radius: 20px;
+        margin-top: 50px;
+    }
+
+    .stat-item {
+        text-align: center;
+        padding: 20px;
+    }
+
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: var(--accent-color);
+    }
+
+    .stat-label {
+        font-size: 1.1rem;
+        opacity: 0.9;
+    }
+
+    /* Team Section */
+    .team-section {
+        padding: 80px 0;
+        background: #f8f9fa;
+    }
+
+    .team-card {
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        text-align: center;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        height: 100%;
+        border: 1px solid #f0f0f0;
+    }
+
+    .team-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .team-image {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin: 0 auto 20px;
+        border: 4px solid var(--accent-color);
+        box-shadow: 0 8px 20px rgba(0, 188, 212, 0.3);
+    }
+
+    .team-social {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .team-social a {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .team-social a:hover {
+        transform: translateY(-3px) scale(1.1);
+        box-shadow: 0 5px 15px rgba(0, 188, 212, 0.4);
+    }
+
+    /* Values Section */
+    .values-section {
+        padding: 80px 0;
+        background: white;
+    }
+
+    .value-item {
+        text-align: center;
+        padding: 30px 20px;
+    }
+
+    .value-icon {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        color: white;
+        font-size: 1.8rem;
+        box-shadow: 0 5px 15px rgba(0, 188, 212, 0.3);
+    }
+
+    /* CTA Section */
+    .about-cta {
+        background: linear-gradient(135deg, var(--dark-color), var(--primary-color));
+        color: white;
+        padding: 80px 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .about-cta::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M0 0h40v40H0V0zm1 1h38v38H1V1z'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .cta-content {
+        position: relative;
+        z-index: 2;
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="about-hero-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="about-hero-content" data-aos="fade-up">
+                    <span class="feature-badge" style="background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); color: white; padding: 8px 20px; border-radius: 25px; font-size: 0.9rem; font-weight: 600; display: inline-block; margin-bottom: 20px; border: 1px solid rgba(255, 255, 255, 0.3);">About AI Tech</span>
+                    <h1 class="display-4 fw-bold mb-4">Pioneering AI Innovation Since 2012</h1>
+                    <p class="lead mb-4">
+                        We transform businesses with cutting-edge artificial intelligence solutions, 
+                        driving digital transformation and unlocking new possibilities through intelligent automation.
+                    </p>
+                    <div data-aos="fade-up" data-aos-delay="200">
+                        <a href="#our-story" class="btn btn-primary-custom me-3">Our Story</a>
+                        <a href="#our-team" class="btn btn-outline-light">Meet Our Team</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mission Section -->
+<section class="mission-section">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <div class="mission-card" data-aos="fade-up">
+                    <span class="feature-badge" style="background: var(--light-color); color: var(--primary-color); padding: 8px 20px; border-radius: 25px; font-size: 0.9rem; font-weight: 600; display: inline-block; margin-bottom: 20px;">OUR MISSION</span>
+                    <h2 class="section-title mb-4">Innovating Through Intelligence</h2>
+                    <p class="lead text-muted mb-4">
+                        At AI Tech, we combine deep learning, automation, and analytics to empower global enterprises 
+                        with next-generation AI technology and smarter decision-making systems.
+                    </p>
+                    <p class="text-muted">
+                        Our mission is to make advanced AI accessible and beneficial for organizations of all sizes, 
+                        transforming complex challenges into intelligent solutions that drive real business value.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6" data-aos="fade-up">
+                <div class="feature-card-ai">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h4>AI-Driven Solutions</h4>
+                    <p class="text-muted">
+                        Custom-built AI algorithms to optimize workflows, automate business processes, 
+                        and deliver intelligent solutions tailored to your specific needs.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-card-ai">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h4>Predictive Intelligence</h4>
+                    <p class="text-muted">
+                        Advanced machine learning models that provide data-driven insights, 
+                        forecast trends, and enable proactive decision-making for your business.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-card-ai">
+                    <div class="feature-icon">
+                        <i class="fas fa-users-cog"></i>
+                    </div>
+                    <h4>Expert AI Team</h4>
+                    <p class="text-muted">
+                        A global team of certified AI developers, data scientists, and automation engineers 
+                        dedicated to delivering exceptional results and continuous innovation.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Story Section -->
+<section class="story-section" id="our-story">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right">
+                <div class="story-content">
+                    <span class="feature-badge" style="background: var(--light-color); color: var(--primary-color); padding: 8px 20px; border-radius: 25px; font-size: 0.9rem; font-weight: 600; display: inline-block; margin-bottom: 20px;">OUR JOURNEY</span>
+                    <h2 class="section-title mb-4">Building the Future with AI Innovation</h2>
+                    <p class="text-muted mb-4">
+                        Founded in 2012, AI Tech began with a vision to democratize artificial intelligence 
+                        and make it accessible to businesses worldwide. What started as a small team of AI enthusiasts 
+                        has grown into a global leader in intelligent solutions.
+                    </p>
+                    <p class="text-muted mb-4">
+                        We help organizations harness the power of artificial intelligence through custom development, 
+                        machine learning, and data analytics. Our solutions are scalable, intelligent, and designed 
+                        to transform complex data into real-world insights that drive business growth.
+                    </p>
+                    <ul class="list-unstyled text-muted mb-4">
+                        <li class="mb-2"><i class="fas fa-check-circle text-info me-2"></i>AI Automation & Intelligent Chatbots</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-info me-2"></i>Predictive Data Analytics & Business Intelligence</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-info me-2"></i>Cloud & Edge AI Solutions</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-info me-2"></i>Computer Vision & Natural Language Processing</li>
+                    </ul>
+                    <a href="{% url 'services' %}" class="btn btn-primary-custom">
+                        <i class="fas fa-arrow-right me-2"></i>Explore Our Services
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="story-image-container">
+                    <img src="{% static 'admin_assets/images/team work.jpg' %}" alt="AI Tech Team Collaboration" class="story-image">
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-container" data-aos="fade-up">
+            <div class="row text-center">
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="stat-item">
+                        <div class="stat-number">200+</div>
+                        <div class="stat-label">AI Projects Completed</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="stat-item">
+                        <div class="stat-number">97%</div>
+                        <div class="stat-label">Client Satisfaction Rate</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="stat-item">
+                        <div class="stat-number">65+</div>
+                        <div class="stat-label">AI & Data Experts</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="stat-item">
+                        <div class="stat-number">12+</div>
+                        <div class="stat-label">Years of Excellence</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Values Section -->
+<section class="values-section">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <span class="feature-badge" style="background: var(--light-color); color: var(--primary-color); padding: 8px 20px; border-radius: 25px; font-size: 0.9rem; font-weight: 600; display: inline-block; margin-bottom: 20px;">OUR VALUES</span>
+                <h2 class="section-title">What Drives Our Innovation</h2>
+                <p class="lead text-muted">Core principles that guide our approach to AI development and client success</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6" data-aos="fade-up">
+                <div class="value-item">
+                    <div class="value-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h5>Innovation First</h5>
+                    <p class="text-muted">Constantly pushing boundaries with cutting-edge AI research and development.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="value-item">
+                    <div class="value-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h5>Client Partnership</h5>
+                    <p class="text-muted">Working collaboratively as an extension of your team to achieve shared goals.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="value-item">
+                    <div class="value-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h5>Ethical AI</h5>
+                    <p class="text-muted">Committed to responsible, transparent, and fair AI practices.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="value-item">
+                    <div class="value-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h5>Measurable Impact</h5>
+                    <p class="text-muted">Delivering solutions that provide tangible business value and ROI.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Team Section -->
+<section class="team-section" id="our-team">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <span class="feature-badge" style="background: var(--light-color); color: var(--primary-color); padding: 8px 20px; border-radius: 25px; font-size: 0.9rem; font-weight: 600; display: inline-block; margin-bottom: 20px;">OUR TEAM</span>
+                <h2 class="section-title">Meet the Innovators</h2>
+                <p class="lead text-muted">The brilliant minds behind our AI success — experts who turn complex ideas into intelligent solutions</p>
+            </div>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            {% for member in team_members %}
+            <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="{% widthratio forloop.counter0 1 100 %}">
+                <div class="team-card">
+                    {% if member.image %}
+                    <img src="{{ member.image.url }}" alt="{{ member.name }}" class="team-image">
+                    {% else %}
+                    <div class="team-image d-flex align-items-center justify-content-center bg-light">
+                        <i class="fas fa-user-tie text-muted fs-1"></i>
+                    </div>
+                    {% endif %}
+                    <h5 class="fw-bold mb-2">{{ member.name|default:"AI Expert" }}</h5>
+                    <p class="text-muted small mb-3">{{ member.role|default:"AI Specialist" }}</p>
+                    <div class="team-social">
+                        {% if member.linkedin %}
+                        <a href="{{ member.linkedin }}" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        {% endif %}
+                        {% if member.twitter %}
+                        <a href="{{ member.twitter }}" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        {% endif %}
+                        {% if member.github %}
+                        <a href="{{ member.github }}" title="GitHub"><i class="fab fa-github"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Default team members if none provided -->
+            <div class="col-lg-3 col-md-6" data-aos="zoom-in">
+                <div class="team-card">
+                    <div class="team-image d-flex align-items-center justify-content-center bg-light">
+                        <i class="fas fa-user-tie text-muted fs-1"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">Dr. Sarah Chen</h5>
+                    <p class="text-muted small mb-3">Chief AI Officer</p>
+                    <div class="team-social">
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="100">
+                <div class="team-card">
+                    <div class="team-image d-flex align-items-center justify-content-center bg-light">
+                        <i class="fas fa-user-tie text-muted fs-1"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">Michael Rodriguez</h5>
+                    <p class="text-muted small mb-3">Head of Data Science</p>
+                    <div class="team-social">
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+                <div class="team-card">
+                    <div class="team-image d-flex align-items-center justify-content-center bg-light">
+                        <i class="fas fa-user-tie text-muted fs-1"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">Emily Watson</h5>
+                    <p class="text-muted small mb-3">ML Engineering Lead</p>
+                    <div class="team-social">
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="300">
+                <div class="team-card">
+                    <div class="team-image d-flex align-items-center justify-content-center bg-light">
+                        <i class="fas fa-user-tie text-muted fs-1"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">David Kim</h5>
+                    <p class="text-muted small mb-3">AI Research Director</p>
+                    <div class="team-social">
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="about-cta">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <div class="cta-content" data-aos="fade-up">
+                    <h2 class="display-5 fw-bold mb-4">Ready to Transform Your Business with AI?</h2>
+                    <p class="lead mb-5">
+                        Join the AI revolution and discover how our intelligent solutions can drive innovation, 
+                        efficiency, and growth for your organization. Let's build the future together.
+                    </p>
+                    <div class="d-flex flex-wrap justify-content-center gap-3">
+                        <a href="{% url 'contact' %}" class="btn btn-primary-custom">
+                            <i class="fas fa-calendar-check me-2"></i>Start Your Project
+                        </a>
+                        <a href="{% url 'services' %}" class="btn btn-outline-light">
+                            <i class="fas fa-arrow-right me-2"></i>Explore Services
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Smooth scrolling for anchor links
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %}

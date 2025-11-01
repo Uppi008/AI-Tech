@@ -1,0 +1,469 @@
+{% extends 'AI_tech/base.html' %}
+{% load static %}
+{% block title %}Contact Us - AI Tech Solutions{% endblock %}
+{% block content %}
+
+<style>
+    /* Contact Hero Section */
+    .contact-hero-section {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        padding: 150px 0 80px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    .contact-hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .contact-hero-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    /* Contact Content Section */
+    .contact-content-section {
+        padding: 80px 0;
+        background: #f8f9fa;
+    }
+
+    .contact-card-ai {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        border: 1px solid #f0f0f0;
+        height: 100%;
+        transition: all 0.3s ease;
+    }
+
+    .contact-card-ai:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .contact-info-item {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 30px;
+        padding: 20px;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border-radius: 15px;
+        transition: all 0.3s ease;
+    }
+
+    .contact-info-item:hover {
+        background: linear-gradient(135deg, var(--light-color), #e3f2fd);
+        transform: translateX(5px);
+    }
+
+    .contact-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        margin-right: 20px;
+        flex-shrink: 0;
+        box-shadow: 0 5px 15px rgba(0, 188, 212, 0.3);
+    }
+
+    .contact-info-content h5 {
+        color: var(--dark-color);
+        margin-bottom: 5px;
+        font-weight: 600;
+    }
+
+    .contact-info-content p {
+        color: #666;
+        margin-bottom: 0;
+    }
+
+    .contact-info-content a {
+        color: #666;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .contact-info-content a:hover {
+        color: var(--accent-color);
+    }
+
+    /* Form Styles */
+    .form-control-custom {
+        border-radius: 12px;
+        padding: 15px 20px;
+        border: 2px solid #f0f0f0;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+    }
+
+    .form-control-custom:focus {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 0.2rem rgba(0, 188, 212, 0.25);
+        transform: translateY(-2px);
+    }
+
+    .form-label-custom {
+        font-weight: 600;
+        color: var(--dark-color);
+        margin-bottom: 8px;
+    }
+
+    .btn-contact-submit {
+        background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+        color: white;
+        padding: 15px 40px;
+        border-radius: 30px;
+        font-weight: 600;
+        border: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0, 188, 212, 0.3);
+        width: 100%;
+        font-size: 1.1rem;
+    }
+
+    .btn-contact-submit:hover {
+        background: linear-gradient(135deg, #0097a7, var(--primary-color));
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 188, 212, 0.4);
+        color: white;
+    }
+
+    /* Social Links */
+    .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .social-link {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0, 188, 212, 0.3);
+    }
+
+    .social-link:hover {
+        transform: translateY(-5px) scale(1.1);
+        box-shadow: 0 10px 25px rgba(0, 188, 212, 0.4);
+        color: white;
+    }
+
+    /* Map Section */
+    .map-section-ai {
+        padding: 60px 0;
+        background: white;
+    }
+
+    .map-container {
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border: 1px solid #f0f0f0;
+    }
+
+    /* Success Messages */
+    .alert-success-custom {
+        background: linear-gradient(135deg, #d4edda, #c3e6cb);
+        border: none;
+        border-radius: 15px;
+        padding: 20px;
+        border-left: 5px solid #28a745;
+        color: #155724;
+        box-shadow: 0 5px 15px rgba(40, 167, 69, 0.2);
+    }
+
+    /* Working Hours */
+    .working-hours {
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        padding: 25px;
+        border-radius: 15px;
+        margin-top: 30px;
+    }
+
+    .working-hours h6 {
+        color: var(--dark-color);
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+
+    .hours-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .hours-item:last-child {
+        border-bottom: none;
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="contact-hero-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="contact-hero-content" data-aos="fade-up">
+                    <span class="feature-badge" style="background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); color: white; padding: 8px 20px; border-radius: 25px; font-size: 0.9rem; font-weight: 600; display: inline-block; margin-bottom: 20px; border: 1px solid rgba(255, 255, 255, 0.3);">Get In Touch</span>
+                    <h1 class="display-4 fw-bold mb-4">Let's Build Intelligent Solutions Together</h1>
+                    <p class="lead mb-4">
+                        Ready to transform your business with AI? Contact our experts to discuss your project 
+                        and discover how our artificial intelligence solutions can drive innovation and growth.
+                    </p>
+                    <div data-aos="fade-up" data-aos-delay="200">
+                        <a href="#contact-form" class="btn btn-primary-custom me-3">Send Message</a>
+                        <a href="#contact-info" class="btn btn-outline-light">Contact Info</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Content Section -->
+<section class="contact-content-section">
+    <div class="container">
+        <div class="row g-5">
+            <!-- Contact Information -->
+            <div class="col-lg-6" id="contact-info">
+                <div class="contact-card-ai" data-aos="fade-right">
+                    <h2 class="section-title mb-4">Get in Touch</h2>
+                    <p class="lead text-muted mb-5">
+                        We're here to help you harness the power of artificial intelligence. 
+                        Reach out to discuss your AI needs and let's create something amazing together.
+                    </p>
+
+                    <!-- Contact Information Items -->
+                    <div class="contact-info-item" data-aos="fade-right" data-aos-delay="100">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div class="contact-info-content">
+                            <h5>Phone</h5>
+                            <p><a href="tel:{{ contact_data.phone }}">{{ contact_data.phone|default:"+1 (555) 123-4567" }}</a></p>
+                            <small class="text-muted">Mon-Fri, 9:00 AM - 6:00 PM</small>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-item" data-aos="fade-right" data-aos-delay="200">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-info-content">
+                            <h5>Email</h5>
+                            <p><a href="mailto:{{ contact_data.email }}">{{ contact_data.email|default:"info@aitech.com" }}</a></p>
+                            <small class="text-muted">We'll respond within 24 hours</small>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-item" data-aos="fade-right" data-aos-delay="300">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-info-content">
+                            <h5>Office</h5>
+                            <p>{{ contact_data.address|default:"123 AI Street, Tech City" }}<br>
+                            {{ contact_data.location|default:"TC 10101" }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Social Links -->
+                    <div data-aos="fade-right" data-aos-delay="400">
+                        <h6 class="fw-semibold mb-3">Follow Us</h6>
+                        <div class="social-links">
+                            {% if contact_data.linkedin %}
+                            <a href="{{ contact_data.linkedin }}" class="social-link" title="LinkedIn">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            {% endif %}
+                            {% if contact_data.twitter %}
+                            <a href="{{ contact_data.twitter }}" class="social-link" title="Twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            {% endif %}
+                            {% if contact_data.facebook %}
+                            <a href="{{ contact_data.facebook }}" class="social-link" title="Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            {% endif %}
+                            {% if contact_data.instagram %}
+                            <a href="{{ contact_data.instagram }}" class="social-link" title="Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            {% endif %}
+                            <!-- Default social links if none provided -->
+                            {% if not contact_data.linkedin and not contact_data.twitter and not contact_data.facebook and not contact_data.instagram %}
+                            <a href="#" class="social-link" title="LinkedIn">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="social-link" title="Twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="social-link" title="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Working Hours -->
+                    <div class="working-hours" data-aos="fade-right" data-aos-delay="500">
+                        <h6>Working Hours</h6>
+                        <div class="hours-item">
+                            <span>Monday - Friday</span>
+                            <span class="fw-semibold">9:00 AM - 6:00 PM</span>
+                        </div>
+                        <div class="hours-item">
+                            <span>Saturday</span>
+                            <span class="fw-semibold">10:00 AM - 4:00 PM</span>
+                        </div>
+                        <div class="hours-item">
+                            <span>Sunday</span>
+                            <span class="fw-semibold">Closed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="col-lg-6" id="contact-form">
+                <div class="contact-card-ai" data-aos="fade-left">
+                    <h2 class="section-title mb-4">Send Us a Message</h2>
+                    <p class="text-muted mb-4">Fill out the form below and our AI experts will get back to you shortly.</p>
+
+                    {% if messages %}
+                    <div class="mb-4">
+                        {% for message in messages %}
+                        <div class="alert alert-success-custom" role="alert" data-aos="fade-up">
+                            <i class="fas fa-check-circle me-2"></i>{{ message }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <form method="POST" id="contactForm" novalidate>
+                        {% csrf_token %}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label-custom">Full Name *</label>
+                                <input type="text" name="name" class="form-control form-control-custom" placeholder="Enter your full name" required>
+                                <div class="invalid-feedback">Please enter your full name.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label-custom">Email Address *</label>
+                                <input type="email" name="email" class="form-control form-control-custom" placeholder="Enter your email" required>
+                                <div class="invalid-feedback">Please enter a valid email address.</div>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label-custom">Subject *</label>
+                                <input type="text" name="subject" class="form-control form-control-custom" placeholder="Enter message subject" required>
+                                <div class="invalid-feedback">Please provide a subject.</div>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label-custom">Message *</label>
+                                <textarea name="message" class="form-control form-control-custom" rows="6" placeholder="Tell us about your AI project or inquiry..." required></textarea>
+                                <div class="invalid-feedback">Please enter your message.</div>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn-contact-submit">
+                                    <i class="fas fa-paper-plane me-2"></i> Send Message
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Map Section -->
+<section class="map-section-ai">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-title" data-aos="fade-up">Visit Our Office</h2>
+                <p class="lead" data-aos="fade-up" data-aos-delay="100">
+                    Come see where the AI magic happens. Our innovation center is designed to foster creativity and collaboration.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12" data-aos="fade-up">
+                <div class="map-container">
+                    {% if contact_data.map_link %}
+                    <iframe src="{{ contact_data.map_link }}" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    {% else %}
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.17763114629!2d-74.00594938459418!3d40.71278367933185!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a316e12b29d%3A0x2c977eafa8b59c89!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2s!4v1620000000000!5m2!1sen!2s" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- JavaScript Validation -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('contactForm');
+        
+        form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        });
+
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add input animations
+        const inputs = document.querySelectorAll('.form-control-custom');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('focused');
+            });
+            
+            input.addEventListener('blur', function() {
+                if (this.value === '') {
+                    this.parentElement.classList.remove('focused');
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %}

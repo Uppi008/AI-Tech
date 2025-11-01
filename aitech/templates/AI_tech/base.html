@@ -1,0 +1,568 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AI Tech - Premier AI Solutions & Data Science Services{% endblock %}</title>
+    <meta name="description" content="AI Tech provides cutting-edge artificial intelligence solutions, machine learning services, and data science expertise to transform businesses across industries.">
+    <link rel="icon" href="{% static 'admin_assets/images/logo_ai_tech.png' %}" type="image/png">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- jQuery Validation -->
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.5/jquery.validate.min.js"></script>
+
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #1a237e;
+            --secondary-color: #3949ab;
+            --accent-color: #00bcd4;
+            --light-color: #e8eaf6;
+            --dark-color: #0d1440;
+            --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .navbar {
+            transition: all 0.3s ease;
+            padding: 15px 0;
+        }
+
+        .navbar-scrolled {
+            background-color: rgba(26, 35, 126, 0.98) !important;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 10px 0;
+        }
+
+        .hero-section {
+            background: var(--gradient);
+            padding: 150px 0 100px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .hero-image-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 12px;
+            transition: transform 0.5s ease, opacity 1s ease;
+        }
+
+        .hero-image:hover {
+            transform: scale(1.03);
+        }
+
+        .btn-primary-custom {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: white;
+            padding: 12px 30px;
+            font-weight: 600;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 188, 212, 0.3);
+        }
+
+        .btn-primary-custom:hover {
+            background-color: #0097a7;
+            border-color: #0097a7;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-title {
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        .card-custom {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .card-custom:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .icon-container {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 188, 212, 0.3);
+        }
+
+        .icon-container img {
+            max-width: 60px;
+            max-height: 60px;
+            border-radius: 100%;
+            object-fit: contain;
+        }
+
+        .stats-section {
+            background: var(--gradient);
+            color: white;
+            padding: 80px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .process-step {
+            position: relative;
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .process-step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 3px 10px rgba(0, 188, 212, 0.3);
+        }
+
+        .tech-stack {
+            background-color: #f8f9fa;
+            padding: 80px 0;
+        }
+
+        .tech-item {
+            text-align: center;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .tech-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .tech-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .service-detail {
+            padding: 30px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .service-detail:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-feature-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .service-feature-list li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .service-feature-list li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .industry-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid #f0f0f0;
+            height: 100%;
+        }
+
+        .industry-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            background-color: #111;
+            color: #aaa;
+            padding: 60px 0 20px;
+        }
+
+        .footer-links h5 {
+            color: white;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .footer-links h5::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #aaa;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .feature-badge {
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 120px 0 80px;
+            }
+            
+            .display-4 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: var(--primary-color);">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'home' %}">
+                <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #00bcd4, #1a237e); display:flex; align-items:center; justify-content:center;">
+                    <img src="{% static 'admin_assets/images/logo_ai tech.jpg' %}" alt="AI Tech Logo" style="width: 46px; height:46px; border-radius:50%;">
+                </div>
+                <span style="color:white; font-weight:600;">AI Tech</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'aboutus' %}active{% endif %}" href="{% url 'aboutus' %}">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'services' %}active{% endif %}" href="{% url 'services' %}">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if 'service_detail' in request.resolver_match.url_name %}active{% endif %}" href="{% url 'services' %}">Our Process</a>
+                    </li>
+                    <li class="nav-item">
+    <a class="nav-link {% if request.resolver_match.url_name == 'portfolio' %}active{% endif %}" href="{% url 'portfolio' %}">Portfolio</a>
+</li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'industries' %}">Industries</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" href="{% url 'contact' %}">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Block -->
+    {% block content %}
+
+    {% include 'AI_tech/home.html' %}
+
+    
+    {% endblock %}
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4" data-aos="fade-up">
+                    <div class="d-flex align-items-center mb-3">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #00bcd4, #1a237e); display:flex; align-items:center; justify-content:center; margin-right: 15px;">
+                            <img src="{% static 'admin_assets/images/logo_ai tech.jpg' %}" alt="AI Tech Logo" style="width: 46px; height:46px; border-radius:50%;">
+                        </div>
+                        <h4 style="color:white;">AI Tech</h4>
+                    </div>
+                    <p>Delivering cutting-edge AI and data science solutions to help businesses thrive in the digital age. We combine technical expertise with business acumen to deliver transformative results.</p>
+                    <div class="social-icons mt-4">
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="footer-links">
+                        <h5>Quick Links</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="{% url 'home' %}">Home</a></li>
+                            <li><a href="{% url 'aboutus' %}">About Us</a></li>
+                            <li><a href="{% url 'services' %}">Services</a></li>
+                            <li><a href="{% url 'home' %}#portfolio">Portfolio</a></li>
+                            <li><a href="{% url 'contact' %}">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="footer-links">
+                        <h5>Services</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="{% url 'services' %}">Machine Learning</a></li>
+                            <li><a href="{% url 'services' %}">Natural Language Processing</a></li>
+                            <li><a href="{% url 'services' %}">Computer Vision</a></li>
+                            <li><a href="{% url 'services' %}">Data Analytics</a></li>
+                            <li><a href="{% url 'services' %}">AI Consulting</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="footer-links">
+                        <h5>Contact Info</h5>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-map-marker-alt me-2"></i> 123 AI Street, Tech City, TC 10101</li>
+                            <li><i class="fas fa-phone me-2"></i> +1 (555) 123-4567</li>
+                            <li><i class="fas fa-envelope me-2"></i> info@aitech.com</li>
+                            <li><i class="fas fa-clock me-2"></i> Mon-Fri: 9:00 AM - 6:00 PM</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-4 mb-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; {% now "Y" %} AI Tech. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <p><a href="#" class="text-secondary me-3">Privacy Policy</a> <a href="#" class="text-secondary">Terms of Service</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- Custom JS -->
+    <script>
+        $(document).ready(function () {
+            // Initialize AOS
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+
+            // Navbar scroll effect
+            $(window).scroll(function () {
+                if ($(window).scrollTop() > 50) {
+                    $('.navbar').addClass('navbar-scrolled');
+                } else {
+                    $('.navbar').removeClass('navbar-scrolled');
+                }
+
+                // Back to top button
+                if ($(window).scrollTop() > 300) {
+                    $('.back-to-top').addClass('active');
+                } else {
+                    $('.back-to-top').removeClass('active');
+                }
+            });
+
+            // Smooth scrolling for anchor links
+            $('a[href*="#"]').on('click', function(e) {
+                e.preventDefault();
+                
+                $('html, body').animate(
+                    {
+                        scrollTop: $($(this).attr('href')).offset().top - 70,
+                    },
+                    500,
+                    'linear'
+                );
+            });
+
+            // Back to top functionality
+            $('.back-to-top').on('click', function() {
+                $('html, body').animate({scrollTop: 0}, 500);
+            });
+        });
+    </script>
+</body>
+</html>

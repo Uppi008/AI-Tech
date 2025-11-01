@@ -1,0 +1,137 @@
+
+    *{
+    scroll-behavior: smooth;
+    }
+    .custom-drop-zone {
+    border: 2px dashed #ced4da;
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+    .custom-drop-zone.dragover {
+        border-color: #0d6efd;
+        background-color: rgba(13, 110, 253, 0.05);
+    }
+
+    #filePreview .preview-item {
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-top: 1rem;
+    }
+
+      /* Custom tooltip styles - works with HTMX dynamic content */
+         .tooltip-custom {
+         --tooltip-bg: #333;
+         --tooltip-text: #fff;
+         --tooltip-arrow-size: 5px;
+         position: relative;
+         display: inline-block;
+         }
+
+         .tooltip-custom::after {
+         content: attr(data-tooltip);
+         position: absolute;
+         padding: 0.5em 1em;
+         background-color: var(--tooltip-bg);
+         color: var(--tooltip-text);
+         border-radius: 4px;
+         font-size: 12px;
+         line-height: 1.4;
+         white-space: nowrap;
+         z-index: 100;
+         opacity: 0;
+         visibility: hidden;
+         transition: opacity 0.2s ease, visibility 0.2s ease;
+         }
+
+         /* Tooltip positions */
+         .tooltip-custom[data-placement="top"]::after {
+         bottom: 100%;
+         left: 50%;
+         transform: translateX(-50%);
+         margin-bottom: var(--tooltip-arrow-size);
+         }
+
+         .tooltip-custom[data-placement="right"]::after {
+         left: 100%;
+         top: 50%;
+         transform: translateY(-50%);
+         margin-left: var(--tooltip-arrow-size);
+         }
+
+         .tooltip-custom[data-placement="bottom"]::after {
+         top: 100%;
+         left: 50%;
+         transform: translateX(-50%);
+         margin-top: var(--tooltip-arrow-size);
+         }
+
+         .tooltip-custom[data-placement="left"]::after {
+         right: 100%;
+         top: 50%;
+         transform: translateY(-50%);
+         margin-right: var(--tooltip-arrow-size);
+         }
+
+         /* Tooltip arrow */
+         .tooltip-custom::before {
+         content: '';
+         position: absolute;
+         width: 0;
+         height: 0;
+         border-style: solid;
+         opacity: 0;
+         visibility: hidden;
+         z-index: 101;
+         }
+
+         .tooltip-custom[data-placement="top"]::before {
+         bottom: calc(100% - var(--tooltip-arrow-size));
+         left: 50%;
+         transform: translateX(-50%);
+         border-width: var(--tooltip-arrow-size) var(--tooltip-arrow-size) 0 var(--tooltip-arrow-size);
+         border-color: var(--tooltip-bg) transparent transparent transparent;
+         }
+
+         .tooltip-custom[data-placement="right"]::before {
+         left: calc(100% - var(--tooltip-arrow-size));
+         top: 50%;
+         transform: translateY(-50%);
+         border-width: var(--tooltip-arrow-size) var(--tooltip-arrow-size) var(--tooltip-arrow-size) 0;
+         border-color: transparent var(--tooltip-bg) transparent transparent;
+         }
+
+         .tooltip-custom[data-placement="bottom"]::before {
+         top: calc(100% - var(--tooltip-arrow-size));
+         left: 50%;
+         transform: translateX(-50%);
+         border-width: 0 var(--tooltip-arrow-size) var(--tooltip-arrow-size) var(--tooltip-arrow-size);
+         border-color: transparent transparent var(--tooltip-bg) transparent;
+         }
+
+         .tooltip-custom[data-placement="left"]::before {
+         right: calc(100% - var(--tooltip-arrow-size));
+         top: 50%;
+         transform: translateY(-50%);
+         border-width: var(--tooltip-arrow-size) 0 var(--tooltip-arrow-size) var(--tooltip-arrow-size);
+         border-color: transparent transparent transparent var(--tooltip-bg);
+         }
+
+         /* Show tooltip on hover */
+         .tooltip-custom:hover::after,
+         .tooltip-custom:hover::before {
+         opacity: 1;
+         visibility: visible;
+         }
+
+         /* HTML tooltip content */
+         .tooltip-custom-html::after {
+         white-space: normal;
+         max-width: 200px;
+         }
+
+ 
