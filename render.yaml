@@ -1,0 +1,22 @@
+# render.yaml
+
+services:
+  - type: web
+    name: ai-tech-website
+    env: python
+    plan: free
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn AI_Tech.wsgi:application"
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ai-tech-db
+          property: connectionString
+
+databases:
+  - name: ai-tech-db
+    plan: free
