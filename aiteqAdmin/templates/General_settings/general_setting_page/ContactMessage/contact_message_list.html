@@ -1,0 +1,129 @@
+{% extends 'aiteq/base_admin.html' %}
+{% block title %}Contact Messages{% endblock %}
+{% load static %}
+
+
+
+{% block content %}
+
+<div class="app-content-header mt-3 pt-3">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-6"><h4 class="mb-0">Contact Messages</h4></div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-end">
+          <li class="breadcrumb-item"><a href="{% url 'general_settings' %}">Settings</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'contact_message_list' %}">Messages</a></li>
+          <li class="breadcrumb-item active">Contact Messages</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+
+        <!-- Add Message + Search Row -->
+        <div class="row align-items-center mb-3">
+          <!-- Button -->
+          <div class="col-12 col-md-8 mb-2 mb-md-0">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModalCreateMessage">
+              <i class="ri-add-line align-bottom me-1"></i> Add Message
+            </button>
+          </div>
+
+          <!-- Search bar -->
+          <div class="col-12 col-md-4">
+            <input type="text" class="form-control" id="search_input_message" name="search" 
+                   hx-get="{% url 'get_contact_message_details' %}" 
+                   hx-trigger="input change delay:500ms" 
+                   hx-target="#table-body-messages" 
+                   hx-swap="innerHTML" 
+                   placeholder="Search by name, email, or subject...">
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-responsive">
+          <table class="table mb-0 table-nowrap">
+            <thead>
+              <tr class="bg-primary">
+                <th class="text-white">S.No</th>
+                <th class="text-white">Name</th>
+                <th class="text-white">Email</th>
+                <th class="text-white">Subject</th>
+                <th class="text-white text-center">Phone</th>
+                <th class="text-white text-center">Status</th>
+                <th class="text-white text-center">Date</th>
+                <th class="text-white text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody 
+              id="table-body-messages"
+              hx-get="{% url 'get_contact_message_details' %}"
+              hx-trigger="load once"
+              hx-target="this"
+              hx-swap="innerHTML">
+              <!-- Content will be loaded via HTMX -->
+              {% include 'components/searching_recording.html' with span_num=8 %}
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center" id="pagination_div_messages"></div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Message Modal -->
+<div id="myModalCreateMessage" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-primary pb-3">
+        <h5 class="modal-title text-white mb-0">Add Contact Message</h5>
+        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" style="background-color: white;" type="button"></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" id="contact_message_form" class="needs-validation" novalidate action="{% url 'contact_message_list' %}">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label for="name" class="form-label fw-semibold">Name <b class="text-danger">*</b></label>
+                <input type="text" class="form-control" name="name" id="name" placeholder="Ex: John Doe" required>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label fw-semibold">Email <b class="text-danger">*</b></label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="Ex: john@example.com" required>
+              </div>
+              <div class="mb-3">
+                <label for="subject" class="form-label fw-semibold">Subject <b class="text-danger">*</b></label>
+                <input type="text" class="form-control" name="subject" id="subject" placeholder="Ex: Inquiry" required>
+              </div>
+              <div class="mb-3">
+                <label for="message" class="form-label fw-semibold">Message <b class="text-danger">*</b></label>
+                <textarea class="form-control" name="message" id="message" rows="4" placeholder="Type your message..." required></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="phone" class="form-label fw-semibold">Phone</label>
+                <input type="text" class="form-control" name="phone" id="phone" placeholder="Ex: 1234567890">
+              </div>
+            </div>
+          </div>
+          <div class="text-center justify-content-center gap-2">
+            <button class="btn btn-primary" type="submit">Create</button>
+            <button class="btn btn-light" data-bs-dismiss="modal" type="button">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

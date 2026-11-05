@@ -1,0 +1,679 @@
+{% extends 'aiteq/base_admin.html' %}
+{% block title%} Services Management{% endblock%}
+{% load static %}
+
+{% block style %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="app-content-header mt-3 pt-3">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-6">
+        <h4 class="mb-0">Services Management</h4>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-end">
+          <li class="breadcrumb-item"><a href="{% url 'general_settings' %}">Settings</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'general_settings' %}">Services Management</a></li>
+          <li class="breadcrumb-item active">Services</li>
+          <!-- <li class="breadcrumb-item active">Settings</li> -->
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+
+        <!-- Add Country + Search Row -->
+        <div class="row align-items-center mb-3">
+          <!-- Button -->
+          <div class="col-12 col-md-8 mb-2 mb-md-0">
+            <button type="button" class="btn btn-primary " data-bs-toggle="modal"
+              data-bs-target="#myModalServiceCreate">
+              <i class="ri-add-line align-bottom me-1"></i> Add New Service
+            </button>
+
+            <button class="btn btn-success flex-grow-1 flex-md-grow-0" type="button" data-bs-toggle="modal"
+              data-bs-target="#serviceImportModal">
+              <i class="las la-file-download"></i>&nbsp;Import
+            </button>
+
+            <button class="btn btn-info flex-grow-1 flex-md-grow-0" type="button" data-bs-toggle="modal"
+              data-bs-target="#exportcontentModalService">
+              <i class="las la-file-export"></i>&nbsp;Export
+            </button>
+
+          </div>
+
+          <!-- Search bar -->
+          <div class="col-12 col-md-4">
+            <input type="text" class="form-control" id="search_input_service" name="search"
+              hx-get="{% url 'get_details_service'%}" hx-trigger="input change delay:500ms"
+              hx-target="#table-body-service" hx-swap="innerHTML" placeholder="Search...">
+          </div>
+        </div>
+
+
+        <!-- Table -->
+        <div class="table-responsive">
+          <table class="table mb-0 table-nowrap">
+            <thead>
+              <tr class="bg-primary">
+                <th class="text-white">S.No</th>
+                <th class="text-white">Icon</th>
+                <th class="text-white">Title</th>
+                <!-- <th class="text-white">Category</th> -->
+                <th class="text-white">Short Description</th>
+                <th class="text-white text-center">Created On</th>
+                <th class="text-white text-center">Status</th>
+                <th class="text-white text-center">Actions</th>
+              </tr>
+            </thead>
+
+
+
+        
+
+               <tbody id="table-body-service" hx-get="{% url 'get_details_service' %}" hx-trigger="load" hx-swap="innerHTML">
+             
+              {% include 'components/searching_recording.html' with span_num=7 %}
+            </tbody>
+          </table>
+
+        </div>
+        <!-- Pagination Start Herr  -->
+        <div class="d-flex justify-content-center" id="paginatin_div_service">
+
+        </div>
+        <!-- Pagination End Herr  -->
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="myModalServiceCreate" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white" id="myModalLabel">Add New Service</h5>
+                <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" style="background-color: white;" type="button"></button>
+            </div>
+            <div class="modal-body">
+                <form id="serviceForm" method="POST" enctype="multipart/form-data" novalidate action="{% url 'service_list' %}">
+                    {% csrf_token %}
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Title <b class="text-danger">*</b></label>
+                            <input type="text" id="title" name="title" class="form-control" placeholder="Ex: AI & Machine Learning" required>
+                            <small id="titleError" class="text-danger"></small>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Category <b class="text-danger">*</b></label>
+                            <input type="text" id="category" name="category" class="form-control" placeholder="Ex: Predictive Analytics" required>
+                            <small id="categoryError" class="text-danger"></small>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Icon Class <b class="text-danger">*</b></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-icons"></i></span>
+                                <input type="text" id="icon" name="icon" class="form-control" placeholder="fa-robot" value="fa-robot">
+                            </div>
+                            <small class="form-text text-muted">Use FontAwesome icon class (e.g., fa-robot, fa-brain, fa-chart-line)</small>
+                            <small id="iconError" class="text-danger"></small>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Background Image <sub class="text-info"><tt>(PNG, JPG)</tt></sub></label>
+                            <input type="file" name="background_image" id="background_image" class="form-control" accept="image/*">
+                            <small id="background_imageError" class="text-danger"></small>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Short Description <b class="text-danger">*</b></label>
+                        <textarea name="short_description" id="short_description" class="form-control" rows="2" placeholder="Brief description for service cards" required></textarea>
+                        <small id="short_descriptionError" class="text-danger"></small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Full Description <b class="text-danger">*</b></label>
+                        <textarea name="description" id="description" class="form-control ckeditor-classic" rows="4" placeholder="Detailed description of the service" required></textarea>
+                        <small id="descriptionError" class="text-danger"></small>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Gradient Start Color</label>
+                            <div class="input-group">
+                                <span class="input-group-text">#</span>
+                                <input type="text" id="gradient_start" name="gradient_start" class="form-control" value="#4361ee" placeholder="4361ee">
+                            </div>
+                            <small class="form-text text-muted">Hex color (e.g., #4361ee)</small>
+                            <small id="gradient_startError" class="text-danger"></small>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Gradient End Color</label>
+                            <div class="input-group">
+                                <span class="input-group-text">#</span>
+                                <input type="text" id="gradient_end" name="gradient_end" class="form-control" value="#3a0ca3" placeholder="3a0ca3">
+                            </div>
+                            <small class="form-text text-muted">Hex color (e.g., #3a0ca3)</small>
+                            <small id="gradient_endError" class="text-danger"></small>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Badge Color</label>
+                            <div class="input-group">
+                                <span class="input-group-text">#</span>
+                                <input type="text" id="badge_color" name="badge_color" class="form-control" value="#4cc9f0" placeholder="4cc9f0">
+                            </div>
+                            <small class="form-text text-muted">Hex color (e.g., #4cc9f0)</small>
+                            <small id="badge_colorError" class="text-danger"></small>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button class="btn btn-primary add-btn-service" id="add-btn-service" type="submit">Create Service</button>
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+<!-- Export Modal for Contact Us -->
+<div class="modal fade" id="exportcontentModalService" tabindex="-1" aria-labelledby="exportcontentModalServiceLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-primary pb-3">
+        <h5 class="modal-title text-white mb-0">Export Contact Us</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" style="background-color: white;"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'get_service_report' %}" class="export_course_form" id="export_course_form" method="post"
+          target="_blank">
+          {% csrf_token %}
+
+          <div class="mb-3">
+            <label for="service_list_startdatereport" class="form-label fw-semibold">From <b
+                class="text-danger">*</b></label>
+            <input type="date" name="service_list_startdatereport" id="service_list_startdatereport"
+              class="form-control" required />
+            <small style="color: red; font-size: 11px;" id="service_list_startdatereport"></small>
+          </div>
+
+          <div class="mb-3">
+            <label for="service_list_enddatereport" class="form-label fw-semibold">To <b
+                class="text-danger">*</b></label>
+            <input type="date" name="service_list_enddatereport" id="service_list_enddatereport" class="form-control"
+              required />
+            <small style="color: red; font-size: 11px;" id="service_list_enddatereportError"></small>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Export Type <b class="text-danger">*</b></label>
+            <select name="export_file_type" id="export_file_type" class="form-select" required>
+              <option value="" disabled selected>Select export type</option>
+              <option value="CSV">CSV</option>
+              <option value="PDF">PDF</option>
+            </select>
+            <small style="color: red; font-size: 11px;" id="export_file_typeError"></small>
+          </div>
+
+          <div class="modal-footer d-flex justify-content-center">
+            <button class="btn btn-primary export-course-btn" id="export-course-btn" type="submit">Export</button>
+            <button class="btn btn-light" data-bs-dismiss="modal" type="button">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Import Modal  ok -->
+
+<div aria-hidden="true" aria-labelledby="serviceImportModalLabel" class="modal fade" id="serviceImportModal"
+  tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header" style="background-color:#405189; padding:10px 15px 10px 10px;">
+        <h5 class="modal-title text-white mb-0">Add Bulk Course Category Data</h5>
+        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" style="background-color: white;"
+          type="button"></button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <!-- Sample File Link -->
+        <span class="mb-1"><b>Sample File : </b> </span>
+        <i class="ri-file-excel-2-line text-success"></i>
+        <a class="mb-2" download href="{% static 'admin_assets/samples_files/service_list.csv' %}">Sample CSV</a>
+
+        <!-- Upload Form -->
+        <form method="post" action="{% url 'bulk_upload_service' %}" class="card-body mt-2"
+          enctype="multipart/form-data" id="search-filter-form">
+          {% csrf_token %}
+
+          <!-- Drop Zone -->
+          <div class="custom-drop-zone text-center border-dashed p-3 border-opacity-50 border-1 border-black"
+            id="dropZone">
+            <div class="dz-message">
+              <div class="mb-3">
+                <i class="display-4 text-muted ri-upload-cloud-2-fill"></i>
+              </div>
+              <h4>Drop CSV file here or click to upload</h4>
+            </div>
+            <input required type="file" name="file" id="fileInput" accept=".csv" hidden>
+          </div>
+
+          <div class="mt-3" id="filePreview"></div>
+
+          <!-- Submit Button -->
+          <div class="d-flex justify-content-center gap-2 mt-4">
+            <button class="btn btn-primary" type="submit" id="upload-btn">Upload Data</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+
+{% block scripts %}
+
+
+
+<script>
+$(document).ready(function () {
+
+  $('#serviceForm').validate({
+    ignore: [],
+
+    rules: {
+      title: {
+        required: true,
+        minlength: 2,
+        maxlength: 60
+      },
+      category: {
+        required: true,
+        minlength: 2,
+        maxlength: 50
+      },
+      icon: {
+        required: true
+      },
+      short_description: {
+        required: true,
+        minlength: 5,
+        maxlength: 200
+      },
+      description: {
+        required: true,
+        minlength: 10
+      },
+      gradient_start: {
+        pattern: /^#([A-Fa-f0-9]{6})$/
+      },
+      gradient_end: {
+        pattern: /^#([A-Fa-f0-9]{6})$/
+      },
+      badge_color: {
+        pattern: /^#([A-Fa-f0-9]{6})$/
+      },
+      background_image: {
+        extension: "jpg|jpeg|png"
+      }
+    },
+
+    messages: {
+      title: {
+        required: "Please enter service title",
+        minlength: "Minimum 2 characters required",
+        maxlength: "Maximum 60 characters allowed"
+      },
+      category: {
+        required: "Please enter category",
+        minlength: "Minimum 2 characters required"
+      },
+      icon: {
+        required: "Please enter FontAwesome icon class"
+      },
+      short_description: {
+        required: "Please enter short description",
+        minlength: "At least 5 characters required"
+      },
+      description: {
+        required: "Please enter full description",
+        minlength: "At least 10 characters required"
+      },
+      gradient_start: {
+        pattern: "Enter valid hex color (e.g. #4361ee)"
+      },
+      gradient_end: {
+        pattern: "Enter valid hex color (e.g. #3a0ca3)"
+      },
+      badge_color: {
+        pattern: "Enter valid hex color (e.g. #4cc9f0)"
+      },
+      background_image: {
+        extension: "Only JPG, JPEG, PNG files allowed"
+      }
+    },
+
+    errorElement: 'small',
+
+    errorPlacement: function (error, element) {
+      error.addClass('text-danger');
+      error.css({
+        "font-size": "12px",
+        "font-weight": "500"
+      });
+      error.appendTo($('#' + element.attr('id') + 'Error'));
+    },
+
+    highlight: function (element) {
+      $(element).addClass('is-invalid');
+    },
+
+    unhighlight: function (element) {
+      $(element).removeClass('is-invalid');
+    },
+
+    submitHandler: function (form) {
+      $('#add-btn-service').prop('disabled', true);
+      form.submit();
+    }
+
+  });
+
+});
+</script>
+
+<script>
+$(document).ready(function () {
+
+  function service_edit_form() {
+
+    $('.service_edit').each(function () {
+      const $form = $(this);
+
+      // Destroy previous validator (important for HTMX)
+      if ($form.data('validator')) {
+        $form.validate().destroy();
+      }
+
+      $form.validate({
+        ignore: [],   // IMPORTANT for CKEditor
+
+        rules: {
+          title: {
+            required: true,
+            minlength: 2,
+            maxlength: 60
+          },
+          category: {
+            required: true,
+            minlength: 2,
+            maxlength: 50
+          },
+          icon: {
+            required: true
+          },
+          short_description: {
+            required: true,
+            minlength: 5,
+            maxlength: 200
+          },
+          description: {
+            required: true,
+            minlength: 10
+          },
+          gradient_start: {
+            pattern: /^#([A-Fa-f0-9]{6})$/
+          },
+          gradient_end: {
+            pattern: /^#([A-Fa-f0-9]{6})$/
+          },
+          badge_color: {
+            pattern: /^#([A-Fa-f0-9]{6})$/
+          },
+          background_image: {
+            extension: "jpg|jpeg|png"
+          }
+        },
+
+        messages: {
+          title: {
+            required: "Please enter service title",
+            minlength: "At least 2 characters required",
+            maxlength: "Maximum 60 characters allowed"
+          },
+          category: {
+            required: "Please enter category",
+            minlength: "At least 2 characters required"
+          },
+          icon: {
+            required: "Please enter FontAwesome icon class"
+          },
+          short_description: {
+            required: "Please enter short description",
+            minlength: "At least 5 characters required"
+          },
+          description: {
+            required: "Please enter full description",
+            minlength: "At least 10 characters required"
+          },
+          gradient_start: {
+            pattern: "Enter valid hex color (e.g. #4361ee)"
+          },
+          gradient_end: {
+            pattern: "Enter valid hex color (e.g. #3a0ca3)"
+          },
+          badge_color: {
+            pattern: "Enter valid hex color (e.g. #4cc9f0)"
+          },
+          background_image: {
+            extension: "Only JPG, JPEG, PNG files allowed"
+          }
+        },
+
+        errorElement: 'small',
+
+        errorPlacement: function (error, element) {
+          error.css({
+            "font-size": "12px",
+            "font-weight": "500"
+          });
+
+          const errorId = element.attr('id') + 'Error';
+          $('#' + errorId).html(error);
+        },
+
+        highlight: function (element) {
+          $(element).addClass('is-invalid');
+        },
+
+        unhighlight: function (element) {
+          $(element).removeClass('is-invalid');
+          $('#' + element.id + 'Error').html('');
+        },
+
+        submitHandler: function (form) {
+
+          // Sync CKEditor before submit
+          if (window.ClassicEditor) {
+            $('.ckeditor-classic').each(function () {
+              this.value = this.ckeditorInstance
+                ? this.ckeditorInstance.getData()
+                : this.value;
+            });
+          }
+
+          $(form).find('button[type="submit"]').prop('disabled', true);
+          form.submit();
+        }
+      });
+
+      // Live validation
+      $form.find('input, textarea').on('input change', function () {
+        $(this).valid();
+      });
+    });
+  }
+
+  // Initial load
+  service_edit_form();
+
+  // Re-run after HTMX modal load
+  document.body.addEventListener('htmx:afterSettle', function () {
+    service_edit_form();
+  });
+
+});
+</script>
+
+
+<script>
+  // Convert YYYY-MM-DD → DD-MM-YYYY
+  function convertToIndianFormat(dateStr) {
+    if (!dateStr) return '';
+    const [yyyy, mm, dd] = dateStr.split('-');
+    return `${dd}-${mm}-${yyyy}`;
+  }
+
+  $(document).ready(function () {
+    const $form = $('#export_course_form');
+    const $submit = $('#export-course-btn');
+    const today = new Date().toISOString().split('T')[0];
+
+    // Set max date = today for both fields
+    $('#service_list_startdatereport, #service_list_enddatereport').attr('max', today);
+
+    // When start date changes → set min for end date
+    $('#service_list_startdatereport').on('change', function () {
+      const start = $(this).val();
+      $('#service_list_enddatereport').attr('min', start);
+
+      // Reset if invalid
+      if ($('#service_list_enddatereport').val() && $('#service_list_enddatereport').val() < start) {
+        $('#service_list_enddatereport').val('');
+        $('#service_list_enddatereportError').text(`Please enter To date on or after ${convertToIndianFormat(start)}`);
+      } else {
+        $('#service_list_enddatereportError').text('');
+      }
+    });
+
+    // Extra safeguard: Prevent typing future or past invalid To date
+    $('#service_list_enddatereport').on('input change', function () {
+      const start = $('#service_list_startdatereport').val();
+      const end = $(this).val();
+
+      if (end) {
+        if (end < start) {
+          $(this).val('');
+          $('#service_list_enddatereportError').text(`Please enter To date on or after ${convertToIndianFormat(start)}`);
+        } else if (end > today) {
+          $(this).val('');
+          $('#service_list_enddatereportError').text(`Please enter To date on or before ${convertToIndianFormat(today)}`);
+        } else {
+          $('#service_list_enddatereportError').text('');
+        }
+      }
+    });
+
+    // jQuery Validate
+    $form.validate({
+      rules: {
+        service_list_startdatereport: {
+          required: true,
+          max: today
+        },
+        service_list_enddatereport: {
+          required: true,
+          min: () => $('#service_list_startdatereport').val(),
+          max: today
+        },
+        export_file_type: {
+          required: true
+        }
+      },
+      messages: {
+        service_list_startdatereport: {
+          required: "Please select a From date.",
+          max: `Please enter on or before ${convertToIndianFormat(today)}`
+        },
+        service_list_enddatereport: {
+          required: "Please select a To date.",
+          min: () => `Please enter on or after ${convertToIndianFormat($('#service_list_startdatereport').val())}`,
+          max: `Please enter on or before ${convertToIndianFormat(today)}`
+        },
+        export_file_type: {
+          required: "Please select an export type."
+        }
+      },
+      errorElement: 'small',
+      errorPlacement(error, element) {
+        const errId = element.attr('id') + 'Error';
+        $('#' + errId).text(error.text());
+      },
+      highlight(el) {
+        $(el).addClass('is-invalid');
+      },
+      unhighlight(el) {
+        $(el).removeClass('is-invalid');
+        $('#' + el.id + 'Error').text('');
+      },
+      submitHandler(form) {
+        $submit.prop('disabled', true);
+        form.submit();
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
+      }
+    });
+
+    // Live validation
+    $form.on('input change', 'input, select', function () {
+      $(this).valid();
+    });
+
+    // Reset modal on close
+    $('#exportcontentModalcourse').on('hidden.bs.modal', function () {
+      $form[0].reset();
+      $submit.prop('disabled', false);
+      $('#service_list_startdatereportError, #service_list_enddatereportError, #export_file_typeError').text('');
+      $form.validate().resetForm();
+      $('#service_list_enddatereport').removeAttr('min');
+    });
+  });
+</script>
+
+{% endblock %}

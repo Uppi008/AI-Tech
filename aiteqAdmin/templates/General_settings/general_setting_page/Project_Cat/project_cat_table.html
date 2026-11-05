@@ -1,0 +1,121 @@
+{% for category in categories %}
+<tr>
+    <td>{{ forloop.counter0|add:categories.start_index }}</td>
+    <td>{{ category.name }}</td>
+    <td class="text-center">
+        <span hx-get="{% url 'toggle_project_category_status' category.id %}" 
+              hx-target="this" 
+              hx-swap="outerHTML" 
+              class="badge {% if category.is_active %}bg-success{% else %}bg-danger{% endif %}" 
+              style="cursor:pointer;">
+            {% if category.is_active %}Active{% else %}Deactive{% endif %}
+        </span>
+    </td>
+    <td class="text-center">{{ category.created_at|date:"d M Y, h:i A" }}</td>
+    <td class="text-center">
+        <!-- Edit Button -->
+        <button type="button" 
+                class="btn btn-primary btn-sm tooltip-custom" 
+                data-bs-toggle="modal" 
+                data-bs-target="#myModalEdit-project-{{ category.id }}"
+                hx-get="{% url 'get_project_category_details' %}"
+                hx-trigger="click"
+                hx-vals='{"get_edit":"{{ category.id }}"}'
+                hx-target="#project_cat_edit_body-{{ category.id }}"
+                hx-swap="innerHTML"
+                data-placement="top" data-tooltip="Edit">
+            <i class="ri-pencil-fill"></i>
+        </button>
+
+        <!-- Delete Button -->
+        <button type="button" 
+                class="btn btn-danger btn-sm tooltip-custom" 
+                data-bs-toggle="modal" 
+                data-bs-target="#myModalDelete-project-{{ category.id }}"
+                hx-get="{% url 'get_project_category_details' %}"
+                hx-trigger="click"
+                hx-vals='{"get_delete":"{{ category.id }}"}'
+                hx-target="#project_cat_delete_body-{{ category.id }}"
+                hx-swap="innerHTML"
+                data-placement="top" data-tooltip="Delete">
+            <i class="ri-delete-bin-line"></i>
+        </button>
+    </td>
+</tr>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="myModalEdit-project-{{ category.id }}" tabindex="-1" aria-hidden="true" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary pb-3">
+                <h5 class="modal-title text-white mb-0">Edit Project Category</h5>
+                <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" style="background-color: white;" type="button"></button>
+            </div>
+            <div class="modal-body" id="project_cat_edit_body-{{ category.id }}">
+                <!-- Content loaded via HTMX -->
+                {% include 'components/edit_form_loader.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="myModalDelete-project-{{ category.id }}" tabindex="-1" aria-hidden="true" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger pb-3">
+                <h5 class="modal-title text-white mb-0">Delete Project Category</h5>
+                <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" style="background-color: white;" type="button"></button>
+            </div>
+            <div class="modal-body" id="project_cat_delete_body-{{ category.id }}">
+                <!-- Content loaded via HTMX -->
+                {% include 'components/edit_form_loader.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% empty %}
+{% include 'components/no_table_data_tr.html' with span_num=5 %}
+{% endfor %}
+
+<!-- Pagination -->
+<div class="d-flex justify-content-center pt-2" id="paginatin_div_project_cat" hx-swap-oob="true">
+    <ul class="pagination pagination-separated pagination-sm justify-content-center justify-content-sm-start mb-0">
+        {% if categories.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="#"
+                   hx-get="{% url 'get_project_category_details' %}?page={{ categories.previous_page_number }}"  
+                   hx-target="#table-body-project-cat"
+                   hx-swap="innerHTML"
+                   hx-include="#search_input_project">Previous</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+        {% endif %}
+
+        {% for page_num in categories.paginator.page_range %}
+            {% if page_num >= categories.number|add:-2 and page_num <= categories.number|add:2 %}
+                <li class="page-item {% if page_num == categories.number %}active{% endif %}">
+                    <a class="page-link" href="#"
+                       hx-get="{% url 'get_project_category_details' %}?page={{ page_num }}"
+                       hx-target="#table-body-project-cat"
+                       hx-swap="innerHTML"
+                       hx-include="#search_input_project">{{ page_num }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+
+        {% if categories.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="#"
+                   hx-get="{% url 'get_project_category_details' %}?page={{ categories.next_page_number }}"
+                   hx-target="#table-body-project-cat"
+                   hx-swap="innerHTML"
+                   hx-include="#search_input_project">Next</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+        {% endif %}
+    </ul>
+</div>

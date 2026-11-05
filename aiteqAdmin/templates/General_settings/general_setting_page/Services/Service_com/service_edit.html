@@ -1,0 +1,156 @@
+
+<form method="POST" 
+      action="{% url 'service_update' service.id %}" 
+      class="needs-validation service_edit" 
+      id="service_edit" 
+      novalidate 
+      enctype="multipart/form-data"
+      hx-post="{% url 'service_update' service.id %}"
+      hx-target="#table-body-service"
+      hx-swap="outerHTML">
+    {% csrf_token %}
+    
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Title <b class="text-danger">*</b></label>
+            <input type="text" id="u_title" name="title" class="form-control" 
+                   placeholder="Ex: AI & Machine Learning"
+                   value="{{ service.title }}" required>
+            <small id="u_titleError" class="text-danger"></small>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Category <b class="text-danger">*</b></label>
+            <input type="text" id="u_category" name="category" class="form-control" 
+                   placeholder="Ex: Predictive Analytics"
+                   value="{{ service.category }}" required>
+            <small id="u_categoryError" class="text-danger"></small>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Icon Class <b class="text-danger">*</b></label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="{{ service.icon }}"></i></span>
+                <input type="text" id="u_icon" name="icon" class="form-control" 
+                       placeholder="fa-robot"
+                       value="{{ service.icon }}" required>
+            </div>
+            <small class="form-text text-muted">Use FontAwesome icon class (e.g., fa-robot, fa-brain, fa-chart-line)</small>
+            <small id="u_iconError" class="text-danger"></small>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Background Image <sub class="text-info"><tt>(PNG, JPG)</tt></sub></label>
+            <div class="d-flex align-items-center gap-3">
+                <input type="file"
+                       class="form-control"
+                       name="background_image"
+                       id="u_background_image"
+                       accept="image/*"
+                       style="flex: 1;">
+
+                <!-- Show Existing Image -->
+                {% if service.background_image %}
+                    <div>
+                        <img src="{{ service.background_image.url }}" 
+                             alt="Service Background"
+                             style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px;">
+                    </div>
+                {% endif %}
+            </div>
+            <small id="u_background_imageError" class="text-danger"></small>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Short Description <b class="text-danger">*</b></label>
+        <textarea name="short_description" rows="2" id="u_short_description" 
+                  placeholder="Brief description for service cards" 
+                  class="form-control" required>{{ service.short_description }}</textarea>
+        <small id="u_short_descriptionError" class="text-danger"></small>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Full Description <b class="text-danger">*</b></label>
+        <textarea name="description" rows="4" id="u_description" 
+                  placeholder="Detailed description of the service" 
+                  class="form-control ckeditor-classic" required>{{ service.description }}</textarea>
+        <small id="u_descriptionError" class="text-danger"></small>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Gradient Start Color</label>
+            <div class="input-group">
+                <span class="input-group-text">#</span>
+                <input type="text" id="u_gradient_start" name="gradient_start" 
+                       class="form-control" placeholder="4361ee"
+                       value="{{ service.gradient_start|cut:'#' }}">
+            </div>
+            <small class="form-text text-muted">Hex color (e.g., #4361ee)</small>
+            <small id="u_gradient_startError" class="text-danger"></small>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Gradient End Color</label>
+            <div class="input-group">
+                <span class="input-group-text">#</span>
+                <input type="text" id="u_gradient_end" name="gradient_end" 
+                       class="form-control" placeholder="3a0ca3"
+                       value="{{ service.gradient_end|cut:'#' }}">
+            </div>
+            <small class="form-text text-muted">Hex color (e.g., #3a0ca3)</small>
+            <small id="u_gradient_endError" class="text-danger"></small>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Badge Color</label>
+            <div class="input-group">
+                <span class="input-group-text">#</span>
+                <input type="text" id="u_badge_color" name="badge_color" 
+                       class="form-control" placeholder="4cc9f0"
+                       value="{{ service.badge_color|cut:'#' }}">
+            </div>
+            <small class="form-text text-muted">Hex color (e.g., #4cc9f0)</small>
+            <small id="u_badge_colorError" class="text-danger"></small>
+        </div>
+    </div>
+
+      <div class="text-center mt-3">
+        <button type="submit" class="btn btn-primary">Update Service</button>
+        <button type="button" data-bs-dismiss="modal" class="btn btn-light">Cancel</button>
+    </div>
+</form>
+
+<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+
+<script>
+    document.querySelectorAll(".ckeditor-classic").forEach(function (element) {
+        ClassicEditor
+            .create(element, {
+                toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'alignment', '|', 'blockQuote', 'undo', 'redo'],
+                alignment: {
+                    options: ['left', 'center', 'right', 'justify']
+                },
+                height: '200px'
+            })
+            .then(function (editor) {
+                editor.ui.view.editable.element.style.height = '200px';
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    });
+
+    // Auto-prefix # for color inputs
+    $(document).ready(function() {
+        $('#u_gradient_start, #u_gradient_end, #u_badge_color').on('blur', function() {
+            let val = $(this).val();
+            if (val && !val.startsWith('#')) {
+                $(this).val('#' + val);
+            }
+        });
+    });
+</script>

@@ -1,0 +1,110 @@
+<form method="POST"
+      class="needs-validation testimonial_edit_form"
+      id="testimonial_edit_form"
+      novalidate
+      enctype="multipart/form-data"
+      action="{% url 'testimonial_update' testimonial.id %}">
+
+    {% csrf_token %}
+
+    <div class="row">
+
+        <!-- Name -->
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">
+                    Name <b class="text-danger">*</b>
+                </label>
+                <input type="text"
+                       class="form-control"
+                       name="u_name"
+                       value="{{ testimonial.name }}"
+                       placeholder="Ex: John Doe"
+                       required>
+                <small class="text-danger"></small>
+            </div>
+        </div>
+
+        <!-- Role -->
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">
+                    Role <b class="text-danger">*</b>
+                </label>
+                <input type="text"
+                       class="form-control"
+                       name="u_role"
+                       value="{{ testimonial.role }}"
+                       placeholder="Ex: CEO"
+                       required>
+            </div>
+        </div>
+
+        <!-- Company -->
+        <div class="col-md-12">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Company</label>
+                <input type="text"
+                       class="form-control"
+                       name="u_company"
+                       value="{{ testimonial.company }}"
+                       placeholder="Ex: ABC Corp">
+            </div>
+        </div>
+
+        <!-- Testimonial Text -->
+        <div class="col-md-12">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">
+                    Testimonial Text <b class="text-danger">*</b>
+                </label>
+                <textarea class="form-control"
+                          name="u_text"
+                          rows="4"
+                          required>{{ testimonial.text }}</textarea>
+            </div>
+        </div>
+
+        <!-- Rating -->
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Rating</label>
+                <select class="form-control" name="u_rating">
+                    {% for i in "12345" %}
+                        <option value="{{ forloop.counter }}"
+                            {% if testimonial.rating == forloop.counter %}selected{% endif %}>
+                            {{ forloop.counter }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <!-- Image -->
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Image</label>
+                <input type="file"
+                       class="form-control"
+                       name="u_image"
+                       accept="image/*">
+
+                {% if testimonial.image %}
+                    <div class="mt-2">
+                        <img src="{{ testimonial.image.url }}"
+                             style="width:60px;height:60px;object-fit:cover;border-radius:6px;">
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="text-center">
+        <button class="btn btn-primary" type="submit">Save</button>
+        <button class="btn btn-light" type="button" data-bs-dismiss="modal">
+            Cancel
+        </button>
+    </div>
+
+</form>

@@ -7,11 +7,15 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('aboutus/', views.aboutus, name='aboutus'),
     path('contact/', views.contact, name='contact'),
+
     path('services/', views.services, name='services'),
     path('services/<slug:slug>/', views.service_detail, name='service_detail'),
+
     path('portfolio/', views.portfolio, name='portfolio'),
     path('portfolio/<int:pk>/', views.portfolio_detail, name='portfolio_detail'),
     path('industries/', views.industries, name='industries'),
+    path('project-gallery/', views.project_gallery, name='project_gallery'),
+    path('project-images/<int:pk>/', views.project_images, name='project_images'),
     
         # Admin Panel Access Credentials
     # path('login', views.login, name='login'),

@@ -1,0 +1,156 @@
+{% for consultation in consultations %}
+<tr>
+    <td>{{ forloop.counter0|add:consultations.start_index }}</td>
+
+    <td>{{ consultation.name }}</td>
+    <td>{{ consultation.email }}</td>
+    <td>{{ consultation.company_name }}</td>
+
+    <!-- STATUS -->
+    <td class="text-center">
+        <span hx-get="{% url 'toggle_service_consultation_status' consultation.id %}"
+              hx-target="this"
+              hx-swap="outerHTML"
+              class="badge {% if consultation.status %}bg-success{% else %}bg-danger{% endif %}"
+              style="cursor:pointer;">
+            {% if consultation.status %}Active{% else %}Deactive{% endif %}
+        </span>
+    </td>
+
+    <td class="text-center">
+        {{ consultation.created_date|date:"d M Y, h:i A" }}
+    </td>
+
+    <!-- ACTIONS -->
+    <td class="text-center">
+
+        <!-- EDIT -->
+        <button type="button"
+                class="btn btn-primary btn-sm tooltip-custom"
+                data-bs-toggle="modal"
+                data-bs-target="#myModalEdit-consultation-{{ consultation.id }}"
+                hx-get="{% url 'get_details_service_consultation' %}"
+                hx-trigger="click"
+                hx-vals='{"get_edit":"{{ consultation.id }}"}'
+                hx-target="#consultation_edit_body-{{ consultation.id }}"
+                hx-swap="innerHTML"
+                data-tooltip="Edit">
+            <i class="ri-pencil-fill"></i>
+        </button>
+
+        <!-- DELETE -->
+        <button type="button"
+                class="btn btn-danger btn-sm tooltip-custom"
+                data-bs-toggle="modal"
+                data-bs-target="#myModalDelete-consultation-{{ consultation.id }}"
+                hx-get="{% url 'get_details_service_consultation' %}"
+                hx-trigger="click"
+                hx-vals='{"get_delete":"{{ consultation.id }}"}'
+                hx-target="#consultation_delete_body-{{ consultation.id }}"
+                hx-swap="innerHTML"
+                data-tooltip="Delete">
+            <i class="ri-delete-bin-line"></i>
+        </button>
+    </td>
+</tr>
+
+<!-- EDIT MODAL -->
+<div class="modal fade"
+     id="myModalEdit-consultation-{{ consultation.id }}"
+     tabindex="-1"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header bg-primary pb-3">
+                <h5 class="modal-title text-white mb-0">Edit Service Consultation</h5>
+                <button class="btn-close" data-bs-dismiss="modal"
+                        style="background:white"></button>
+            </div>
+
+            <div class="modal-body"
+                 id="consultation_edit_body-{{ consultation.id }}">
+               
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- DELETE MODAL -->
+<div class="modal fade"
+     id="myModalDelete-consultation-{{ consultation.id }}"
+     tabindex="-1"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header bg-danger pb-3">
+                <h5 class="modal-title text-white mb-0">Delete Service Consultation</h5>
+                <button class="btn-close" data-bs-dismiss="modal"
+                        style="background:white"></button>
+            </div>
+
+            <div class="modal-body"
+                 id="consultation_delete_body-{{ consultation.id }}">
+              
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% empty %}
+{% include 'components/no_table_data_tr.html' with span_num=7 %}
+{% endfor %}
+
+<div class="d-flex justify-content-center pt-2"
+     id="pagination_service_consultation"
+     hx-swap-oob="true">
+
+    <ul class="pagination pagination-separated pagination-sm mb-0">
+
+        {% if consultations.has_previous %}
+        <li class="page-item">
+            <a class="page-link"
+               hx-get="{% url 'get_details_service_consultation' %}?page={{ consultations.previous_page_number }}"
+               hx-target="#table-body-service-consultation"
+               hx-swap="innerHTML"
+               hx-include="[name='search']">
+               Previous
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">Previous</span></li>
+        {% endif %}
+
+        {% for page_num in consultations.paginator.page_range %}
+            {% if page_num >= consultations.number|add:-2 and page_num <= consultations.number|add:2 %}
+            <li class="page-item {% if page_num == consultations.number %}active{% endif %}">
+                <a class="page-link"
+                   hx-get="{% url 'get_details_service_consultation' %}?page={{ page_num }}"
+                   hx-target="#table-body-service-consultation"
+                   hx-swap="innerHTML"
+                   hx-include="[name='search']">
+                   {{ page_num }}
+                </a>
+            </li>
+            {% endif %}
+        {% endfor %}
+
+        {% if consultations.has_next %}
+        <li class="page-item">
+            <a class="page-link"
+               hx-get="{% url 'get_details_service_consultation' %}?page={{ consultations.next_page_number }}"
+               hx-target="#table-body-service-consultation"
+               hx-swap="innerHTML"
+               hx-include="[name='search']">
+               Next
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">Next</span></li>
+        {% endif %}
+
+    </ul>
+</div>

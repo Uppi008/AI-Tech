@@ -1,0 +1,94 @@
+<form method="POST"
+      class="needs-validation supporting_edit_form"
+      novalidate
+      action="{% url 'supporting_service_update' service.id %}">
+
+    {% csrf_token %}
+
+    <div class="row">
+
+        <!-- Title -->
+        <div class="col-md-12 mb-3">
+            <label class="form-label fw-semibold">
+                Service Title <span class="text-danger">*</span>
+            </label>
+            <input type="text"
+                   class="form-control"
+                   name="u_title"
+                   value="{{ service.title }}"
+                   required>
+        </div>
+
+        <!-- Description -->
+        <div class="col-md-12 mb-3">
+            <label class="form-label fw-semibold">
+                Description <span class="text-danger">*</span>
+            </label>
+            <textarea class="form-control"
+                      name="u_description"
+                      rows="3"
+                      required>{{ service.description }}</textarea>
+        </div>
+
+        <!-- Icon -->
+        <div class="col-md-6 mb-3">
+            <label class="form-label fw-semibold">Icon Class</label>
+            <input type="text"
+                   class="form-control"
+                   name="u_icon"
+                   value="{{ service.icon }}"
+                   placeholder="fa-solid fa-user">
+        </div>
+
+        <!-- Badge Text -->
+        <div class="col-md-6 mb-3">
+            <label class="form-label fw-semibold">Badge Text</label>
+            <input type="text"
+                   class="form-control"
+                   name="u_badge_text"
+                   value="{{ service.badge_text }}">
+        </div>
+
+        <!-- Gradient Start -->
+        <div class="col-md-4 mb-3">
+            <label class="form-label fw-semibold">Gradient Start</label>
+            <input type="color"
+                   class="form-control form-control-color"
+                   name="u_gradient_start"
+                   value="{{ service.gradient_start }}">
+        </div>
+
+        <!-- Gradient End -->
+        <div class="col-md-4 mb-3">
+            <label class="form-label fw-semibold">Gradient End</label>
+            <input type="color"
+                   class="form-control form-control-color"
+                   name="u_gradient_end"
+                   value="{{ service.gradient_end }}">
+        </div>
+
+        <!-- Badge Color -->
+        <div class="col-md-4 mb-3">
+            <label class="form-label fw-semibold">Badge Color</label>
+            <input type="color"
+                   class="form-control form-control-color"
+                   name="u_badge_color"
+                   value="{{ service.badge_color }}">
+        </div>
+
+        <!-- Order -->
+        <div class="col-md-6 mb-3">
+            <label class="form-label fw-semibold">Order</label>
+            <input type="number"
+                   class="form-control"
+                   name="u_order"
+                   value="{{ service.order }}">
+        </div>
+
+    </div>
+
+    <div class="text-center">
+        <button class="btn btn-primary" type="submit">Save</button>
+        <button class="btn btn-light" data-bs-dismiss="modal" type="button">Cancel</button>
+    </div>
+</form>

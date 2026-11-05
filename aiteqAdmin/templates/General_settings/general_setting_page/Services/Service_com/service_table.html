@@ -1,0 +1,201 @@
+{% for service in service %}
+<tr>
+    <!-- Serial Number -->
+    <td>{{ forloop.counter|add:page_obj.start_index|add:"-1" }}</td>
+
+    <!-- Icon -->
+    <td class="text-center">
+        <i class="{{ service.icon }} fa-lg" 
+           style="color: {{ service.badge_color }};"></i>
+    </td>
+
+    <!-- Title & Category -->
+    <td>
+        <div style="display: flex; flex-direction: column;">
+            <strong>{{ service.title }}</strong>
+            <small class="text-muted">{{ service.category }}</small>
+        </div>
+    </td>
+
+    <!-- Short Description -->
+    <td>{{ service.short_description|truncatechars:50 }}</td>
+
+    <!-- Created On -->
+    <td class="text-center">{{ service.created_date|date:"d M Y, h:i A" }}</td>
+
+    <!-- Status Badge -->
+    <td class="text-center">
+        <span hx-get="{% url 'toggle_service_status' service.id %}"
+              hx-target="this"
+              hx-swap="outerHTML"
+              class="badge {% if service.status %}bg-success{% else %}bg-danger{% endif %}"
+              style="cursor:pointer;">
+            {% if service.status %}Active{% else %}Inactive{% endif %}
+        </span>
+    </td>
+
+    <!-- Action Buttons -->
+    <td class="text-center">
+        <!-- View -->
+        <button type="button" class="btn btn-info btn-sm tooltip-custom"
+                data-bs-toggle="modal"
+                data-bs-target="#myModalView-service-{{ service.id }}"
+                hx-get="{% url 'get_details_service' %}?get_view={{ service.id }}"
+                hx-target="#service_view_body-{{ service.id }}"
+                hx-swap="innerHTML"
+                data-placement="top" data-tooltip="View">
+            <i class="ri-eye-line"></i>
+        </button>
+        
+        <!-- Edit -->
+        <button type="button"
+                class="btn btn-primary btn-sm tooltip-custom"
+                data-bs-toggle="modal"
+                data-bs-target="#myModalEdit-service-{{ service.id }}"
+                hx-get="{% url 'get_details_service' %}?get_edit={{ service.id }}"
+                hx-target="#service_edit_body-{{ service.id }}"
+                hx-swap="innerHTML"
+                hx-trigger="click"
+                data-placement="top" data-tooltip="Edit">
+            <i class="ri-pencil-fill"></i>
+        </button>
+
+        <!-- Delete -->
+        <button type="button"
+                class="btn btn-danger btn-sm tooltip-custom"
+                data-bs-toggle="modal"
+                data-bs-target="#myModalDelete-service-{{ service.id }}"
+                hx-get="{% url 'get_details_service' %}?get_delete={{ service.id }}"
+                hx-target="#service_delete_body-{{ service.id }}"
+                hx-swap="innerHTML"
+                hx-trigger="click"
+                data-placement="top" data-tooltip="Delete">
+            <i class="ri-delete-bin-line"></i>
+        </button>
+    </td>
+</tr>
+
+<!-- View Modal -->
+<div class="modal fade" id="myModalView-service-{{ service.id }}" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white">View Service</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" style="background-color: white;" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="service_view_body-{{ service.id }}">
+                <!-- Content will be loaded via HTMX -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="myModalEdit-service-{{ service.id }}" tabindex="-1" aria-hidden="true" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white">Edit Service</h5>
+                <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" style="background-color: white;" type="button"></button>
+            </div>
+            <div class="modal-body" id="service_edit_body-{{ service.id }}">
+                <!-- Content will be loaded via HTMX -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="myModalDelete-service-{{ service.id }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title text-white">Delete Service</h5>
+                <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" style="background-color: white;" type="button"></button>
+            </div>
+            <div class="modal-body" id="service_delete_body-{{ service.id }}">
+                <!-- Content will be loaded via HTMX -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% empty %}
+{% include 'components/no_table_data_tr.html' with span_num=7 %}
+{% endfor %}
+
+<!-- Pagination -->
+<div class="d-flex justify-content-center pt-2" id="paginatin_div_service" hx-swap-oob="true">
+    <ul class="pagination pagination-separated pagination-sm justify-content-center justify-content-sm-start mb-0">
+        {% if service.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="#"
+                   hx-get="{% url 'get_details_service' %}?page={{ service.previous_page_number }}"  
+                   hx-target="#table-body-service"
+                   hx-swap="innerHTML"
+                   hx-include="#search_input_service">Previous</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#">Previous</a>
+            </li>
+        {% endif %}
+       
+        {% if service.number > 3 %}
+            <li class="page-item">
+                <a class="page-link" href="#"
+                   hx-get="{% url 'get_details_service' %}?page=1"
+                   hx-target="#table-body-service"
+                   hx-swap="innerHTML"
+                   hx-include="#search_input_service">1</a>
+            </li>
+            {% if service.number > 4 %}
+                <li class="page-item disabled">
+                    <span class="page-link">...</span>
+                </li>
+            {% endif %}
+        {% endif %}
+       
+        {% for page_num in service.paginator.page_range %}
+            {% if page_num >= service.number|add:-2 and page_num <= service.number|add:2 %}
+                <li class="page-item {% if page_num == service.number %}active{% endif %}">
+                    <a class="page-link" href="#"
+                       hx-get="{% url 'get_details_service' %}?page={{ page_num }}"
+                       hx-target="#table-body-service"
+                       hx-swap="innerHTML"
+                       hx-include="#search_input_service">{{ page_num }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+       
+        {% if service.number < service.paginator.num_pages|add:-2 %}
+            {% if service.number < service.paginator.num_pages|add:-3 %}
+                <li class="page-item disabled">
+                    <span class="page-link">...</span>
+                </li>
+            {% endif %}
+            <li class="page-item">
+                <a class="page-link" href="#"
+                   hx-get="{% url 'get_details_service' %}?page={{ service.paginator.num_pages }}"
+                   hx-target="#table-body-service"
+                   hx-swap="innerHTML"
+                   hx-include="#search_input_service">{{ service.paginator.num_pages }}</a>
+            </li>
+        {% endif %}
+       
+        {% if service.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="#"
+                   hx-get="{% url 'get_details_service' %}?page={{ service.next_page_number }}"
+                   hx-target="#table-body-service"
+                   hx-swap="innerHTML"
+                   hx-include="#search_input_service">Next</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        {% endif %}
+    </ul>
+</div>

@@ -1,0 +1,86 @@
+<form method="POST"
+      class="needs-validation service_consultation_form"
+      id="service_consultation_form"
+      novalidate
+      action="{% url 'service_consultation_update' consultation.id %}">
+
+    {% csrf_token %}
+
+    <div class="row">
+
+        <!-- NAME -->
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">
+                    Name <b class="text-danger">*</b>
+                </label>
+                <input type="text"
+                       class="form-control"
+                       name="u_name"
+                       value="{{ consultation.name }}"
+                       required>
+            </div>
+        </div>
+
+        <!-- EMAIL -->
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">
+                    Email <b class="text-danger">*</b>
+                </label>
+                <input type="email"
+                       class="form-control"
+                       name="u_email"
+                       value="{{ consultation.email }}"
+                       required>
+            </div>
+        </div>
+
+        <!-- COMPANY NAME -->
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">
+                    Company Name <b class="text-danger">*</b>
+                </label>
+                <input type="text"
+                       class="form-control"
+                       name="u_company_name"
+                       value="{{ consultation.company_name }}"
+                       required>
+            </div>
+        </div>
+
+        <!-- PHONE -->
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">
+                    Phone
+                </label>
+                <input type="text"
+                       class="form-control"
+                       name="u_phone"
+                       value="{{ consultation.phone }}">
+            </div>
+        </div>
+
+        <!-- DESCRIPTION -->
+        <div class="col-md-12">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">
+                    Description <b class="text-danger">*</b>
+                </label>
+                <textarea class="form-control"
+                          name="u_description"
+                          rows="3"
+                          required>{{ consultation.description }}</textarea>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="text-center">
+        <button class="btn btn-primary" type="submit">Save</button>
+        <button class="btn btn-light" type="button" data-bs-dismiss="modal">Cancel</button>
+    </div>
+
+</form>

@@ -1,0 +1,147 @@
+{% extends 'aiteq/base_admin.html' %}
+{% block title %} Testimonials {% endblock %}
+{% block content %}
+{% load static %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<div class="app-content-header mt-3 pt-3">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-6">
+        <h4 class="mb-0">Testimonials</h4>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-end">
+          <li class="breadcrumb-item"><a href="{% url 'general_settings' %}">Settings</a></li>
+          <li class="breadcrumb-item active">Testimonials</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+
+        <!-- Top Actions -->
+        <div class="row align-items-center mb-3 g-2">
+
+          <div class="col-12 col-md">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#testimonialCreateModal">
+              <i class="ri-add-line me-1"></i> Add Testimonial
+            </button>
+          </div>
+
+          <!-- Search -->
+          <div class="col-12 col-md-4">
+            <input type="text"
+                   class="form-control"
+                   name="search"
+                   placeholder="Search testimonial..."
+                   hx-get="{% url 'get_details_testimonial' %}"
+                   hx-trigger="input change delay:300ms"
+                   hx-target="#testimonial-table-body"
+                   hx-swap="innerHTML">
+          </div>
+
+        </div>
+
+        <!-- Table -->
+        <div class="table-responsive">
+          <table class="table table-nowrap mb-0">
+            <thead class="bg-primary">
+              <tr>
+                <th class="text-white">Sno</th>
+                <th class="text-white">Name</th>
+                <th class="text-white">Role</th>
+                <th class="text-white">Company</th>
+                <th class="text-white">Rating</th>
+                <th class="text-white text-center">Status</th>
+                <th class="text-white text-center">Actions</th>
+              </tr>
+            </thead>
+
+            <tbody id="testimonial-table-body"
+                   hx-get="{% url 'get_details_testimonial' %}"
+                   hx-trigger="load once"
+                   hx-swap="innerHTML">
+            </tbody>
+          </table>
+        </div>
+
+        <div class="d-flex justify-content-center mt-3" id="pagination_div_testimonial"></div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= CREATE MODAL ================= -->
+<div class="modal fade" id="testimonialCreateModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <div class="modal-header bg-primary">
+        <h5 class="modal-title text-white">Add Testimonial</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <form method="POST" enctype="multipart/form-data" action="{% url 'testimonial_list' %}">
+          {% csrf_token %}
+
+          <div class="mb-3">
+            <label>Name <span class="text-danger">*</span></label>
+            <input type="text" name="name" class="form-control" required>
+          </div>
+
+          <div class="mb-3">
+            <label>Role <span class="text-danger">*</span></label>
+            <input type="text" name="role" class="form-control" required>
+          </div>
+
+          <div class="mb-3">
+            <label>Company</label>
+            <input type="text" name="company" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label>Testimonial Text <span class="text-danger">*</span></label>
+            <textarea name="text" class="form-control" rows="4" required></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label>Rating</label>
+            <select name="rating" class="form-control">
+              {% for i in "12345" %}
+                <option value="{{ forloop.counter }}">{{ forloop.counter }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label>Image</label>
+            <input type="file" name="image" class="form-control" accept="image/*">
+          </div>
+
+          <div class="form-check mb-3">
+            <input type="checkbox" name="is_active" class="form-check-input" checked>
+            <label class="form-check-label">Active</label>
+          </div>
+
+          <div class="text-center">
+            <button class="btn btn-primary">Create</button>
+            <button class="btn btn-light" data-bs-dismiss="modal" type="button">Cancel</button>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,190 @@
+{% for i in services %}
+<tr>
+    <td>{{ forloop.counter0|add:services.start_index }}</td>
+    <td>
+    <div style="display:flex;align-items:center;gap:8px;">
+        {% if i.icon %}
+            <i class="fas {{ i.icon }}"
+               style="
+                    font-size:22px;
+                    width:40px;
+                    height:40px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    background:#f8f9fa;
+                    border-radius:4px;
+               ">
+            </i>
+        {% else %}
+            <i class="fas fa-image"></i>
+        {% endif %}
+        <span>{{ i.title }}</span>
+    </div>
+</td>
+
+    <td>{{ i.description }}</td>
+    <td>{{ i.badge_text }}</td>
+    <td>{{ i.gradient_start }}</td>
+    <td>{{ i.gradient_end }}</td>
+    <td>{{ i.badge_color }}</td>
+
+    <td class="text-center">
+        <span
+            hx-get="{% url 'toggle_supporting_service_status' i.id %}"
+            hx-target="this"
+            hx-swap="outerHTML"
+            class="badge {% if i.status %}bg-success{% else %}bg-danger{% endif %}"
+            style="cursor:pointer;"
+        >
+            {% if i.status %}Active{% else %}Inactive{% endif %}
+        </span>
+    </td>
+
+    <td class="text-center">
+        {{ i.created_at|date:"d M Y, h:i A" }}
+    </td>
+
+    <td class="text-center">
+        <!-- Edit -->
+       <button
+    type="button"
+    class="btn btn-primary btn-sm"
+    data-bs-toggle="modal"
+    data-bs-target="#editModal-{{ i.id }}"
+    hx-get="{% url 'get_details_supporting_service' %}?get_edit={{ i.id }}"
+    hx-target="#edit-body-{{ i.id }}"
+    hx-swap="innerHTML"
+    hx-trigger="click"
+>
+    <i class="ri-pencil-fill"></i>
+</button>
+
+
+        <!-- Delete -->
+        <button
+            class="btn btn-danger btn-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#deleteModal-{{ i.id }}"
+            hx-get="{% url 'get_details_supporting_service' %}?get_delete={{ i.id }}"
+            hx-target="#delete-body-{{ i.id }}"
+            hx-swap="innerHTML"
+        >
+            <i class="ri-delete-bin-line"></i>
+        </button>
+    </td>
+</tr>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal-{{ i.id }}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5>Edit Supporting Service</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="edit-body-{{ i.id }}">
+
+                <div class="text-center py-3">
+                    <div class="spinner-border text-primary"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal-{{ i.id }}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5>Delete Supporting Service</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="delete-body-{{ i.id }}">
+                <div class="text-center py-3">
+                    <div class="spinner-border text-danger"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% empty %}
+{% include 'components/no_table_data_tr.html' with span_num=10 %}
+{% endfor %}
+
+
+<!-- Pagination -->
+<div class="d-flex justify-content-center pt-2" id="paginatin_div_service" hx-swap-oob="true">
+    <ul class="pagination pagination-separated pagination-sm justify-content-center justify-content-sm-start mb-0">
+        {% if services.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="#"
+                   hx-get="{% url 'get_details_supporting_service' %}?page={{ services.previous_page_number }}"
+                   hx-target="#service-table-body"
+                   hx-swap="innerHTML"
+                   hx-include="#search_input_service">Previous</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#">Previous</a>
+            </li>
+        {% endif %}
+       
+        {% if services.number > 3 %}
+            <li class="page-item">
+                <a class="page-link" href="#"
+                   hx-get="{% url 'get_details_supporting_service' %}?page=1"
+                   hx-target="#service-table-body"
+                   hx-swap="innerHTML"
+                   hx-include="#search_input_service">1</a>
+            </li>
+            {% if services.number > 4 %}
+                <li class="page-item disabled">
+                    <span class="page-link">...</span>
+                </li>
+            {% endif %}
+        {% endif %}
+       
+        {% for page_num in services.paginator.page_range %}
+            {% if page_num >= services.number|add:-2 and page_num <= services.number|add:2 %}
+                <li class="page-item {% if page_num == services.number %}active{% endif %}">
+                    <a class="page-link" href="#"
+                       hx-get="{% url 'get_details_supporting_service' %}?page={{ page_num }}"
+                       hx-target="#service-table-body"
+                       hx-swap="innerHTML"
+                       hx-include="#search_input_service">{{ page_num }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+       
+        {% if services.number < services.paginator.num_pages|add:-2 %}
+            {% if services.number < services.paginator.num_pages|add:-3 %}
+                <li class="page-item disabled">
+                    <span class="page-link">...</span>
+                </li>
+            {% endif %}
+            <li class="page-item">
+                <a class="page-link" href="#"
+                   hx-get="{% url 'get_details_supporting_service' %}?page={{ services.paginator.num_pages }}"
+                   hx-target="#service-table-body"
+                   hx-swap="innerHTML"
+                   hx-include="#search_input_service">{{ services.paginator.num_pages }}</a>
+            </li>
+        {% endif %}
+       
+        {% if services.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="#"
+                   hx-get="{% url 'get_details_supporting_service' %}?page={{ services.next_page_number }}"
+                   hx-target="#service-table-body"
+                   hx-swap="innerHTML"
+                   hx-include="#search_input_service">Next</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        {% endif %}
+    </ul>
+</div>

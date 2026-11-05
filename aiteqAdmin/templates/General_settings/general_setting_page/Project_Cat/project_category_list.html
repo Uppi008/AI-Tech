@@ -1,0 +1,132 @@
+{% extends 'aiteq/base_admin.html' %}
+{% block title %}Project Category{% endblock %}
+{% load static %}
+
+{% block style %}
+<!-- Add any additional CSS here -->
+{% endblock %}
+
+{% block content %}
+
+<div class="app-content-header mt-3 pt-3">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-6"><h4 class="mb-0">Project Category</h4></div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-end">
+          <li class="breadcrumb-item"><a href="{% url 'general_settings' %}">Settings</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'general_settings' %}#Projects">Projects</a></li>
+          <li class="breadcrumb-item active">Project Category</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+
+<!-- Add Category + Search Row -->
+<div class="row align-items-center mb-3">
+    <div class="col-12 col-md-8 mb-2 mb-md-0">
+        <button type="button" class="btn btn-primary" 
+                data-bs-toggle="modal" data-bs-target="#myModalcreate-project">
+            <i class="ri-add-line align-bottom me-1"></i> Add Project Category
+        </button>
+    </div>
+
+    <!-- Search bar -->
+    <div class="col-12 col-md-4">
+        <input type="text" class="form-control" id="search_input_project" name="search" 
+               hx-get="{% url 'get_project_category_details' %}" 
+               hx-trigger="input change delay:500ms" 
+               hx-target="#table-body-project-cat" 
+               hx-swap="innerHTML" 
+               placeholder="Search...">
+    </div>
+</div>
+
+<!-- Table -->
+<div class="table-responsive">
+    <table class="table mb-0 table-nowrap">
+        <thead>
+            <tr class="bg-primary">
+                <th class="text-white">S.No</th>
+                <th class="text-white">Project Category Name</th>
+                <th class="text-white text-center">Status</th>
+                <th class="text-white text-center">Created At</th>
+                <th class="text-white text-center">Actions</th>
+            </tr>
+        </thead>
+
+        <tbody 
+            id="table-body-project-cat"
+            hx-get="{% url 'get_project_category_details' %}"
+            hx-trigger="load once"
+            hx-target="this"
+            hx-swap="innerHTML">
+            <!-- Content will be loaded via HTMX -->
+            {% include 'components/searching_recording.html' with span_num=5 %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Pagination -->
+<div class="d-flex justify-content-center" id="paginatin_div_project_cat"></div>
+
+</div>
+</div>
+</div>
+</div>
+
+<!-- Create Project Category Modal -->
+<div id="myModalcreate-project" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary pb-3">
+                <h5 class="modal-title text-white mb-0">Add Project Category</h5>
+                <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" style="background-color: white;" type="button"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" id="project_category_form" class="needs-validation" novalidate action="{% url 'project_category_list' %}">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label for="name" class="form-label fw-semibold">Name <b class="text-danger">*</b></label>
+                            <input type="text" class="form-control" name="name" id="name" placeholder="Ex: AI Projects" required>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <label for="description" class="form-label fw-semibold">Description</label>
+                            <textarea class="form-control" name="description" id="description" rows="3" placeholder="Optional description"></textarea>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="icon" class="form-label fw-semibold">Icon</label>
+                            <input type="text" class="form-control" name="icon" id="icon" placeholder="FontAwesome class, e.g., fas fa-brain">
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="color" class="form-label fw-semibold">Color</label>
+                            <input type="color" class="form-control form-control-color" name="color" id="color" value="#1976d2">
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="order" class="form-label fw-semibold">Order</label>
+                            <input type="number" class="form-control" name="order" id="order" value="0">
+                        </div>
+                    </div>
+
+                    <div class="text-center justify-content-center gap-2">
+                        <button class="btn btn-primary" type="submit">Create</button>
+                        <button class="btn btn-light" data-bs-dismiss="modal" type="button">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

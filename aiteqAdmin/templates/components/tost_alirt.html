@@ -1,0 +1,41 @@
+{% if messages %}
+    <!-- Toast container: fixed in top-right with padding -->
+    <div class="toast-container position-fixed top-1 end-0 p-3" style="z-index: 1100;">
+        {% for message in messages %}
+            <div id="toast-{{ forloop.counter }}" class="toast toast-border-{{ message.tags }} alert-top-border alert alert-{{message.tags}} overflow-hidden mb-3" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="5000">
+                <div class="toast-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0 me-2">
+                            {% if message.tags == "success" %}
+                                <i class="ri-checkbox-circle-line align-middle"></i>
+                            {% elif message.tags == "danger" or message.tags == "error" %}
+                                <i class="ri-alert-line align-middle"></i>
+                            {% else %}
+                                <i class="ri-information-line align-middle"></i>
+                            {% endif %}
+                        </div>
+                        <div class="flex-grow-1">
+                            <h6 class="mb-0">{{ message }}</h6>
+                        </div>
+                        <button type="button" class="btn-close ms-2 mb-1" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+ 
+    <!-- Initialize all toasts on page load -->
+    <script>
+      function showToasts() {
+    document.querySelectorAll('.toast').forEach(function (toastEl) {
+        new bootstrap.Toast(toastEl).show();
+    });
+        }
+ 
+    // Call showToasts after 5 seconds
+    setTimeout(showToasts, 400);
+ 
+    </script>
+{% endif %}
+ 
+ 

@@ -1,0 +1,141 @@
+{% extends 'aiteq/base_admin.html' %}
+{% block title %}Service Consultation{% endblock %}
+{% load static %}
+
+{% block style %}
+{% endblock %}
+
+{% block content %}
+
+<div class="app-content-header">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-6">
+        <h4 class="mb-0">Service Consultation</h4>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-end">
+          <li class="breadcrumb-item"><a href="{% url 'general_settings' %}">Settings</a></li>
+          <li class="breadcrumb-item active">Service Consultation</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+
+        <!-- Add + Search -->
+        <div class="row align-items-center mb-3">
+          <div class="col-12 col-md-8 mb-2 mb-md-0">
+            <button type="button" class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#myModalCreateConsultation">
+              <i class="ri-add-line me-1"></i> Add Consultation
+            </button>
+          </div>
+
+          <!-- Search -->
+          <div class="col-12 col-md-4">
+            <input type="text"
+                   class="form-control"
+                   name="search"
+                   hx-get="{% url 'get_details_service_consultation' %}"
+                   hx-trigger="input change delay:500ms"
+                   hx-target="#table-body-service-consultation"
+                   hx-swap="innerHTML"
+                   placeholder="Search by name, email, company...">
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-responsive">
+          <table class="table table-nowrap mb-0">
+            <thead>
+              <tr class="bg-primary">
+                <th class="text-white">S.No</th>
+                <th class="text-white">Name</th>
+                <th class="text-white">Email</th>
+                <th class="text-white">Company</th>
+                <th class="text-white text-center">Status</th>
+                <th class="text-white text-center">Created</th>
+                <th class="text-white text-center">Actions</th>
+              </tr>
+            </thead>
+
+            <tbody id="table-body-service-consultation"
+                   hx-get="{% url 'get_details_service_consultation' %}"
+                   hx-trigger="load once"
+                   hx-target="this"
+                   hx-swap="innerHTML">
+              {% include 'components/searching_recording.html' with span_num=7 %}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="d-flex justify-content-center" id="pagination_service_consultation"></div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CREATE MODAL -->
+<div id="myModalCreateConsultation" class="modal fade" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <div class="modal-header bg-primary">
+        <h5 class="modal-title text-white">Add Service Consultation</h5>
+        <button class="btn-close" data-bs-dismiss="modal" style="background:white"></button>
+      </div>
+
+      <div class="modal-body">
+        <form method="POST"
+              action="{% url 'service_consultation_list' %}"
+              class="needs-validation"
+              novalidate>
+          {% csrf_token %}
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Name <b class="text-danger">*</b></label>
+              <input type="text" name="name" class="form-control" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Email <b class="text-danger">*</b></label>
+              <input type="email" name="email" class="form-control" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Company Name <b class="text-danger">*</b></label>
+              <input type="text" name="company_name" class="form-control" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Phone</label>
+              <input type="text" name="phone" class="form-control">
+            </div>
+
+            <div class="col-md-12 mb-3">
+              <label class="form-label">Description <b class="text-danger">*</b></label>
+              <textarea name="description" rows="3" class="form-control" required></textarea>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <button class="btn btn-primary" type="submit">Create</button>
+            <button class="btn btn-light" type="button" data-bs-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

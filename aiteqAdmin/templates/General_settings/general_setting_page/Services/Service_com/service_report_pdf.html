@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: Helvetica, Arial, sans-serif; font-size: 11px; color: #222; }
+        h2 { margin-bottom: 4px; }
+        .subtitle { color: #666; margin-bottom: 16px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ccc; padding: 6px 8px; text-align: left; }
+        th { background-color: #405189; color: #fff; }
+        .status-active { color: #1a7f37; font-weight: bold; }
+        .status-inactive { color: #b91c1c; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h2>Service Report</h2>
+    <p class="subtitle">Period: {{ service_startdatereport }} &ndash; {{ service_enddatereport }}</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>S.No</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Created Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for service in service_list %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ service.title }}</td>
+                <td>{{ service.category }}</td>
+                <td class="{% if service.status %}status-active{% else %}status-inactive{% endif %}">
+                    {% if service.status %}Active{% else %}Inactive{% endif %}
+                </td>
+                <td>{{ service.created_date|date:"d-m-Y" }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5">No services found for this period.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -3,103 +3,64 @@
 
 {% block title %}Industries We Serve - AI Solutions Across Sectors{% endblock %}
 
-{% block content %}
-
+{% block extra_css %}
 <style>
-    /* Industries Hero Section */
-    .industries-hero-section {
-        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-        padding: 150px 0 80px;
-        color: white;
-        position: relative;
-        overflow: hidden;
+    .page-hero {
+        padding: 160px 0 90px;
         text-align: center;
+        background: radial-gradient(circle at 20% 20%, rgba(67, 97, 238, 0.16), transparent 45%),
+                    radial-gradient(circle at 80% 10%, rgba(76, 201, 240, 0.14), transparent 40%),
+                    var(--bg-color);
     }
 
-    .industries-hero-section::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    }
-
-    /* Industries Grid */
-    .industries-grid-section {
-        padding: 80px 0;
-        background: #f8f9fa;
-    }
+    .page-hero h1 { font-size: 2.8rem; font-weight: 800; }
+    .page-hero p { max-width: 640px; margin: 0 auto 32px; font-size: 1.1rem; }
 
     .industry-card {
-        background: white;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
         border-radius: 20px;
-        padding: 40px 30px;
+        padding: 36px 30px;
         text-align: center;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-        transition: all 0.3s ease;
         height: 100%;
-        border: 1px solid #f0f0f0;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .industry-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 4px;
-        background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
-        transform: scaleX(0);
-        transition: transform 0.3s ease;
-    }
-
-    .industry-card:hover::before {
-        transform: scaleX(1);
+        transition: all 0.3s ease;
     }
 
     .industry-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        transform: translateY(-8px);
+        border-color: var(--accent-color);
+        box-shadow: 0 20px 40px rgba(20, 20, 40, 0.1);
     }
 
     .industry-icon {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+        width: 72px;
+        height: 72px;
+        border-radius: 18px;
+        background: var(--gradient-accent);
         display: flex;
         align-items: center;
         justify-content: center;
-        margin: 0 auto 25px;
-        color: white;
-        font-size: 2rem;
-        box-shadow: 0 8px 20px rgba(0, 188, 212, 0.3);
-        transition: all 0.3s ease;
-    }
-
-    .industry-card:hover .industry-icon {
-        transform: scale(1.1) rotate(5deg);
+        margin: 0 auto 22px;
+        color: #fff;
+        font-size: 1.7rem;
     }
 
     .industry-features {
         list-style: none;
         padding: 0;
-        margin: 20px 0 0;
+        margin: 18px 0 0;
         text-align: left;
     }
 
     .industry-features li {
-        padding: 8px 0;
-        color: #555;
+        padding: 6px 0;
+        color: var(--text-muted);
         position: relative;
-        padding-left: 25px;
+        padding-left: 24px;
+        font-size: 0.92rem;
     }
 
-    .industry-features li:before {
+    .industry-features li::before {
         content: '✓';
         position: absolute;
         left: 0;
@@ -107,354 +68,213 @@
         font-weight: bold;
     }
 
-    /* Use Cases Section */
-    .usecases-section {
-        padding: 80px 0;
-        background: white;
-    }
-
     .usecase-card {
-        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-left: 4px solid var(--primary-color);
         padding: 30px;
-        border-radius: 15px;
-        transition: all 0.3s ease;
+        border-radius: 16px;
         height: 100%;
-        border-left: 4px solid var(--accent-color);
+        transition: all 0.3s ease;
     }
 
     .usecase-card:hover {
-        transform: translateY(-5px);
-        background: linear-gradient(135deg, var(--light-color), #e3f2fd);
+        transform: translateY(-4px);
     }
 
-    /* CTA Section */
-    .industries-cta {
-        background: linear-gradient(135deg, var(--dark-color), var(--primary-color));
-        color: white;
-        padding: 80px 0;
+    .final-cta {
+        border-radius: 28px;
+        padding: 70px 40px;
         text-align: center;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .industries-cta::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M0 0h40v40H0V0zm1 1h38v38H1V1z'/%3E%3C/g%3E%3C/svg%3E");
+        background: var(--gradient);
+        color: #fff;
     }
 </style>
+{% endblock %}
 
-<!-- Hero Section -->
-<section class="industries-hero-section">
+{% block content %}
+
+<!-- Hero -->
+<section class="page-hero">
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div data-aos="fade-up">
-                    <span class="feature-badge" style="background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); color: white; padding: 8px 20px; border-radius: 25px; font-size: 0.9rem; font-weight: 600; display: inline-block; margin-bottom: 20px; border: 1px solid rgba(255, 255, 255, 0.3);">INDUSTRY SOLUTIONS</span>
-                    <h1 class="display-4 fw-bold mb-4">AI Solutions for Every Industry</h1>
-                    <p class="lead mb-4">
-                        We deliver cutting-edge artificial intelligence solutions tailored to the unique challenges 
-                        and opportunities of your industry. Transform your business with AI-driven innovation.
-                    </p>
-                    <div data-aos="fade-up" data-aos-delay="200">
-                        <a href="#industries-grid" class="btn btn-primary-custom me-3">Explore Industries</a>
-                        <a href="#use-cases" class="btn btn-outline-light">View Use Cases</a>
-                    </div>
-                </div>
-            </div>
+        <span class="section-eyebrow" data-aos="fade-up">Industry Solutions</span>
+        <h1 data-aos="fade-up" data-aos-delay="100">AI Solutions for <span class="text-gradient">Every Industry</span></h1>
+        <p data-aos="fade-up" data-aos-delay="150">
+            We deliver artificial intelligence solutions tailored to the unique challenges and opportunities
+            of your industry.
+        </p>
+        <div class="d-flex flex-wrap justify-content-center gap-3" data-aos="fade-up" data-aos-delay="200">
+            <a href="#industries-grid" class="btn btn-gradient">Explore Industries</a>
+            <a href="#use-cases" class="btn btn-outline-brand">View Use Cases</a>
         </div>
     </div>
 </section>
 
-<!-- Industries Grid Section -->
-<section class="industries-grid-section" id="industries-grid">
+<!-- Industries Grid -->
+<section class="py-5" id="industries-grid" style="padding-top:20px !important; padding-bottom:100px !important;">
     <div class="container">
         <div class="row mb-5">
-            <div class="col-lg-8 mx-auto text-center">
-                <h2 class="section-title" data-aos="fade-up">Industries We Transform</h2>
-                <p class="lead" data-aos="fade-up" data-aos-delay="100">
-                    Discover how AI is revolutionizing different sectors with tailored solutions
-                </p>
+            <div class="col-lg-8 mx-auto text-center" data-aos="fade-up">
+                <h2 class="section-title display-6">Industries We Transform</h2>
+                <p class="section-subtitle">Discover how AI is revolutionizing different sectors with tailored solutions.</p>
             </div>
         </div>
 
         <div class="row g-4">
-            <!-- Healthcare -->
             <div class="col-lg-4 col-md-6" data-aos="fade-up">
                 <div class="industry-card">
-                    <div class="industry-icon">
-                        <i class="fas fa-heartbeat"></i>
-                    </div>
-                    <h4>Healthcare</h4>
-                    <p class="text-muted mb-4">
-                        Transform patient care with AI-powered diagnostics, treatment optimization, 
-                        and operational efficiency solutions.
-                    </p>
+                    <div class="industry-icon"><i class="fas fa-heartbeat"></i></div>
+                    <h4 class="h5 fw-bold">Healthcare</h4>
+                    <p class="mb-0">Transform patient care with AI-powered diagnostics, treatment optimization, and operational efficiency.</p>
                     <ul class="industry-features">
                         <li>Medical imaging analysis</li>
                         <li>Predictive patient outcomes</li>
                         <li>Drug discovery acceleration</li>
                         <li>Personalized treatment plans</li>
-                        <li>Operational workflow optimization</li>
                     </ul>
-                    <div class="mt-4">
-                        <a href="{% url 'contact' %}?industry=healthcare" class="btn btn-sm btn-primary-custom">
-                            Discuss Healthcare AI
-                        </a>
-                    </div>
+                    <a href="{% url 'contact' %}" class="btn btn-outline-brand btn-sm mt-3">Discuss Healthcare AI</a>
                 </div>
             </div>
 
-            <!-- Finance -->
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                 <div class="industry-card">
-                    <div class="industry-icon">
-                        <i class="fas fa-university"></i>
-                    </div>
-                    <h4>Finance & Banking</h4>
-                    <p class="text-muted mb-4">
-                        Enhance financial services with AI-driven risk assessment, fraud detection, 
-                        and personalized customer experiences.
-                    </p>
+                    <div class="industry-icon"><i class="fas fa-university"></i></div>
+                    <h4 class="h5 fw-bold">Finance &amp; Banking</h4>
+                    <p class="mb-0">Enhance financial services with AI-driven risk assessment, fraud detection, and customer experiences.</p>
                     <ul class="industry-features">
                         <li>Fraud detection systems</li>
                         <li>Algorithmic trading</li>
                         <li>Credit risk assessment</li>
-                        <li>Customer service automation</li>
                         <li>Regulatory compliance</li>
                     </ul>
-                    <div class="mt-4">
-                        <a href="{% url 'contact' %}?industry=finance" class="btn btn-sm btn-primary-custom">
-                            Discuss Finance AI
-                        </a>
-                    </div>
+                    <a href="{% url 'contact' %}" class="btn btn-outline-brand btn-sm mt-3">Discuss Finance AI</a>
                 </div>
             </div>
 
-            <!-- Retail -->
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
                 <div class="industry-card">
-                    <div class="industry-icon">
-                        <i class="fas fa-shopping-cart"></i>
-                    </div>
-                    <h4>Retail & E-commerce</h4>
-                    <p class="text-muted mb-4">
-                        Revolutionize retail with AI-powered personalization, inventory optimization, 
-                        and customer experience enhancement.
-                    </p>
+                    <div class="industry-icon"><i class="fas fa-cart-shopping"></i></div>
+                    <h4 class="h5 fw-bold">Retail &amp; E-commerce</h4>
+                    <p class="mb-0">Revolutionize retail with AI-powered personalization, inventory optimization, and better experiences.</p>
                     <ul class="industry-features">
                         <li>Personalized recommendations</li>
                         <li>Demand forecasting</li>
                         <li>Inventory optimization</li>
-                        <li>Customer sentiment analysis</li>
                         <li>Dynamic pricing strategies</li>
                     </ul>
-                    <div class="mt-4">
-                        <a href="{% url 'contact' %}?industry=retail" class="btn btn-sm btn-primary-custom">
-                            Discuss Retail AI
-                        </a>
-                    </div>
+                    <a href="{% url 'contact' %}" class="btn btn-outline-brand btn-sm mt-3">Discuss Retail AI</a>
                 </div>
             </div>
 
-            <!-- Manufacturing -->
             <div class="col-lg-4 col-md-6" data-aos="fade-up">
                 <div class="industry-card">
-                    <div class="industry-icon">
-                        <i class="fas fa-industry"></i>
-                    </div>
-                    <h4>Manufacturing</h4>
-                    <p class="text-muted mb-4">
-                        Optimize manufacturing processes with AI-driven quality control, 
-                        predictive maintenance, and supply chain optimization.
-                    </p>
+                    <div class="industry-icon"><i class="fas fa-industry"></i></div>
+                    <h4 class="h5 fw-bold">Manufacturing</h4>
+                    <p class="mb-0">Optimize manufacturing with AI-driven quality control, predictive maintenance, and supply chain planning.</p>
                     <ul class="industry-features">
                         <li>Predictive maintenance</li>
                         <li>Quality control automation</li>
                         <li>Supply chain optimization</li>
                         <li>Production planning</li>
-                        <li>Energy consumption optimization</li>
                     </ul>
-                    <div class="mt-4">
-                        <a href="{% url 'contact' %}?industry=manufacturing" class="btn btn-sm btn-primary-custom">
-                            Discuss Manufacturing AI
-                        </a>
-                    </div>
+                    <a href="{% url 'contact' %}" class="btn btn-outline-brand btn-sm mt-3">Discuss Manufacturing AI</a>
                 </div>
             </div>
 
-            <!-- Logistics -->
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                 <div class="industry-card">
-                    <div class="industry-icon">
-                        <i class="fas fa-truck"></i>
-                    </div>
-                    <h4>Logistics & Supply Chain</h4>
-                    <p class="text-muted mb-4">
-                        Streamline logistics operations with AI-powered route optimization, 
-                        demand forecasting, and warehouse automation.
-                    </p>
+                    <div class="industry-icon"><i class="fas fa-truck-fast"></i></div>
+                    <h4 class="h5 fw-bold">Logistics &amp; Supply Chain</h4>
+                    <p class="mb-0">Streamline logistics with AI-powered route optimization, demand forecasting, and warehouse automation.</p>
                     <ul class="industry-features">
                         <li>Route optimization</li>
                         <li>Demand forecasting</li>
                         <li>Warehouse automation</li>
                         <li>Delivery time prediction</li>
-                        <li>Inventory management</li>
                     </ul>
-                    <div class="mt-4">
-                        <a href="{% url 'contact' %}?industry=logistics" class="btn btn-sm btn-primary-custom">
-                            Discuss Logistics AI
-                        </a>
-                    </div>
+                    <a href="{% url 'contact' %}" class="btn btn-outline-brand btn-sm mt-3">Discuss Logistics AI</a>
                 </div>
             </div>
 
-            <!-- Education -->
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
                 <div class="industry-card">
-                    <div class="industry-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <h4>Education</h4>
-                    <p class="text-muted mb-4">
-                        Transform learning experiences with AI-powered personalized education, 
-                        student performance prediction, and content recommendation.
-                    </p>
+                    <div class="industry-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h4 class="h5 fw-bold">Education</h4>
+                    <p class="mb-0">Transform learning with AI-powered personalized education, performance analytics, and recommendations.</p>
                     <ul class="industry-features">
                         <li>Personalized learning paths</li>
-                        <li>Student performance prediction</li>
+                        <li>Student performance analytics</li>
                         <li>Content recommendation</li>
                         <li>Automated assessment systems</li>
-                        <li>Learning analytics</li>
                     </ul>
-                    <div class="mt-4">
-                        <a href="{% url 'contact' %}?industry=education" class="btn btn-sm btn-primary-custom">
-                            Discuss Education AI
-                        </a>
-                    </div>
+                    <a href="{% url 'contact' %}" class="btn btn-outline-brand btn-sm mt-3">Discuss Education AI</a>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Use Cases Section -->
-<section class="usecases-section" id="use-cases">
+<!-- Use Cases -->
+<section class="section-alt py-5" id="use-cases" style="padding-top:90px !important; padding-bottom:90px !important;">
     <div class="container">
         <div class="row mb-5">
-            <div class="col-lg-8 mx-auto text-center">
-                <h2 class="section-title" data-aos="fade-up">Real-World AI Use Cases</h2>
-                <p class="lead" data-aos="fade-up" data-aos-delay="100">
-                    See how AI is solving complex challenges across different industries
-                </p>
+            <div class="col-lg-8 mx-auto text-center" data-aos="fade-up">
+                <h2 class="section-title display-6">What AI Can Do For You</h2>
+                <p class="section-subtitle">Illustrative examples of how AI addresses real challenges across industries.</p>
             </div>
         </div>
 
         <div class="row g-4">
             <div class="col-md-6" data-aos="fade-up">
                 <div class="usecase-card">
-                    <h5 class="fw-bold mb-3">🏥 Healthcare: Early Disease Detection</h5>
-                    <p class="text-muted">
-                        Developed an AI system that analyzes medical images to detect early signs of diseases 
-                        with 98% accuracy, enabling earlier intervention and better patient outcomes.
-                    </p>
-                    <div class="mt-3">
-                        <span class="badge bg-primary me-2">Computer Vision</span>
-                        <span class="badge bg-info">Deep Learning</span>
-                    </div>
+                    <h5 class="fw-bold mb-2"><i class="fas fa-heart-pulse me-2" style="color: var(--primary-color);"></i>Healthcare: Early Disease Detection</h5>
+                    <p class="mb-3">AI models trained on medical imaging can flag early signs of disease for radiologist review, helping care teams intervene sooner.</p>
+                    <span class="badge rounded-pill px-3 py-2 me-2" style="background: var(--primary-color); color: #fff;">Computer Vision</span>
+                    <span class="badge rounded-pill px-3 py-2" style="background: var(--accent-color); color: #06202a;">Deep Learning</span>
                 </div>
             </div>
-
             <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
                 <div class="usecase-card">
-                    <h5 class="fw-bold mb-3">💰 Finance: Fraud Prevention</h5>
-                    <p class="text-muted">
-                        Implemented a real-time fraud detection system that reduced false positives by 70% 
-                        while increasing fraud detection accuracy by 45%, saving millions in potential losses.
-                    </p>
-                    <div class="mt-3">
-                        <span class="badge bg-primary me-2">Machine Learning</span>
-                        <span class="badge bg-info">Real-time Analytics</span>
-                    </div>
+                    <h5 class="fw-bold mb-2"><i class="fas fa-shield-halved me-2" style="color: var(--primary-color);"></i>Finance: Fraud Prevention</h5>
+                    <p class="mb-3">Real-time scoring models can catch anomalous transactions as they happen, reducing both fraud losses and false positives.</p>
+                    <span class="badge rounded-pill px-3 py-2 me-2" style="background: var(--primary-color); color: #fff;">Machine Learning</span>
+                    <span class="badge rounded-pill px-3 py-2" style="background: var(--accent-color); color: #06202a;">Real-time Analytics</span>
                 </div>
             </div>
-
             <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
                 <div class="usecase-card">
-                    <h5 class="fw-bold mb-3">🏭 Manufacturing: Predictive Maintenance</h5>
-                    <p class="text-muted">
-                        Created an AI solution that predicts equipment failures 30 days in advance, 
-                        reducing unplanned downtime by 65% and saving $1.3M annually in maintenance costs.
-                    </p>
-                    <div class="mt-3">
-                        <span class="badge bg-primary me-2">IoT Integration</span>
-                        <span class="badge bg-info">Predictive Analytics</span>
-                    </div>
+                    <h5 class="fw-bold mb-2"><i class="fas fa-gears me-2" style="color: var(--primary-color);"></i>Manufacturing: Predictive Maintenance</h5>
+                    <p class="mb-3">Sensor-driven models can forecast equipment failures before they happen, reducing unplanned downtime and maintenance costs.</p>
+                    <span class="badge rounded-pill px-3 py-2 me-2" style="background: var(--primary-color); color: #fff;">IoT Integration</span>
+                    <span class="badge rounded-pill px-3 py-2" style="background: var(--accent-color); color: #06202a;">Predictive Analytics</span>
                 </div>
             </div>
-
             <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
                 <div class="usecase-card">
-                    <h5 class="fw-bold mb-3">🛒 Retail: Personalized Shopping</h5>
-                    <p class="text-muted">
-                        Built a recommendation engine that increased average order value by 35% 
-                        and customer retention by 25% through hyper-personalized product suggestions.
-                    </p>
-                    <div class="mt-3">
-                        <span class="badge bg-primary me-2">Recommendation Systems</span>
-                        <span class="badge bg-info">NLP</span>
-                    </div>
+                    <h5 class="fw-bold mb-2"><i class="fas fa-cart-shopping me-2" style="color: var(--primary-color);"></i>Retail: Personalized Shopping</h5>
+                    <p class="mb-3">Recommendation engines tailor product suggestions to each shopper, improving conversion and customer retention.</p>
+                    <span class="badge rounded-pill px-3 py-2 me-2" style="background: var(--primary-color); color: #fff;">Recommendation Systems</span>
+                    <span class="badge rounded-pill px-3 py-2" style="background: var(--accent-color); color: #06202a;">NLP</span>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- CTA Section -->
-<section class="industries-cta">
+<!-- CTA -->
+<section class="py-5">
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8 text-center">
-                <div data-aos="fade-up">
-                    <h2 class="display-5 fw-bold mb-4">Ready to Transform Your Industry with AI?</h2>
-                    <p class="lead mb-5">
-                        Whether you're in healthcare, finance, retail, or any other sector, 
-                        our AI experts are ready to help you harness the power of artificial intelligence.
-                    </p>
-                    <div class="d-flex flex-wrap justify-content-center gap-3">
-                        <a href="{% url 'contact' %}" class="btn btn-primary-custom btn-lg">
-                            <i class="fas fa-calendar-check me-2"></i>Schedule Consultation
-                        </a>
-                        <a href="{% url 'portfolio' %}" class="btn btn-outline-light btn-lg">
-                            <i class="fas fa-briefcase me-2"></i>View Case Studies
-                        </a>
-                    </div>
-                </div>
+        <div class="final-cta" data-aos="fade-up">
+            <h2 class="fw-bold mb-3">Ready to transform your industry with AI?</h2>
+            <p class="mb-4" style="color: rgba(255,255,255,0.85); max-width: 600px; margin: 0 auto;">
+                Whether you're in healthcare, finance, retail, or any other sector, our AI experts are ready
+                to help you harness the power of artificial intelligence.
+            </p>
+            <div class="d-flex flex-wrap justify-content-center gap-3">
+                <a href="{% url 'contact' %}" class="btn btn-light fw-bold px-4"><i class="fas fa-calendar-check me-2"></i>Schedule Consultation</a>
+                <a href="{% url 'portfolio' %}" class="btn btn-outline-light px-4"><i class="fas fa-briefcase me-2"></i>View Case Studies</a>
             </div>
         </div>
     </div>
 </section>
-
-<script>
-// Smooth scrolling for anchor links
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-});
-</script>
-
 {% endblock %}

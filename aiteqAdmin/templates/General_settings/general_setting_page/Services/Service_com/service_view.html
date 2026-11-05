@@ -1,0 +1,102 @@
+<div class="table-responsive">
+    <table class="table table-bordered align-middle">
+        <tbody>
+            <tr>
+                <th width="25%">Title</th>
+                <td>{{ service.title }}</td>
+            </tr>
+            <tr>
+                <th>Category</th>
+                <td><span class="badge bg-secondary">{{ service.category }}</span></td>
+            </tr>
+            <tr>
+                <th>Icon</th>
+                <td>
+                    <i class="{{ service.icon }} fa-2x me-2"></i>
+                    <code>{{ service.icon }}</code>
+                </td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td><code>{{ service.slug }}</code></td>
+            </tr>
+            <tr>
+                <th>Background Image</th>
+                <td>
+                    {% if service.background_image %}
+                        <img src="{{ service.background_image.url }}" 
+                             class="img-thumbnail" 
+                             style="max-height:150px; max-width:200px;" 
+                             alt="{{ service.title }}">
+                    {% else %}
+                        <span class="text-muted">No background image</span>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Color Scheme</th>
+                <td>
+                    <div class="d-flex gap-2">
+                        <div class="d-flex align-items-center">
+                            <div class="color-preview" style="width:20px; height:20px; background-color:{{ service.gradient_start }}; border:1px solid #ddd;"></div>
+                            <small class="ms-2">{{ service.gradient_start }}</small>
+                        </div>
+                        <span class="mx-2">→</span>
+                        <div class="d-flex align-items-center">
+                            <div class="color-preview" style="width:20px; height:20px; background-color:{{ service.gradient_end }}; border:1px solid #ddd;"></div>
+                            <small class="ms-2">{{ service.gradient_end }}</small>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <strong>Badge:</strong> 
+                        <div class="d-inline-flex align-items-center ms-2">
+                            <div class="color-preview" style="width:15px; height:15px; background-color:{{ service.badge_color }}; border:1px solid #ddd;"></div>
+                            <small class="ms-1">{{ service.badge_color }}</small>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>Created On</th>
+                <td>{{ service.created_date|date:"F d, Y H:i" }}</td>
+            </tr>
+            <tr>
+                <th>Short Description</th>
+                <td class="text-muted">
+                    <span class="word-wrap-5">{{ service.short_description }}</span>
+                </td>
+            </tr>
+            <tr>
+                <th>Full Description</th>
+                <td class="text-muted">
+                    <span class="word-wrap-5">{{ service.description|safe }}</span>
+                </td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>
+                    {% if service.status %}
+                        <span class="badge bg-success">Active</span>
+                    {% else %}
+                        <span class="badge bg-danger">Inactive</span>
+                    {% endif %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="text-center mt-3">
+        <button type="button" data-bs-dismiss="modal" class="btn btn-secondary">Close</button>
+    </div>
+</div>
+
+<style>
+  .word-wrap-5 {
+    display: inline-block;
+    max-width: 50ch;
+    white-space: normal;
+    word-wrap: break-word;
+  }
+  .color-preview {
+    border-radius: 3px;
+  }
+</style>

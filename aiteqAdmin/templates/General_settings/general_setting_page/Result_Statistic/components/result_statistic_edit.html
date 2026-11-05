@@ -1,0 +1,90 @@
+<form method="POST"
+      class="needs-validation result_statistic_edit_form"
+      id="result_statistic_edit_form"
+      novalidate
+      action="{% url 'result_statistic_update' stat.id %}">
+
+    {% csrf_token %}
+
+    <div class="row">
+
+        <!-- Title -->
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">
+                    Title <b class="text-danger">*</b>
+                </label>
+                <input type="text"
+                       class="form-control"
+                       name="u_title"
+                       value="{{ stat.title }}"
+                       maxlength="200"
+                       required>
+            </div>
+        </div>
+
+        <!-- Value -->
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">
+                    Value <b class="text-danger">*</b>
+                </label>
+                <input type="text"
+                       class="form-control"
+                       name="u_value"
+                       value="{{ stat.value }}"
+                       maxlength="100"
+                       required>
+            </div>
+        </div>
+
+        <!-- Icon -->
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">
+                    Icon Class <b class="text-danger">*</b>
+                </label>
+                <input type="text"
+                       class="form-control"
+                       name="u_icon"
+                       value="{{ stat.icon }}"
+                       required>
+            </div>
+        </div>
+
+        <!-- Order -->
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Display Order</label>
+                <input type="number"
+                       class="form-control"
+                       name="u_order"
+                       value="{{ stat.order }}">
+            </div>
+        </div>
+
+        <!-- Description -->
+        <div class="col-md-12">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Description</label>
+                <textarea class="form-control"
+                          name="u_description"
+                          rows="3">{{ stat.description }}</textarea>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="form-check mb-3">
+        <input type="checkbox" name="u_is_active" class="form-check-input" {% if stat.is_active %}checked{% endif %}>
+        <label class="form-check-label">Active</label>
+    </div>
+
+    <div class="text-center">
+        <button class="btn btn-primary" type="submit">Save</button>
+        <button class="btn btn-light" type="button" data-bs-dismiss="modal">
+            Cancel
+        </button>
+    </div>
+
+</form>

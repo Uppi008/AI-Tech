@@ -1,0 +1,43 @@
+<form method="POST" class="needs-validation project_edit_form" id="project_edit_form" novalidate 
+      action="{% url 'update_project_category' category.id %}">
+    {% csrf_token %}
+    <div class="row">
+
+        <!-- Name -->
+        <div class="col-md-12 mb-3">
+            <label for="u_name" class="form-label fw-semibold">Project Category Name <b class="text-danger">*</b></label>
+            <input type="text" class="form-control" name="u_name" value="{{ category.name }}" id="u_name" placeholder="Ex: AI Projects" required>
+            <small id="u_nameError" style="color: red; font-size: 11px;"></small>
+        </div>
+
+        <!-- Description -->
+        <div class="col-md-12 mb-3">
+            <label for="u_description" class="form-label fw-semibold">Description</label>
+            <textarea class="form-control" name="u_description" id="u_description" rows="3" placeholder="Optional description">{{ category.description }}</textarea>
+        </div>
+
+        <!-- Icon -->
+        <div class="col-md-6 mb-3">
+            <label for="u_icon" class="form-label fw-semibold">Icon</label>
+            <input type="text" class="form-control" name="u_icon" id="u_icon" value="{{ category.icon }}" placeholder="FontAwesome class, e.g., fas fa-brain">
+        </div>
+
+        <!-- Color -->
+        <div class="col-md-6 mb-3">
+            <label for="u_color" class="form-label fw-semibold">Color</label>
+            <input type="color" class="form-control form-control-color" name="u_color" id="u_color" value="{{ category.color }}">
+        </div>
+
+        <!-- Order -->
+        <div class="col-md-6 mb-3">
+            <label for="u_order" class="form-label fw-semibold">Order</label>
+            <input type="number" class="form-control" name="u_order" id="u_order" value="{{ category.order }}">
+        </div>
+
+    </div>
+
+    <div class="text-center">
+        <button class="btn btn-primary" type="submit">Save</button>
+        <button class="btn btn-light" data-bs-dismiss="modal" type="button">Cancel</button>
+    </div>
+</form>
