@@ -3,630 +3,634 @@
 
 {% block title %}AI Tech - Premier AI Solutions & Data Science Services{% endblock %}
 
+{% block extra_css %}
+<style>
+    .hero-section {
+        position: relative;
+        padding: 160px 0 100px;
+        overflow: hidden;
+        background: radial-gradient(circle at 15% 20%, rgba(67, 97, 238, 0.16), transparent 45%),
+                    radial-gradient(circle at 85% 10%, rgba(76, 201, 240, 0.14), transparent 40%),
+                    var(--bg-color);
+    }
+
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(67, 97, 238, 0.1);
+        color: var(--primary-color);
+        padding: 8px 18px;
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        margin-bottom: 24px;
+    }
+
+    .hero-title {
+        font-size: 3.2rem;
+        font-weight: 800;
+        line-height: 1.15;
+        margin-bottom: 24px;
+    }
+
+    .hero-lead {
+        font-size: 1.15rem;
+        max-width: 540px;
+        margin-bottom: 32px;
+    }
+
+    .hero-visual {
+        position: relative;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 30px 60px rgba(20, 20, 40, 0.25);
+        border: 1px solid var(--card-border);
+    }
+
+    .hero-visual video {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .trust-strip {
+        padding: 20px 0;
+        border-top: 1px solid var(--card-border);
+        border-bottom: 1px solid var(--card-border);
+    }
+
+    /* Stats */
+    .stat-card {
+        text-align: center;
+        padding: 30px 20px;
+        border-radius: 16px;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        height: 100%;
+    }
+
+    .stat-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 16px;
+        background: var(--gradient-accent);
+        color: #fff;
+        font-size: 1.3rem;
+    }
+
+    .stat-number {
+        font-size: 2.2rem;
+        font-weight: 800;
+        margin-bottom: 4px;
+    }
+
+    .stat-label {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        margin: 0;
+    }
+
+    /* Service cards */
+    .service-card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 18px;
+        padding: 32px;
+        height: 100%;
+        transition: all 0.3s ease;
+    }
+
+    .service-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 40px rgba(20, 20, 40, 0.12);
+        border-color: var(--accent-color);
+    }
+
+    .service-icon-wrapper {
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .service-feature-list li {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin-bottom: 8px;
+    }
+
+    .service-feature-list i {
+        color: var(--accent-color);
+    }
+
+    /* Supporting services */
+    .support-card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 16px;
+        padding: 28px 22px;
+        text-align: center;
+        height: 100%;
+        transition: all 0.3s ease;
+    }
+
+    .support-card:hover {
+        transform: translateY(-4px);
+        border-color: var(--accent-color);
+    }
+
+    /* Category / expertise cards */
+    .category-card {
+        border-radius: 16px;
+        padding: 26px;
+        height: 100%;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-left: 4px solid var(--cat-color, var(--primary-color));
+        transition: all 0.3s ease;
+    }
+
+    .category-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 16px 32px rgba(20, 20, 40, 0.1);
+    }
+
+    .category-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        background: var(--cat-color, var(--primary-color));
+        margin-bottom: 16px;
+    }
+
+    /* Portfolio preview */
+    .project-card {
+        border-radius: 18px;
+        overflow: hidden;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        height: 100%;
+        transition: all 0.3s ease;
+    }
+
+    .project-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 40px rgba(20, 20, 40, 0.12);
+    }
+
+    .project-card img {
+        width: 100%;
+        height: 210px;
+        object-fit: cover;
+    }
+
+    /* Tech marquee */
+    .marquee-container {
+        overflow: hidden;
+        -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+        mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+    }
+
+    .marquee-track {
+        display: flex;
+        width: max-content;
+        animation: marquee 28s linear infinite;
+    }
+
+    .marquee-track:hover {
+        animation-play-state: paused;
+    }
+
+    @keyframes marquee {
+        from { transform: translateX(0); }
+        to { transform: translateX(-50%); }
+    }
+
+    .tech-item {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 14px;
+        padding: 20px 28px;
+        text-align: center;
+        margin: 0 10px;
+        min-width: 130px;
+    }
+
+    .tech-item i {
+        font-size: 1.8rem;
+        color: var(--accent-color);
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .tech-item span {
+        font-weight: 600;
+        font-size: 0.85rem;
+    }
+
+    /* Testimonials */
+    .testimonial-card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 20px;
+        padding: 44px;
+        margin: 0 40px;
+        min-height: 320px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .carousel-indicators button {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: var(--primary-color);
+        opacity: 0.3;
+    }
+
+    .carousel-indicators button.active {
+        opacity: 1;
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        filter: invert(0.5);
+        width: 1.6rem;
+        height: 1.6rem;
+    }
+
+    /* Final CTA */
+    .final-cta {
+        border-radius: 28px;
+        padding: 70px 40px;
+        text-align: center;
+        background: var(--gradient);
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+        .hero-section { padding: 130px 0 70px; }
+        .hero-title { font-size: 2.2rem; }
+        .testimonial-card { margin: 0 12px; padding: 28px; }
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 
-<style>
-.testimonial-card {
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    border: 1px solid #f0f0f0;
-    margin: 0 50px;
-    min-height: 350px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.rating-stars {
-    font-size: 1.2rem;
-}
-
-.client-info h6 {
-    color: var(--dark-color);
-    font-weight: 600;
-}
-
-.carousel-indicators button {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: var(--accent-color);
-    opacity: 0.5;
-}
-
-.carousel-indicators button.active {
-    opacity: 1;
-}
-
-.carousel-control-prev,
-.carousel-control-next {
-    width: 50px;
-    opacity: 0.8;
-}
-
-.carousel-control-prev:hover,
-.carousel-control-next:hover {
-    opacity: 1;
-}
-
-@media (max-width: 768px) {
-    .testimonial-card {
-        margin: 0 20px;
-        min-height: 400px;
-    }
-}
-</style>
-<!-- Hero Section -->
-<section class="hero-section" id="home">
+<!-- Hero -->
+<section class="hero-section" data-scene-x="0.5">
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6" data-aos="fade-right">
-                <span class="feature-badge">Transforming Businesses with AI Since 2015</span>
-                <h1 class="display-4 fw-bold mb-4">Intelligent Solutions for the Digital Age</h1>
-                <p class="lead mb-4">At AI Tech, we specialize in developing cutting-edge artificial intelligence and machine learning solutions that drive innovation, optimize operations, and unlock new growth opportunities for businesses across industries.</p>
-                <p class="mb-4">Our team of expert data scientists, AI engineers, and business strategists work collaboratively to deliver tailored solutions that address your unique challenges and objectives.</p>
+        <div class="row align-items-center g-4">
+            <div class="col-lg-6" data-aos="fade-up">
+                <span class="hero-badge"><i class="fas fa-wand-magic-sparkles"></i> AI &amp; Data Science Partner</span>
+                <h1 class="hero-title">Build what's next with <span class="text-gradient">intelligent AI systems</span></h1>
+                <p class="hero-lead">
+                    AI Tech helps businesses design, build, and ship production-grade machine learning,
+                    NLP, and computer vision solutions — from first prototype to full-scale deployment.
+                </p>
                 <div class="d-flex flex-wrap gap-3">
-                    <a href="{% url 'services' %}" class="btn btn-primary-custom">Explore Our Services</a>
-                    <a href="{% url 'contact' %}" class="btn btn-outline-light">Schedule Consultation</a>
+                    <a href="{% url 'services' %}" class="btn btn-gradient">Explore Our Services</a>
+                    <a href="{% url 'contact' %}" class="btn btn-outline-brand">Book a Consultation</a>
                 </div>
             </div>
-            <div class="col-lg-6 text-center" data-aos="fade-left" data-aos-delay="200">
-                <div class="hero-image-container">
-                    <img src="{% static 'admin_assets/images/AI_tech01.jpg' %}" alt="AI Technology" class="hero-image">
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="150">
+                <div class="hero-stage">
+                    <div class="hero-visual">
+                        <video autoplay muted loop playsinline>
+                            <source src="{% static 'admin_assets/images/ai_video.mp4' %}" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="hero-chip hero-chip--1" data-mouse-depth="1.6"><i class="fas fa-brain"></i> Neural Networks</div>
+                    <div class="hero-chip hero-chip--2" data-mouse-depth="2.2"><i class="fas fa-eye"></i> Computer Vision</div>
+                    <div class="hero-chip hero-chip--3" data-mouse-depth="1.2"><i class="fas fa-comments"></i> NLP &amp; LLMs</div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Stats Section -->
-<section class="stats-section">
+<!-- Stats -->
+<section class="section-alt py-5">
     <div class="container">
-        <div class="row text-center">
-            <div class="col-md-3 col-6 mb-4" data-aos="fade-up">
-                <div class="stat-item">
-                    <h2 class="stat-number">200+</h2>
-                    <p class="stat-label">AI Projects Completed</p>
+        <div class="row g-4">
+            {% for stat in result_stats %}
+            <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="{{ stat.icon }}"></i></div>
+                    <h3 class="stat-number text-gradient counter" data-target="{{ stat.value }}">0</h3>
+                    <p class="stat-label">{{ stat.title }}</p>
                 </div>
             </div>
-            <div class="col-md-3 col-6 mb-4" data-aos="fade-up" data-aos-delay="100">
-                <div class="stat-item">
-                    <h2 class="stat-number">97%</h2>
-                    <p class="stat-label">Client Satisfaction Rate</p>
-                </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p class="mb-0">Results and impact metrics will appear here once added from the dashboard.</p>
             </div>
-            <div class="col-md-3 col-6 mb-4" data-aos="fade-up" data-aos-delay="200">
-                <div class="stat-item">
-                    <h2 class="stat-number">65+</h2>
-                    <p class="stat-label">AI & Data Experts</p>
-                </div>
-            </div>
-            <div class="col-md-3 col-6 mb-4" data-aos="fade-up" data-aos-delay="300">
-                <div class="stat-item">
-                    <h2 class="stat-number">12+</h2>
-                    <p class="stat-label">Years of Excellence</p>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </section>
 
-<!-- About Section -->
-<section class="py-5" id="about">
+<!-- Services -->
+<section class="py-5" style="padding-top:100px !important; padding-bottom:100px !important;" id="ai-services">
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6" data-aos="fade-right">
-                <h2 class="section-title">About AI Tech</h2>
-                <p class="lead">Pioneering AI innovation since 2012, we've established ourselves as a trusted partner for businesses seeking to leverage artificial intelligence and data science.</p>
-                <p>Our journey began with a simple mission: to make advanced AI technologies accessible and beneficial for organizations of all sizes. Today, we're proud to have helped over 150 companies transform their operations, enhance customer experiences, and drive measurable business outcomes through our AI solutions.</p>
-                <p>What sets us apart is our holistic approach to AI implementation. We don't just build models; we develop comprehensive solutions that integrate seamlessly with your existing systems, empower your teams, and deliver sustainable value long after deployment.</p>
-                <div class="mt-4">
-                    <a href="{% url 'aboutus' %}" class="btn btn-primary-custom me-3">Learn More About Us</a>
-                    <a href="#portfolio" class="btn btn-outline-primary">View Case Studies</a>
-                </div>
-            </div>
-            <div class="col-lg-6" data-aos="fade-left">
-                <div class="row mt-4 mt-lg-0">
-                    <div class="col-6 mb-4">
-                        <div class="text-center p-4 bg-light rounded">
-                            <i class="fas fa-rocket fa-2x mb-3" style="color: var(--accent-color);"></i>
-                            <h5>Innovation Focus</h5>
-                            <p class="small">Continuously researching and implementing the latest AI advancements</p>
-                        </div>
-                    </div>
-                    <div class="col-6 mb-4">
-                        <div class="text-center p-4 bg-light rounded">
-                            <i class="fas fa-handshake fa-2x mb-3" style="color: var(--accent-color);"></i>
-                            <h5>Partnership Approach</h5>
-                            <p class="small">Working collaboratively as an extension of your team</p>
-                        </div>
-                    </div>
-                    <div class="col-6 mb-4">
-                        <div class="text-center p-4 bg-light rounded">
-                            <i class="fas fa-shield-alt fa-2x mb-3" style="color: var(--accent-color);"></i>
-                            <h5>Ethical AI</h5>
-                            <p class="small">Committed to responsible, transparent, and fair AI practices</p>
-                        </div>
-                    </div>
-                    <div class="col-6 mb-4">
-                        <div class="text-center p-4 bg-light rounded">
-                            <i class="fas fa-graduation-cap fa-2x mb-3" style="color: var(--accent-color);"></i>
-                            <h5>Knowledge Transfer</h5>
-                            <p class="small">Empowering your team with AI understanding and capabilities</p>
-                        </div>
-                    </div>
-                </div>
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8 text-center" data-aos="fade-up">
+                <span class="section-eyebrow">What We Do</span>
+                <h2 class="section-title display-6">AI &amp; Data Science Services</h2>
+                <p class="section-subtitle">
+                    End-to-end artificial intelligence solutions designed to solve complex business
+                    challenges and drive digital transformation.
+                </p>
             </div>
         </div>
-    </div>
-</section>
 
-<!-- Services Section -->
-<section class="py-5 bg-light">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto text-center mb-5">
-                <h2 class="section-title" data-aos="fade-up">Our AI Services</h2>
-                <p class="lead" data-aos="fade-up" data-aos-delay="100">Comprehensive AI and data science services tailored to your business needs</p>
-            </div>
-        </div>
-        <div class="row mt-4">
-            <!-- Service 1 -->
-            <div class="col-lg-6 mb-4" data-aos="fade-up">
-                <div class="service-detail">
-                    <div class="icon-container">
-                        <i class="fas fa-brain fa-2x"></i>
+        <div class="row g-4">
+            {% for service in services %}
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+                <div class="service-card">
+                    <div class="d-flex align-items-start mb-3 gap-3">
+                        <div class="service-icon-wrapper" style="background: linear-gradient(135deg, {{ service.gradient_start }}, {{ service.gradient_end }});">
+                            <i class="fas {{ service.icon }} text-white"></i>
+                        </div>
+                        <div>
+                            <h4 class="h5 fw-bold mb-2">{{ service.title }}</h4>
+                            <span class="badge rounded-pill px-3 py-2" style="background: {{ service.badge_color }}22; color: {{ service.badge_color }};">
+                                {{ service.category }}
+                            </span>
+                        </div>
                     </div>
-                    <h4>Machine Learning Solutions</h4>
-                    <p>Develop and deploy sophisticated machine learning models that learn from your data to make accurate predictions, automate decisions, and uncover valuable insights.</p>
-                    <ul class="service-feature-list">
-                        <li>Predictive analytics and forecasting models</li>
-                        <li>Recommendation engines for personalized experiences</li>
-                        <li>Anomaly detection for fraud and risk management</li>
-                        <li>Customer segmentation and behavior analysis</li>
-                        <li>Demand forecasting and inventory optimization</li>
-                        <li>Model deployment and MLOps implementation</li>
+
+                    <p class="mb-3">{{ service.short_description|default:service.description }}</p>
+
+                    {% with features=service.get_features %}
+                    {% if features %}
+                    <ul class="list-unstyled row service-feature-list mb-4">
+                        {% for feature in features|slice:":4" %}
+                        <li class="col-6"><i class="fas fa-check-circle"></i> {{ feature.name }}</li>
+                        {% endfor %}
                     </ul>
-                    <div class="mt-4">
-                        <a href="{% url 'contact' %}" class="btn btn-sm btn-primary-custom">Discuss Your Project</a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Service 2 -->
-            <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="100">
-                <div class="service-detail">
-                    <div class="icon-container">
-                        <i class="fas fa-comments fa-2x"></i>
-                    </div>
-                    <h4>Natural Language Processing</h4>
-                    <p>Transform unstructured text data into actionable intelligence with our advanced NLP solutions that understand, interpret, and generate human language.</p>
-                    <ul class="service-feature-list">
-                        <li>Intelligent chatbots and virtual assistants</li>
-                        <li>Sentiment analysis and opinion mining</li>
-                        <li>Document classification and information extraction</li>
-                        <li>Text summarization and content generation</li>
-                        <li>Multilingual translation and localization</li>
-                        <li>Voice recognition and speech-to-text solutions</li>
-                    </ul>
-                    <div class="mt-4">
-                        <a href="{% url 'contact' %}" class="btn btn-sm btn-primary-custom">Discuss Your Project</a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Service 3 -->
-            <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="200">
-                <div class="service-detail">
-                    <div class="icon-container">
-                        <i class="fas fa-eye fa-2x"></i>
-                    </div>
-                    <h4>Computer Vision</h4>
-                    <p>Enable machines to interpret and understand visual information from images and videos, automating visual inspection, recognition, and analysis tasks.</p>
-                    <ul class="service-feature-list">
-                        <li>Object detection and recognition systems</li>
-                        <li>Facial recognition and biometric authentication</li>
-                        <li>Image classification and tagging automation</li>
-                        <li>Quality control and defect detection</li>
-                        <li>Medical imaging analysis and diagnostics</li>
-                        <li>Autonomous vehicle perception systems</li>
-                    </ul>
-                    <div class="mt-4">
-                        <a href="{% url 'contact' %}" class="btn btn-sm btn-primary-custom">Discuss Your Project</a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Service 4 -->
-            <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="300">
-                <div class="service-detail">
-                    <div class="icon-container">
-                        <i class="fas fa-chart-line fa-2x"></i>
-                    </div>
-                    <h4>Data Analytics & BI</h4>
-                    <p>Transform raw data into actionable business intelligence with our comprehensive analytics solutions that drive informed decision-making across your organization.</p>
-                    <ul class="service-feature-list">
-                        <li>Advanced data visualization and dashboards</li>
-                        <li>Business intelligence platform implementation</li>
-                        <li>Data warehouse design and optimization</li>
-                        <li>Real-time analytics and reporting</li>
-                        <li>KPI tracking and performance monitoring</li>
-                        <li>Predictive analytics for strategic planning</li>
-                    </ul>
-                    <div class="mt-4">
-                        <a href="{% url 'contact' %}" class="btn btn-sm btn-primary-custom">Discuss Your Project</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Additional Services Row -->
-        <div class="row mt-4">
-            <div class="col-lg-4 mb-4" data-aos="fade-up">
-                <div class="card card-custom p-4 text-center h-100">
-                    <div class="icon-container">
-                        <i class="fas fa-robot fa-2x"></i>
-                    </div>
-                    <h5>AI Strategy & Consulting</h5>
-                    <p>Develop comprehensive AI roadmaps aligned with your business objectives. Our experts help you identify opportunities, assess feasibility, and create implementation plans.</p>
-                </div>
-            </div>
-            <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="100">
-                <div class="card card-custom p-4 text-center h-100">
-                    <div class="icon-container">
-                        <i class="fas fa-cogs fa-2x"></i>
-                    </div>
-                    <h5>AI Integration & Deployment</h5>
-                    <p>Seamlessly integrate AI solutions into your existing systems and workflows. We ensure smooth deployment, performance optimization, and ongoing maintenance.</p>
-                </div>
-            </div>
-            <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
-                <div class="card card-custom p-4 text-center h-100">
-                    <div class="icon-container">
-                        <i class="fas fa-users fa-2x"></i>
-                    </div>
-                    <h5>AI Training & Workshops</h5>
-                    <p>Empower your team with AI knowledge through customized training programs and workshops. Build internal capabilities to sustain and expand your AI initiatives.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+                    {% endif %}
+                    {% endwith %}
 
-<!-- Process Section -->
-<section class="py-5" id="process">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto text-center mb-5">
-                <h2 class="section-title" data-aos="fade-up">Our AI Development Process</h2>
-                <p class="lead" data-aos="fade-up" data-aos-delay="100">A structured, collaborative approach to ensure successful AI implementation and maximum business value</p>
+                    <a href="{% url 'service_detail' service.slug %}" class="btn btn-outline-brand btn-sm">
+                        Learn More <i class="fas fa-arrow-right ms-1"></i>
+                    </a>
+                </div>
             </div>
+            {% empty %}
+            <div class="col-12 text-center py-4">
+                <i class="fas fa-cubes fa-2x mb-3" style="color: var(--text-muted);"></i>
+                <p class="mb-0">Services will appear here once they're added from the dashboard.</p>
+            </div>
+            {% endfor %}
         </div>
-        <div class="row">
-            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up">
-                <div class="process-step">
-                    <div class="step-number">1</div>
-                    <h5>Discovery & Strategy</h5>
-                    <p>We begin by deeply understanding your business challenges, objectives, and data landscape. Through workshops and analysis, we define clear AI goals, success metrics, and develop a comprehensive strategy aligned with your business priorities.</p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="100">
-                <div class="process-step">
-                    <div class="step-number">2</div>
-                    <h5>Data Preparation</h5>
-                    <p>Our data engineers collect, clean, and prepare your data for AI model training. We assess data quality, address gaps, create pipelines, and ensure proper labeling and annotation. This critical phase lays the foundation for accurate and reliable AI models.</p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="200">
-                <div class="process-step">
-                    <div class="step-number">3</div>
-                    <h5>Model Development</h5>
-                    <p>Our AI experts design, train, and optimize models tailored to your specific requirements. We employ state-of-the-art techniques, conduct rigorous testing and validation, and iteratively refine models to achieve optimal performance for your use case.</p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="300">
-                <div class="process-step">
-                    <div class="step-number">4</div>
-                    <h5>Deployment & Support</h5>
-                    <p>We deploy the AI solution into your production environment, ensuring seamless integration with existing systems. Our team provides comprehensive training, documentation, and ongoing support to maintain optimal performance and adapt to evolving needs.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
-<!-- Portfolio Section -->
-<section class="py-5 bg-light" id="portfolio">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto text-center mb-5">
-                <h2 class="section-title" data-aos="fade-up">Success Stories</h2>
-                <p class="lead" data-aos="fade-up" data-aos-delay="100">Explore how we've helped businesses transform with AI solutions</p>
+        {% if supporting_services %}
+        <div class="row mt-5 pt-5">
+            <div class="col-12 text-center mb-4" data-aos="fade-up">
+                <h3 class="h4 fw-bold mb-2">Implementation Services</h3>
+                <p class="section-subtitle">Complete support throughout your AI journey</p>
             </div>
-        </div>
-        <div class="row">
-            {% for project in portfolio %}
-            <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up">
-                <div class="card card-custom h-100">
-                    <img src="{% static project.img %}" class="card-img-top" alt="{{ project.title }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ project.title }}</h5>
-                        <p class="card-text">{{ project.desc }}</p>
-                        <div class="mt-3">
-                            <span class="badge bg-primary me-1">Machine Learning</span>
-                            <span class="badge bg-secondary">Data Analytics</span>
-                        </div>
+            {% for item in supporting_services %}
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+                <div class="support-card">
+                    <div class="rounded-3 p-3 d-inline-block mb-3" style="background: linear-gradient(135deg, {{ item.gradient_start }}, {{ item.gradient_end }});">
+                        <i class="fas {{ item.icon }} fa-lg text-white"></i>
                     </div>
+                    <h5 class="fw-bold mb-2">{{ item.title }}</h5>
+                    <p class="mb-3" style="font-size: 0.9rem;">{{ item.description }}</p>
+                    <span class="badge rounded-pill px-3" style="background: {{ item.badge_color }}22; color: {{ item.badge_color }};">
+                        {{ item.badge_text }}
+                    </span>
                 </div>
             </div>
             {% endfor %}
         </div>
-        <div class="row mt-5">
-            <div class="col-12 text-center" data-aos="fade-up">
-                <h3>Client Results & Impact</h3>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Areas of Expertise / Categories -->
+{% if categories %}
+<section class="section-alt py-5" style="padding-top:100px !important; padding-bottom:100px !important;" id="expertise">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8 text-center" data-aos="fade-up">
+                <span class="section-eyebrow">Industry Expertise</span>
+                <h2 class="section-title display-6">Areas We Specialize In</h2>
+                <p class="section-subtitle">Delivering transformative AI solutions tailored to sector-specific challenges.</p>
             </div>
-            <div class="col-md-4 text-center mt-4" data-aos="fade-up">
-                <h2 class="text-primary">45%</h2>
-                <p>Average increase in operational efficiency</p>
+        </div>
+        <div class="row g-4">
+            {% for category in categories %}
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+                <div class="category-card" style="--cat-color: {{ category.color }};">
+                    <div class="category-icon"><i class="{{ category.icon }}"></i></div>
+                    <h5 class="fw-bold mb-2">{{ category.name }}</h5>
+                    <p class="mb-0" style="font-size: 0.92rem;">{{ category.description }}</p>
+                </div>
             </div>
-            <div class="col-md-4 text-center mt-4" data-aos="fade-up" data-aos-delay="100">
-                <h2 class="text-primary">$3.2M</h2>
-                <p>Average annual cost savings for clients</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Featured Projects -->
+{% if featured_projects %}
+<section class="py-5" style="padding-top:100px !important; padding-bottom:100px !important;" id="portfolio">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8 text-center" data-aos="fade-up">
+                <span class="section-eyebrow">Our Work</span>
+                <h2 class="section-title display-6">Featured Projects</h2>
+                <p class="section-subtitle">A look at how we've helped clients ship real AI-powered products.</p>
             </div>
-            <div class="col-md-4 text-center mt-4" data-aos="fade-up" data-aos-delay="200">
-                <h2 class="text-primary">68%</h2>
-                <p>Faster decision-making with AI insights</p>
+        </div>
+        <div class="row g-4">
+            {% for project in featured_projects %}
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+                <a href="{% url 'portfolio_detail' project.pk %}" class="project-card d-block text-decoration-none">
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                    <div class="p-4">
+                        <span class="badge rounded-pill px-3 py-2 mb-2" style="background: {{ project.category.color }}22; color: {{ project.category.color }};">
+                            {{ project.category.name }}
+                        </span>
+                        <h5 class="fw-bold mb-2">{{ project.title }}</h5>
+                        <p class="mb-0" style="font-size: 0.92rem;">{{ project.short_description|default:project.description|truncatewords:16 }}</p>
+                    </div>
+                </a>
             </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-5">
+            <a href="{% url 'portfolio' %}" class="btn btn-outline-brand">View Full Portfolio</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Tech Stack -->
+<section class="section-alt py-5" style="padding-top:80px !important; padding-bottom:80px !important;">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-lg-8 mx-auto text-center" data-aos="fade-up">
+                <span class="section-eyebrow">Our Toolkit</span>
+                <h2 class="section-title h3">Technologies We Use</h2>
+            </div>
+        </div>
+    </div>
+    <div class="marquee-container">
+        <div class="marquee-track">
+            {% for i in "12"|make_list %}
+            <div class="tech-item"><i class="fab fa-python"></i><span>Python</span></div>
+            <div class="tech-item"><i class="fas fa-brain"></i><span>TensorFlow</span></div>
+            <div class="tech-item"><i class="fas fa-fire"></i><span>PyTorch</span></div>
+            <div class="tech-item"><i class="fas fa-diagram-project"></i><span>Scikit-learn</span></div>
+            <div class="tech-item"><i class="fas fa-robot"></i><span>OpenAI</span></div>
+            <div class="tech-item"><i class="fas fa-link"></i><span>LangChain</span></div>
+            <div class="tech-item"><i class="fas fa-comments"></i><span>Hugging Face</span></div>
+            <div class="tech-item"><i class="fas fa-chart-bar"></i><span>Pandas</span></div>
+            <div class="tech-item"><i class="fab fa-docker"></i><span>Docker</span></div>
+            <div class="tech-item"><i class="fab fa-aws"></i><span>AWS</span></div>
+            <div class="tech-item"><i class="fas fa-dharmachakra"></i><span>Kubernetes</span></div>
+            {% endfor %}
         </div>
     </div>
 </section>
 
-<!-- Industries Section -->
-<section class="py-5" id="industries">
+<!-- Testimonials -->
+<section class="py-5" style="padding-top:100px !important; padding-bottom:100px !important;" id="testimonials">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto text-center mb-5">
-                <h2 class="section-title" data-aos="fade-up">Industries We Serve</h2>
-                <p class="lead" data-aos="fade-up" data-aos-delay="100">We deliver AI solutions across diverse sectors to drive innovation and efficiency</p>
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center" data-aos="fade-up">
+                <span class="section-eyebrow">Testimonials</span>
+                <h2 class="section-title display-6">What Our Clients Say</h2>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up">
-                <div class="industry-card">
-                    <i class="fas fa-heartbeat fa-2x mb-3" style="color: #e91e63;"></i>
-                    <h5>Healthcare</h5>
-                    <p>Medical diagnosis assistance, drug discovery acceleration, patient care optimization, medical imaging analysis, and personalized treatment recommendations.</p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="100">
-                <div class="industry-card">
-                    <i class="fas fa-shopping-cart fa-2x mb-3" style="color: #4caf50;"></i>
-                    <h5>Retail & E-commerce</h5>
-                    <p>Demand forecasting, personalized recommendations, inventory optimization, customer sentiment analysis, and dynamic pricing strategies.</p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="200">
-                <div class="industry-card">
-                    <i class="fas fa-university fa-2x mb-3" style="color: #ff9800;"></i>
-                    <h5>Finance & Banking</h5>
-                    <p>Fraud detection, risk assessment, algorithmic trading, credit scoring, customer service automation, and regulatory compliance monitoring.</p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="300">
-                <div class="industry-card">
-                    <i class="fas fa-industry fa-2x mb-3" style="color: #795548;"></i>
-                    <h5>Manufacturing</h5>
-                    <p>Predictive maintenance, quality control automation, supply chain optimization, production planning, and energy consumption optimization.</p>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up">
-                <div class="industry-card">
-                    <i class="fas fa-truck fa-2x mb-3" style="color: #2196f3;"></i>
-                    <h5>Logistics & Supply Chain</h5>
-                    <p>Route optimization, demand forecasting, warehouse automation, delivery time prediction, and inventory management.</p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="100">
-                <div class="industry-card">
-                    <i class="fas fa-graduation-cap fa-2x mb-3" style="color: #9c27b0;"></i>
-                    <h5>Education</h5>
-                    <p>Personalized learning paths, student performance prediction, content recommendation, and automated assessment systems.</p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="200">
-                <div class="industry-card">
-                    <i class="fas fa-film fa-2x mb-3" style="color: #f44336;"></i>
-                    <h5>Media & Entertainment</h5>
-                    <p>Content recommendation, audience analytics, content generation, copyright protection, and trend prediction.</p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="300">
-                <div class="industry-card">
-                    <i class="fas fa-seedling fa-2x mb-3" style="color: #4caf50;"></i>
-                    <h5>Agriculture</h5>
-                    <p>Crop yield prediction, pest detection, soil analysis, irrigation optimization, and harvest planning.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
-<!-- Technologies Section -->
-<section class="tech-stack" id="tech">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto text-center mb-5">
-                <h2 class="section-title" data-aos="fade-up">Technologies We Use</h2>
-                <p class="lead" data-aos="fade-up" data-aos-delay="100">We leverage the latest technologies and frameworks to build robust, scalable AI solutions</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6 col-md-3 col-lg-2 mb-4" data-aos="fade-up">
-                <div class="tech-item">
-                    <i class="fab fa-python tech-icon"></i>
-                    <h6>Python</h6>
-                </div>
-            </div>
-            <div class="col-6 col-md-3 col-lg-2 mb-4" data-aos="fade-up" data-aos-delay="100">
-                <div class="tech-item">
-                    <i class="fas fa-brain tech-icon"></i>
-                    <h6>TensorFlow</h6>
-                </div>
-            </div>
-            <div class="col-6 col-md-3 col-lg-2 mb-4" data-aos="fade-up" data-aos-delay="200">
-                <div class="tech-item">
-                    <i class="fas fa-project-diagram tech-icon"></i>
-                    <h6>PyTorch</h6>
-                </div>
-            </div>
-            <div class="col-6 col-md-3 col-lg-2 mb-4" data-aos="fade-up" data-aos-delay="300">
-                <div class="tech-item">
-                    <i class="fas fa-chart-line tech-icon"></i>
-                    <h6>Scikit-learn</h6>
-                </div>
-            </div>
-            <div class="col-6 col-md-3 col-lg-2 mb-4" data-aos="fade-up" data-aos-delay="400">
-                <div class="tech-item">
-                    <i class="fas fa-database tech-icon"></i>
-                    <h6>SQL & NoSQL</h6>
-                </div>
-            </div>
-            <div class="col-6 col-md-3 col-lg-2 mb-4" data-aos="fade-up" data-aos-delay="500">
-                <div class="tech-item">
-                    <i class="fab fa-aws tech-icon"></i>
-                    <h6>AWS/Azure</h6>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Testimonials Section -->
-<section class="py-5" id="testimonials">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto text-center mb-5">
-                <h2 class="section-title" data-aos="fade-up">What Our Clients Say</h2>
-                <p class="lead" data-aos="fade-up" data-aos-delay="100">Hear from businesses that have transformed with our AI solutions</p>
-            </div>
-        </div>
-        
-        <div id="testimonialCarousel" class="carousel slide mt-5" data-bs-ride="carousel" data-aos="fade-up">
-            <!-- Carousel Indicators -->
+        {% if testimonials %}
+        <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel" data-aos="fade-up">
             <div class="carousel-indicators">
                 {% for testimonial in testimonials %}
-                <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="{{ forloop.counter0 }}" 
-                        class="{% if forloop.first %}active{% endif %}" aria-current="{% if forloop.first %}true{% endif %}" 
-                        aria-label="Slide {{ forloop.counter }}"></button>
+                <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="{{ forloop.counter0 }}"
+                    class="{% if forloop.first %}active{% endif %}"></button>
                 {% endfor %}
             </div>
-            
             <div class="carousel-inner">
                 {% for testimonial in testimonials %}
                 <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                    <div class="testimonial-card text-center p-4">
-                        <!-- Rating Stars -->
-                        <div class="rating-stars mb-3">
+                    <div class="testimonial-card">
+                        <div class="mb-3">
                             {% for i in "12345" %}
-                                {% if forloop.counter <= testimonial.rating %}
-                                    <i class="fas fa-star text-warning"></i>
-                                {% else %}
-                                    <i class="far fa-star text-warning"></i>
-                                {% endif %}
+                            {% if forloop.counter <= testimonial.rating %}
+                            <i class="fas fa-star text-warning"></i>
+                            {% else %}
+                            <i class="far fa-star text-warning"></i>
+                            {% endif %}
                             {% endfor %}
                         </div>
-                        
-                        <!-- Quote Icon -->
-                        <div class="icon-container mb-4" style="width: 70px; height: 70px; background: linear-gradient(135deg, var(--accent-color), var(--secondary-color)); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;">
-                            <i class="fas fa-quote-left text-white"></i>
-                        </div>
-                        
-                        <!-- Testimonial Text -->
+                        {% if testimonial.image %}
+                        <img src="{{ testimonial.image.url }}" class="rounded-circle mx-auto mb-3"
+                            style="width:70px;height:70px;object-fit:cover;">
+                        {% endif %}
                         <p class="lead fst-italic mb-4">"{{ testimonial.text }}"</p>
-                        
-                        <!-- Client Info -->
-                        <div class="client-info">
-                            <h6 class="mb-1">{{ testimonial.name }}</h6>
-                            <p class="text-muted mb-1">{{ testimonial.role }}</p>
-                            {% if testimonial.company %}
-                            <small class="text-primary">{{ testimonial.company }}</small>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-                {% empty %}
-                <!-- Fallback testimonials if no testimonials in database -->
-                <div class="carousel-item active">
-                    <div class="testimonial-card text-center p-4">
-                        <div class="rating-stars mb-3">
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                        </div>
-                        <div class="icon-container mb-4" style="width: 70px; height: 70px; background: linear-gradient(135deg, var(--accent-color), var(--secondary-color)); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;">
-                            <i class="fas fa-quote-left text-white"></i>
-                        </div>
-                        <p class="lead fst-italic mb-4">"AI Tech transformed our business operations with their machine learning solutions. Our efficiency increased by 45% and customer satisfaction skyrocketed."</p>
-                        <div class="client-info">
-                            <h6 class="mb-1">Sarah Johnson</h6>
-                            <p class="text-muted mb-1">CEO at TechInnovate</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="testimonial-card text-center p-4">
-                        <div class="rating-stars mb-3">
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                        </div>
-                        <div class="icon-container mb-4" style="width: 70px; height: 70px; background: linear-gradient(135deg, var(--accent-color), var(--secondary-color)); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;">
-                            <i class="fas fa-quote-left text-white"></i>
-                        </div>
-                        <p class="lead fst-italic mb-4">"The AI-powered analytics platform developed by AI Tech gave us insights we never thought possible. It's like having a crystal ball for our business."</p>
-                        <div class="client-info">
-                            <h6 class="mb-1">Michael Chen</h6>
-                            <p class="text-muted mb-1">Operations Director at GlobalRetail</p>
-                        </div>
+                        <h6 class="mb-1">{{ testimonial.name }}</h6>
+                        <p class="mb-0" style="font-size: 0.9rem;">
+                            {{ testimonial.role }}{% if testimonial.company %}, {{ testimonial.company }}{% endif %}
+                        </p>
                     </div>
                 </div>
                 {% endfor %}
             </div>
-            
-            <!-- Carousel Controls -->
             <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
+                <span class="carousel-control-prev-icon"></span>
             </button>
             <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
+                <span class="carousel-control-next-icon"></span>
             </button>
         </div>
-    </div>
-</section>
-
-
-
-<!-- Contact / CTA Section -->
-<section class="py-5 bg-dark text-white" id="contact">
-    <div class="container text-center">
-        <h2 class="section-title text-white" data-aos="fade-up">Ready to Transform Your Business with AI?</h2>
-        <p class="lead mb-4" data-aos="fade-up" data-aos-delay="100">Get in touch with our experts for a free consultation and discover how AI can drive your business forward.</p>
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <p data-aos="fade-up" data-aos-delay="200">Whether you're just beginning your AI journey or looking to enhance existing capabilities, our team is ready to help you navigate the possibilities and develop a strategy tailored to your unique needs.</p>
-            </div>
+        {% else %}
+        <div class="text-center">
+            <i class="fas fa-comment-dots fa-2x mb-3" style="color: var(--text-muted);"></i>
+            <p class="mb-0">Client testimonials will appear here once added from the dashboard.</p>
         </div>
-        <a href="{% url 'contact' %}" class="btn btn-primary-custom mt-3" data-aos="fade-up" data-aos-delay="300">Schedule a Free Consultation</a>
+        {% endif %}
     </div>
 </section>
 
+<!-- Final CTA -->
+<section class="section-alt pb-5">
+    <div class="container">
+        <div class="final-cta" data-aos="fade-up">
+            <h2 class="fw-bold mb-3">Ready to start your AI journey?</h2>
+            <p class="mb-4" style="color: rgba(255,255,255,0.85); max-width: 560px; margin-left:auto; margin-right:auto;">
+                Let's discuss how AI can transform your business operations — schedule a free consultation with our team.
+            </p>
+            <a href="{% url 'contact' %}" class="btn btn-light fw-bold px-4">Schedule a Free Consultation</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const counters = document.querySelectorAll('.counter');
+        let started = false;
+
+        function isInViewport(el) {
+            const rect = el.getBoundingClientRect();
+            return rect.top <= (window.innerHeight - 100);
+        }
+
+        function startCounters() {
+            if (started || !counters.length || !isInViewport(counters[0])) return;
+            started = true;
+            counters.forEach(counter => {
+                const raw = counter.getAttribute('data-target') || '0';
+                const numeric = parseFloat(raw.replace(/[^0-9.]/g, '')) || 0;
+                const prefix = raw.trim().startsWith('$') ? '$' : '';
+                const suffix = raw.replace(/[0-9.]/g, '').replace('$', '');
+                const duration = 1400;
+                const start = performance.now();
+
+                function tick(now) {
+                    const progress = Math.min((now - start) / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    const value = numeric * eased;
+                    const display = Number.isInteger(numeric) ? Math.round(value) : value.toFixed(1);
+                    counter.textContent = prefix + display + suffix;
+                    if (progress < 1) requestAnimationFrame(tick);
+                }
+                requestAnimationFrame(tick);
+            });
+        }
+
+        window.addEventListener('scroll', startCounters);
+        startCounters();
+    });
+</script>
 {% endblock %}
