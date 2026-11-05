@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="utf-8" />
+    <title>AI Tech | Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="Themesdesign" name="author" />
+
+    <!-- Favicon icon-->
+    <link href="{% static 'assets/images/favicon/graduation.png' %}" rel="shortcut icon" type="image/x-icon" />
+
+    <!-- darkmode js -->
+    <script src="{% static 'assets/js/vendors/darkMode.js' %}"></script>
+
+    <!-- Libs CSS -->
+    <link href="{% static 'assets/fonts/feather/feather.css' %}" rel="stylesheet" />
+    <link href="{% static 'assets/libs/bootstrap-icons/font/bootstrap-icons.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'assets/css/theme.min.css' %}" rel="stylesheet">
+    <title>AI Tech Console</title>
+
+    <style>
+        .btn-link.active {
+            color: #4361ee !important;
+            font-weight: bold !important;
+            text-decoration: underline !important;
+        }
+
+        .btn-link {
+            color: #6c757d !important;
+            text-decoration: none !important;
+            background: none !important;
+            border: none !important;
+            padding: 0.375rem 0.75rem !important;
+        }
+
+        .btn-link:hover {
+            color: #4361ee !important;
+            text-decoration: underline !important;
+        }
+
+        .auth-input {
+            display: block;
+        }
+
+        .alert {
+            transition: opacity 0.5s ease;
+        }
+
+        .alert.fade-out {
+            opacity: 0;
+        }
+        
+        .auth-maintenance {
+            background: #f8f9fa;
+        }
+        
+        .bg-auth {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="auth-maintenance d-flex align-items-center min-vh-100">
+        <div class="bg-overlay bg-light"></div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="auth-full-page-content d-flex min-vh-100 py-sm-5 py-4">
+                        <div class="w-100">
+                            <div class="d-flex flex-column h-100 py-0 py-xl-3">
+                                <div class="text-center mb-4">
+                                    <a href="{% url 'console_signin' %}" class="">
+                                        <img src="{% static 'assets/images/favicon/graduation.png' %}" alt="" height="40" class="auth-logo logo-dark mx-auto">
+                                        <img src="{% static 'assets/images/favicon/Peramsons_logo.jpg' %}" alt="" height="40" class="auth-logo logo-light mx-auto">
+                                    </a>
+                                    <p class="text-muted mt-2">AI Tech Console Management System</p>
+                                </div>
+
+                                <div class="card my-auto overflow-hidden">
+                                    <div class="row g-0">
+                                        <div class="col-lg-6">
+                                            <div class="h-100 bg-auth">
+                                                <img src="{% static 'admin_assets/images/small/img-3.jpg' %}" alt="auth image" class="w-100 h-100 object-fit-cover">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <div class="p-lg-5 p-4">
+                                                <div>
+                                                    <div class="text-center mt-1">
+                                                        <h4 class="font-size-18">Welcome to AI Tech Console</h4>
+                                                        <p class="text-muted">Sign in to access the admin dashboard</p>
+                                                    </div>
+
+                                                    <!-- Tab Navigation -->
+                                                    <div class="text-center mb-3">
+                                                        <button class="btn btn-link fw-bold" onclick="showLogin()" id="loginTab">Login</button> |
+                                                        <button class="btn btn-link fw-bold" onclick="showSignup()" id="signupTab">Signup</button>
+                                                    </div>
+
+                                                    <!-- Messages Display -->
+                                                    {% if messages %}
+                                                    <div class="mb-3">
+                                                        {% for message in messages %}
+                                                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" id="alert-{{ forloop.counter }}">
+                                                            {{ message }}
+                                                            <button type="button" class="btn-close" onclick="dismissAlert('alert-{{ forloop.counter }}')"></button>
+                                                        </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                    {% endif %}
+
+                                                    <!-- LOGIN FORM -->
+                                                    <form method="POST" action="{% url 'console_signin' %}" id="loginForm" class="auth-input" style="display: none;">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="action" value="login">
+
+                                                        <div class="mb-3">
+                                                            <label for="login_email" class="form-label">Email <b class="text-danger">*</b></label>
+                                                            <input type="email" name="email" class="form-control" id="login_email" placeholder="Enter email" required 
+                                                                   value="{% if form_data.email %}{{ form_data.email }}{% else %}{{ request.POST.email|default:'' }}{% endif %}">
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <label for="login_password" class="form-label">Password <b class="text-danger">*</b></label>
+                                                            <input type="password" name="password" class="form-control" id="login_password" placeholder="Enter password" required>
+                                                        </div>
+
+                                                        <div class="form-check mb-3">
+                                                            <input class="form-check-input" type="checkbox" id="auth-remember-check">
+                                                            <label class="form-check-label" for="auth-remember-check">Remember me</label>
+                                                        </div>
+
+                                                        <div class="mt-3">
+                                                            <button class="btn btn-primary w-100" type="submit">Sign In</button>
+                                                        </div>
+                                                    </form>
+
+                                                    <!-- SIGNUP FORM -->
+                                                    <form method="POST" action="{% url 'console_signin' %}" id="signupForm" class="auth-input" style="display: none;">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="action" value="signup">
+
+                                                        <div class="mb-3">
+                                                            <label for="signup_name" class="form-label">Full Name <b class="text-danger">*</b></label>
+                                                            <input type="text" name="name" class="form-control" id="signup_name" placeholder="Enter full name" required 
+                                                                   value="{% if form_data.name %}{{ form_data.name }}{% else %}{{ request.POST.name|default:'' }}{% endif %}">
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <label for="signup_email" class="form-label">Email <b class="text-danger">*</b></label>
+                                                            <input type="email" name="email" class="form-control" id="signup_email" placeholder="Enter email" required 
+                                                                   value="{% if form_data.email %}{{ form_data.email }}{% else %}{{ request.POST.email|default:'' }}{% endif %}">
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <label for="signup_phone" class="form-label">Phone <b class="text-danger">*</b></label>
+                                                            <input type="text" name="phone" class="form-control" id="signup_phone" placeholder="Enter phone number" required 
+                                                                   value="{% if form_data.phone %}{{ form_data.phone }}{% else %}{{ request.POST.phone|default:'' }}{% endif %}" 
+                                                                   pattern="[6-9][0-9]{9}" title="Phone number must start with 6-9 and be 10 digits">
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <label for="signup_password" class="form-label">Password <b class="text-danger">*</b></label>
+                                                            <input type="password" name="password" class="form-control" id="signup_password" placeholder="Create password (min. 6 characters)" required minlength="6">
+                                                        </div>
+
+                                                        <div class="mt-3">
+                                                            <button class="btn btn-success w-100" type="submit">Create Account</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end card -->
+
+                                <div class="mt-5 text-center">
+                                    <p class="mb-0">© <script>document.write(new Date().getFullYear())</script> AI Tech. Design & Develop by AI Tech</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{% static 'assets/libs/%40popperjs/core/dist/umd/popper.min.js' %}"></script>
+    <script src="{% static 'assets/libs/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets/js/theme.min.js' %}"></script>
+
+    <script>
+        // Tab switching functionality
+        function showLogin() {
+            document.getElementById("loginForm").style.display = "block";
+            document.getElementById("signupForm").style.display = "none";
+            
+            document.getElementById("loginTab").classList.add("active");
+            document.getElementById("signupTab").classList.remove("active");
+        }
+
+        function showSignup() {
+            document.getElementById("loginForm").style.display = "none";
+            document.getElementById("signupForm").style.display = "block";
+            
+            document.getElementById("signupTab").classList.add("active");
+            document.getElementById("loginTab").classList.remove("active");
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check Django context variable
+            {% if show_signup %}
+                showSignup();
+            {% else %}
+                showLogin();
+            {% endif %}
+            
+            // Auto-hide alerts after 5 seconds
+            setTimeout(function() {
+                let alerts = document.querySelectorAll('.alert');
+                alerts.forEach(function(alert) {
+                    alert.classList.add('fade-out');
+                    setTimeout(() => alert.remove(), 500);
+                });
+            }, 5000);
+        });
+
+        function dismissAlert(alertId) {
+            const alert = document.getElementById(alertId);
+            if (alert) {
+                alert.classList.add('fade-out');
+                setTimeout(() => alert.remove(), 500);
+            }
+        }
+    </script>
+</body>
+</html>

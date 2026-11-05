@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+<base href="/" />
+<head>
+    <meta charset="utf-8" />
+    <title>{{ site_title|default:"AI Teq" }} | {% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="AI Teq - Advanced AI Solutions Platform" name="description" />
+    <meta content="AI Teq" name="author" />
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{% static 'admin_assets/images/logo_ai tech.jpg' %}">
+
+    <!-- Layout Js -->
+    <script src="{% static 'admin_assets/js/layout.js' %}"></script>
+    
+    <!-- Bootstrap Css -->
+    <link href="{% static 'admin_assets/css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    
+    <!-- Icons Css -->
+    <link href="{% static 'admin_assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+    
+    <!-- App Css-->
+    <link href="{% static 'admin_assets/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
+    
+    <!-- Custom AI Teq Styles -->
+    
+    <!-- HTMX -->
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js"></script>
+    
+    <!-- Tom Select -->
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --ai-teq-primary: #3a86ff;
+            --ai-teq-secondary: #8338ec;
+            --ai-teq-accent: #ff006e;
+            --ai-teq-dark: #1a1a2e;
+            --ai-teq-light: #f8f9fa;
+            --ai-teq-gradient: linear-gradient(135deg, var(--ai-teq-primary), var(--ai-teq-secondary));
+        }
+        
+        .ai-teq-bg-gradient {
+            background: var(--ai-teq-gradient);
+        }
+        
+        .sidebar-colored {
+            background: var(--ai-teq-dark);
+        }
+        
+        .navbar-brand-box .logo-lg img {
+            max-height: 45px;
+        }
+
+        .vertical-menu-btn i {
+    color: #b8b8db;
+}
+        
+        .vertical-menu .navbar-brand-box {
+            padding: 0 1.5rem;
+            height: 70px;
+            background: var(--ai-teq-dark);
+        }
+        
+        .vertical-menu .navbar-brand-box .logo-sm img {
+            max-height: 30px;
+        }
+        
+        .vertical-scroll {
+            background: var(--ai-teq-dark);
+        }
+        
+        #sidebar-menu .metismenu a {
+            color: rgba(255, 255, 255, 0.8);
+            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        #sidebar-menu .metismenu a:hover, 
+        #sidebar-menu .metismenu a:focus, 
+        #sidebar-menu .metismenu a:active,
+        #sidebar-menu .metismenu .mm-active > a {
+            color: white;
+            background: rgba(58, 134, 255, 0.2);
+            border-left-color: var(--ai-teq-primary);
+        }
+        
+        #sidebar-menu .metismenu i {
+            color: var(--ai-teq-primary);
+            font-size: 18px;
+            margin-right: 10px;
+        }
+        
+        .menu-title {
+            color: rgba(255, 255, 255, 0.5) !important;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 12px 20px !important;
+        }
+        
+        .sidebar-user {
+            background: rgba(26, 26, 46, 0.9);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .header-profile-user {
+            border: 2px solid var(--ai-teq-primary);
+        }
+        
+        #page-topbar {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .vertical-menu-btn i {
+            color: var(--ai-teq-dark);
+        }
+        
+        .app-search .form-control {
+            border-radius: 30px;
+            border: 1px solid #e2e5e8;
+        }
+        
+        .app-search .form-control:focus {
+            border-color: var(--ai-teq-primary);
+            box-shadow: 0 0 0 0.15rem rgba(58, 134, 255, 0.25);
+        }
+        
+        .btn-primary {
+            background-color: var(--ai-teq-primary);
+            border-color: var(--ai-teq-primary);
+        }
+        
+        .btn-primary:hover, .btn-primary:focus {
+            background-color: #2a75f0;
+            border-color: #2a75f0;
+        }
+        
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        
+        .dropdown-item:hover, .dropdown-item:focus {
+            background-color: rgba(58, 134, 255, 0.1);
+        }
+        
+        .footer {
+            background: var(--ai-teq-light);
+            border-top: 1px solid #e2e5e8;
+        }
+        
+        .notification-item {
+            border-bottom: 1px solid #f1f3f4;
+            padding: 12px 15px;
+            transition: all 0.2s;
+        }
+        
+        .notification-item:hover {
+            background: #f8f9fa;
+        }
+        
+        .badge-primary {
+            background-color: var(--ai-teq-primary);
+        }
+        
+        .page-content {
+            background: #f5f7fb;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .card-header {
+            background: white;
+            border-bottom: 1px solid #e2e5e8;
+            border-radius: 10px 10px 0 0 !important;
+        }
+        
+        .ai-teq-stat-card {
+            border-left: 4px solid var(--ai-teq-primary);
+            transition: transform 0.3s;
+        }
+        
+        .ai-teq-stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .ai-teq-feature-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background: rgba(58, 134, 255, 0.1);
+            color: var(--ai-teq-primary);
+            font-size: 22px;
+        }
+        
+        .ai-teq-chart-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .ai-teq-user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .ai-teq-table th {
+            border-top: none;
+            font-weight: 600;
+            color: var(--ai-teq-dark);
+            font-size: 14px;
+        }
+        
+        .ai-teq-table td {
+            padding: 15px 12px;
+            vertical-align: middle;
+        }
+        
+        .ai-teq-status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status-active {
+            background: rgba(76, 175, 80, 0.1);
+            color: #4caf50;
+        }
+        
+        .status-pending {
+            background: rgba(255, 152, 0, 0.1);
+            color: #ff9800;
+        }
+        
+        .status-completed {
+            background: rgba(58, 134, 255, 0.1);
+            color: var(--ai-teq-primary);
+        }
+        
+        .ai-teq-action-btn {
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            color: #6c757d;
+            transition: all 0.2s;
+        }
+        
+        .ai-teq-action-btn:hover {
+            background: rgba(58, 134, 255, 0.1);
+            color: var(--ai-teq-primary);
+        }
+        
+        .ai-teq-search-box {
+            position: relative;
+        }
+        
+        .ai-teq-search-box input {
+            padding-left: 40px;
+            border-radius: 30px;
+        }
+        
+        .ai-teq-search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
+        
+        .ai-teq-page-title {
+            font-weight: 600;
+            color: var(--ai-teq-dark);
+            margin-bottom: 5px;
+        }
+        
+        .ai-teq-page-subtitle {
+            color: #6c757d;
+            font-size: 14px;
+        }
+        
+        .ai-teq-divider {
+            height: 1px;
+            background: #e2e5e8;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+
+<body data-sidebar="colored">
+    {% block style %}{% endblock %}
+    
+    {% include 'components/tost_alirt.html' %}
+    
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+        <!-- Topbar -->
+        <header id="page-topbar">
+            <div class="navbar-header bg-white">
+                <div class="d-flex">
+                    <!-- LOGO -->
+                    <div class="navbar-brand-box d-lg-none">
+                        <a href="index.html" class="logo logo-dark">
+                            <span class="logo-sm">
+                                <img src="{% static 'admin_assets/images/logo_ai tech.jpg' %}" alt="AI Teq" height="24">
+                            </span>
+                        </a>
+                        <a href="index.html" class="logo logo-light">
+                            <span class="logo-sm">
+                                <img src="{% static 'admin_assets/images/logo_ai tech.jpg' %}" alt="AI Teq" height="24">
+                            </span>
+                        </a>
+                    </div>
+
+                    <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect vertical-menu-btn" id="vertical-menu-btn">
+                        <i class="ri-menu-2-line align-middle"></i>
+                    </button>
+                </div>
+
+                <div class="d-flex">
+                    <!-- App Search -->
+                    <form class="app-search d-none d-lg-block">
+                        <div class="position-relative">
+                            <input type="text" class="form-control" placeholder="Search...">
+                            <span class="ri-search-line"></span>
+                        </div>
+                    </form>
+
+                    <div class="dropdown d-inline-block d-lg-none ms-2">
+                        <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="ri-search-line"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+                            aria-labelledby="page-header-search-dropdown">
+                            <form class="p-3">
+                                <div class="mb-3 m-0">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Search ...">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="submit"><i class="ri-search-line"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="dropdown d-none d-lg-inline-block ms-1">
+                        <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
+                            <i class="ri-fullscreen-line"></i>
+                        </button>
+                    </div>
+
+                    <div class="dropdown d-inline-block">
+                        <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown"
+                              data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="ri-notification-3-line"></i>
+                            <span class="noti-dot"></span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+                            aria-labelledby="page-header-notifications-dropdown">
+                            <div class="p-3">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <h6 class="m-0">Notifications</h6>
+                                    </div>
+                                    <div class="col-auto">
+                                        <a href="#!" class="small text-primary">View All</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div data-simplebar style="max-height: 230px;">
+                                <a href="#" class="text-reset notification-item">
+                                    <div class="d-flex">
+                                        <div class="flex-shrink-0 me-3">
+                                            <div class="ai-teq-feature-icon">
+                                                <i class="ri-shopping-cart-line"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <h6 class="mb-1">New Course Enrollment</h6>
+                                            <div class="font-size-12 text-muted">
+                                                <p class="mb-1">John Doe enrolled in AI Fundamentals course</p>
+                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 15 min ago</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="#" class="text-reset notification-item">
+                                    <div class="d-flex">
+                                        <div class="flex-shrink-0 me-3">
+                                            <div class="ai-teq-feature-icon bg-success bg-opacity-10 text-success">
+                                                <i class="ri-checkbox-circle-line"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <h6 class="mb-1">Project Completed</h6>
+                                            <div class="font-size-12 text-muted">
+                                                <p class="mb-1">AI Chatbot project has been completed successfully</p>
+                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 1 hour ago</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="#" class="text-reset notification-item">
+                                    <div class="d-flex">
+                                        <div class="flex-shrink-0 me-3">
+                                            <div class="ai-teq-feature-icon bg-warning bg-opacity-10 text-warning">
+                                                <i class="ri-error-warning-line"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <h6 class="mb-1">System Update Required</h6>
+                                            <div class="font-size-12 text-muted">
+                                                <p class="mb-1">New system update available for installation</p>
+                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 hours ago</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="p-2 border-top">
+                                <div class="d-grid">
+                                    <a class="btn btn-sm btn-link font-size-14 text-center" href="javascript:void(0)">
+                                        View All Notifications
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dropdown d-inline-block user-dropdown">
+                        <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    {% if request.session.user_image %}
+                                        <img class="rounded-circle header-profile-user" src="{{ request.session.user_image }}" alt="Header Avatar">
+                                    {% else %}
+                                        <img class="rounded-circle header-profile-user" src="{% static 'admin_assets/images/users/avatar-2.jpg' %}" alt="Header Avatar">
+                                    {% endif %}
+                                </div>
+                                <div class="flex-grow-1 ms-2 text-start d-none d-md-block">
+                                    <span class="fw-medium user-name-text">{{ request.session.user_name }}</span>
+                                </div>
+                                <div class="flex-shrink-0 ms-1">
+                                    <i class="mdi mdi-chevron-down"></i>
+                                </div>
+                            </span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <!-- item-->
+                            <a class="dropdown-item" href="#"><i class="ri-user-line align-middle me-1"></i> Profile</a>
+                            <a class="dropdown-item" href="#"><i class="ri-wallet-line align-middle me-1"></i> My Wallet</a>
+                            <a class="dropdown-item" href="#"><i class="ri-settings-3-line align-middle me-1"></i> Settings</a>
+                            <a class="dropdown-item" href="#"><i class="ri-lock-unlock-line align-middle me-1"></i> Lock screen</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="#"><i class="ri-shut-down-line align-middle me-1 text-danger"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- ========== Left Sidebar Start ========== -->
+        <div class="vertical-menu">
+
+            <!-- LOGO -->
+            <div class="navbar-brand-box">
+                <a href="index.html" class="logo logo-dark">
+                    <span class="logo-sm">
+                        <img src="{% static 'admin_assets/images/logo-sm-dark.png' %}" alt="logo-sm-dark" height="24">
+                    </span>
+                    <span class="logo-lg">
+                        <img src="{% static 'admin_assets/images/logo-dark.png' %}" alt="logo-dark" height="22">
+                    </span>
+                </a>
+
+                <a href="#" class="logo logo-light">
+                    <span class="logo-sm">
+                        <img src="{% static 'admin_assets/images/logo_ai tech.jpg' %}" alt="logo-sm-light" height="24">
+                    </span>
+                    <span class="logo-lg">
+                        <img src="{% static 'admin_assets/images/logo_ai tech.jpg' %}" alt="logo-light" height="70" width="150">
+                    </span>
+                </a>
+            </div>
+
+            <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect vertical-menu-btn" id="vertical-menu-btn">
+                <i class="ri-menu-2-line align-middle"></i>
+            </button>
+
+            <div data-simplebar class="sidebar-scroll">
+
+                <!--- Sidemenu -->
+                <div id="sidebar-menu">
+                    <!-- Left Menu Start -->
+                    <ul class="metismenu list-unstyled" id="side-menu">
+                        <li class="menu-title">Menu</li>
+                        
+                        <li>
+                            <a href="{% url 'dashboard'%}" class="waves-effect">
+                                <i class="ri-dashboard-line"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="#" class="waves-effect">
+                                <i class="ri-user-add-line"></i>
+                                <span>User Register</span>
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="#" class="waves-effect">
+                                <i class="ri-file-edit-line"></i>
+                                <span>Project Enquiry</span>
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="#" class="waves-effect">
+                                <i class="ri-award-line"></i>
+                                <span>Services</span>
+                            </a>
+                        </li>
+
+                       
+
+                        <li class="menu-title">Administration</li>
+                        
+                        <li>
+                            <a href="{% url 'general_settings'%}" class="waves-effect">
+                                <i class="ri-settings-3-line"></i>
+                                <span>General Settings</span>
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="#" class="waves-effect">
+                                <i class="ri-database-2-line"></i>
+                                <span>Data Management</span>
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="#" class="waves-effect">
+                                <i class="ri-bar-chart-line"></i>
+                                <span>Analytics</span>
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="#" class="waves-effect">
+                                <i class="ri-customer-service-2-line"></i>
+                                <span>Support</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Sidebar -->
+            </div>
+
+            <div class="sidebar-user sidebar-user-info px-3 py-3">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        {% if request.session.user_image %}
+                            <img src="{{ request.session.user_image }}" class="img-fluid header-profile-user rounded-circle" alt="">
+                        {% else %}
+                            <img src="{% static 'admin_assets/images/users/avatar-2.jpg' %}" class="img-fluid header-profile-user rounded-circle" alt="">
+                        {% endif %}
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h6 class="mb-0 user-name-text">{{ request.session.user_name }}</h6>
+                        <p class="text-muted font-size-13 mb-0">Administrator</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Left Sidebar End -->
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+            <div class="page-content">
+                <div class="container-fluid">
+                    {% block content %}
+                    <!-- Default Dashboard Content -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-flex align-items-center justify-content-between">
+                                <div>
+                                    <h4 class="ai-teq-page-title mb-1">Dashboard</h4>
+                                    <p class="ai-teq-page-subtitle">Welcome back, {{ request.session.user_name }}! Here's what's happening today.</p>
+                                </div>
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">AI Teq</a></li>
+                                        <li class="breadcrumb-item active">Dashboard</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% endblock %}
+                </div> <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+            
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <script>document.write(new Date().getFullYear())</script> © AI Teq.
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="text-sm-end d-none d-sm-block">
+                                Design & Develop by <span class="text-primary">AI Teq</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!-- end main content-->
+    </div>
+    <!-- END layout-wrapper -->
+
+    <!-- Right Sidebar -->
+    <div class="right-bar">
+        <div data-simplebar class="h-100">
+            <div class="rightbar-title d-flex align-items-center px-3 py-4">
+                <h5 class="m-0 me-2">Settings</h5>
+                <a href="javascript:void(0);" class="right-bar-toggle ms-auto">
+                    <i class="mdi mdi-close noti-icon"></i>
+                </a>
+            </div>
+
+            <!-- Settings -->
+            <hr class="mt-0" />
+            <h6 class="text-center mb-0">Choose Layouts</h6>
+
+            <div class="p-4">
+                <div class="mb-2">
+                    <img src="{% static 'admin_assets/images/layouts/layout-1.jpg' %}" class="img-fluid img-thumbnail" alt="layout-1">
+                </div>
+
+                <div class="form-check form-switch mb-3">
+                    <input class="form-check-input theme-choice" type="checkbox" id="light-mode-switch" checked>
+                    <label class="form-check-label" for="light-mode-switch">Light Mode</label>
+                </div>
+
+                <div class="mb-2">
+                    <img src="{% static 'admin_assets/images/layouts/layout-2.jpg' %}" class="img-fluid img-thumbnail" alt="layout-2">
+                </div>
+                <div class="form-check form-switch mb-3">
+                    <input class="form-check-input theme-choice" type="checkbox" id="dark-mode-switch" data-bsStyle="{% static 'admin_assets/css/bootstrap-dark.min.css' %}" data-appStyle="{% static 'admin_assets/css/app-dark.min.css' %}">
+                    <label class="form-check-label" for="dark-mode-switch">Dark Mode</label>
+                </div>
+
+                <div class="mb-2">
+                    <img src="{% static 'admin_assets/images/layouts/layout-3.jpg' %}" class="img-fluid img-thumbnail" alt="layout-3">
+                </div>
+                <div class="form-check form-switch mb-5">
+                    <input class="form-check-input theme-choice" type="checkbox" id="rtl-mode-switch" data-appStyle="{% static 'admin_assets/css/app-rtl.min.css' %}">
+                    <label class="form-check-label" for="rtl-mode-switch">RTL Mode</label>
+                </div>
+            </div>
+        </div> <!-- end slimscroll-menu-->
+    </div>
+    <!-- /Right-bar -->
+
+    <!-- Right bar overlay-->
+    <div class="rightbar-overlay"></div>
+
+    <!-- JAVASCRIPT -->
+    <script src="{% static 'admin_assets/js/jquery/jquery-3.6.4.min.js' %}"></script>
+    <script src="{% static 'admin_assets/js/jquery/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'admin_assets/js/validation.js' %}"></script>
+    
+    <script src="{% static 'admin_assets/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'admin_assets/libs/metismenu/metisMenu.min.js' %}"></script>
+    <script src="{% static 'admin_assets/libs/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'admin_assets/libs/node-waves/waves.min.js' %}"></script>
+    
+    <!-- Apex Charts -->
+    <script src="{% static 'admin_assets/libs/apexcharts/apexcharts.min.js' %}"></script>
+    
+    <!-- CKEditor -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+    
+    <!-- Tom Select -->
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
+    
+    <!-- App js -->
+    <script src="{% static 'admin_assets/js/app.js' %}"></script>
+    
+
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

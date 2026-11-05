@@ -1,0 +1,123 @@
+{% for message in messages %}
+<tr>
+    <td>{{ forloop.counter0|add:messages.start_index }}</td>
+    <td>{{ message.name }}</td>
+    <td>{{ message.email }}</td>
+    <td>{{ message.subject }}</td>
+    <td class="text-center">{{ message.phone|default:"-" }}</td>
+    <td class="text-center">
+        <span hx-get="{% url 'toggle_contact_message_status' message.id %}" 
+              hx-target="this" 
+              hx-swap="outerHTML" 
+              class="badge {% if message.status %}bg-success{% else %}bg-danger{% endif %}" 
+              style="cursor:pointer;">
+            {% if message.status %}Active{% else %}Inactive{% endif %}
+        </span>
+    </td>
+    <td class="text-center">{{ message.created_date|date:"d M Y, h:i A" }}</td>
+    <td class="text-center">
+        <!-- Edit Button -->
+        <button type="button" 
+                class="btn btn-primary btn-sm tooltip-custom" 
+                data-bs-toggle="modal" 
+                data-bs-target="#myModalEdit-message-{{ message.id }}"
+                hx-get="{% url 'get_contact_message_details' %}"
+                hx-trigger="click"
+                hx-vals='{"get_edit":"{{ message.id }}"}'
+                hx-target="#contact_message_edit_body-{{ message.id }}"
+                hx-swap="innerHTML"
+                data-placement="top" data-tooltip="Edit">
+            <i class="ri-pencil-fill"></i>
+        </button>
+
+        <!-- Delete Button -->
+        <button type="button" 
+                class="btn btn-danger btn-sm tooltip-custom" 
+                data-bs-toggle="modal" 
+                data-bs-target="#myModalDelete-message-{{ message.id }}"
+                hx-get="{% url 'get_contact_message_details' %}"
+                hx-trigger="click"
+                hx-vals='{"get_delete":"{{ message.id }}"}'
+                hx-target="#contact_message_delete_body-{{ message.id }}"
+                hx-swap="innerHTML"
+                data-placement="top" data-tooltip="Delete">
+            <i class="ri-delete-bin-line"></i>
+        </button>
+    </td>
+</tr>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="myModalEdit-message-{{ message.id }}" tabindex="-1" aria-hidden="true" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary pb-3">
+                <h5 class="modal-title text-white mb-0">Edit Contact Message</h5>
+                <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" style="background-color: white;" type="button"></button>
+            </div>
+            <div class="modal-body" id="contact_message_edit_body-{{ message.id }}">
+                <!-- Content will be loaded via HTMX -->
+                {% include 'components/edit_form_loader.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="myModalDelete-message-{{ message.id }}" tabindex="-1" aria-hidden="true" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger pb-3">
+                <h5 class="modal-title text-white mb-0">Delete Contact Message</h5>
+                <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" style="background-color: white;" type="button"></button>
+            </div>
+            <div class="modal-body" id="contact_message_delete_body-{{ message.id }}">
+                <!-- Content will be loaded via HTMX -->
+                {% include 'components/edit_form_loader.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% empty %}
+{% include 'components/no_table_data_tr.html' with span_num=8 %}
+{% endfor %}
+
+<div class="d-flex justify-content-center pt-2" id="pagination_div_messages" hx-swap-oob="true">
+    <ul class="pagination pagination-separated pagination-sm justify-content-center justify-content-sm-start mb-0">
+        {% if messages.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="#"
+                   hx-get="{% url 'get_contact_message_details' %}?page={{ messages.previous_page_number }}"  
+                   hx-target="#table-body-messages"
+                   hx-swap="innerHTML"
+                   hx-include="#search_input_message">Previous</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+        {% endif %}
+
+        {% for page_num in messages.paginator.page_range %}
+            {% if page_num >= messages.number|add:-2 and page_num <= messages.number|add:2 %}
+                <li class="page-item {% if page_num == messages.number %}active{% endif %}">
+                    <a class="page-link" href="#"
+                       hx-get="{% url 'get_contact_message_details' %}?page={{ page_num }}"
+                       hx-target="#table-body-messages"
+                       hx-swap="innerHTML"
+                       hx-include="#search_input_message">{{ page_num }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+
+        {% if messages.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="#"
+                   hx-get="{% url 'get_contact_message_details' %}?page={{ messages.next_page_number }}"
+                   hx-target="#table-body-messages"
+                   hx-swap="innerHTML"
+                   hx-include="#search_input_message">Next</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+        {% endif %}
+    </ul>
+</div>

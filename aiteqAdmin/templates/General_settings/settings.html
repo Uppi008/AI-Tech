@@ -1,0 +1,311 @@
+{% extends 'aiteq/base_admin.html' %}
+
+{% block title %}General Settings{% endblock %}
+{% block style %}
+<style>
+    .card-animate {
+        transition: all 0.3s ease-in-out;
+        cursor: pointer;
+    }
+
+    .card-animate:hover {
+        transform: translateY(-8px); /* lift effect */
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* shadow */
+        background-color: #f8f9fa; /* slight background change */
+    }
+    
+    .card-animate:hover .avatar-title {
+        transform: rotate(10deg) scale(1.1);
+        transition: transform 0.3s ease-in-out;
+    }
+    
+    .category-header {
+        border-left: 4px solid #405189;
+        padding-left: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .category-header h5 {
+        color: #405189;
+        font-weight: 600;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="col-12 mt-2">
+    <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
+        <h4 class="mb-sm-0">General Settings</h4>
+        <div class="page-title-right">
+            <ol class="breadcrumb m-0">
+                <li class="breadcrumb-item active">General Settings</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<!-- Search Bar -->
+<div class="card mt-3">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <input type="text" placeholder="Global search here" class="form-control">
+            </div>
+        </div>
+    </div>
+</div> 
+
+<div class="card mt-4" id="result-section">
+    <div class="card-header">
+        <div class="category-header">
+            <h5>Contact Us</h5>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="col-xxl-12">
+            <div class="row">    
+                <div class="col-xl-3">
+                    <div class="card card-animate">
+                        <div class="card-body bg-light">
+                            <div class="d-flex align-items-center">
+                                <div class="avatar-sm flex-shrink-0">
+                                    <span class="avatar-title bg-purple-subtle text-purple rounded-2 fs-2">
+                                        <i class="ri-bar-chart-line"></i>
+                                    </span>
+                                </div>
+                                <div class="flex-grow-1 overflow-hidden ms-3">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <h6 class="fs-15 flex-grow-1 mb-0"><a class="text-dark" href="{% url 'contact_info_edit' %}">ContactInfo</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end card body -->
+                    </div>
+                </div><!-- end col -->
+
+                <div class="col-xl-3">
+                    <div class="card card-animate">
+                        <div class="card-body bg-light">
+                            <div class="d-flex align-items-center">
+                                <div class="avatar-sm flex-shrink-0">
+                                    <span class="avatar-title bg-purple-subtle text-purple rounded-2 fs-2">
+                                        <i class="ri-bar-chart-line"></i>
+                                    </span>
+                                </div>
+                                <div class="flex-grow-1 overflow-hidden ms-3">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <h6 class="fs-15 flex-grow-1 mb-0"><a class="text-dark" href="{% url 'contact_message_list' %}">ContactMessage</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end card body -->
+                    </div>
+                </div><!-- end col -->
+
+            </div>
+            <!-- end row -->
+        </div><!-- end col -->
+    </div>
+</div>
+
+
+<!-- Services Section -->
+<div class="card mt-4" id="services-section">
+    <div class="card-header">
+        <div class="category-header">
+            <h5>Services</h5>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="col-xxl-12">
+            <div class="row">    
+                <div class="col-xl-3">
+                    <div class="card card-animate">
+                        <div class="card-body bg-light">
+                            <div class="d-flex align-items-center">
+                                <div class="avatar-sm flex-shrink-0">
+                                    <span class="avatar-title bg-primary-subtle text-primary rounded-2 fs-2">
+                                        <i class="ri-service-line"></i>
+                                    </span>
+                                </div>
+                                <div class="flex-grow-1 overflow-hidden ms-3">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <h6 class="fs-15 flex-grow-1 mb-0"><a class="text-dark" href="{% url 'service_list' %}">Service</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end card body -->
+                    </div>
+                </div><!-- end col -->
+
+                <div class="col-xl-3">
+                    <div class="card card-animate">
+                        <div class="card-body bg-light">
+                            <div class="d-flex align-items-center">
+                                <div class="avatar-sm flex-shrink-0">
+                                    <span class="avatar-title bg-success-subtle text-success rounded-2 fs-2">
+                                        <i class="ri-question-answer-line"></i>
+                                    </span>
+                                </div>
+                                <div class="flex-grow-1 overflow-hidden ms-3">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <h6 class="fs-15 flex-grow-1 mb-0"><a class="text-dark" href="{% url 'supporting_service_list' %}">Supporting Service</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end card body -->
+                    </div>
+                </div><!-- end col -->
+
+
+                  <div class="col-xl-3">
+                    <div class="card card-animate">
+                        <div class="card-body bg-light">
+                            <div class="d-flex align-items-center">
+                                <div class="avatar-sm flex-shrink-0">
+                                    <span class="avatar-title bg-success-subtle text-success rounded-2 fs-2">
+                                        <i class="ri-question-answer-line"></i>
+                                    </span>
+                                </div>
+                                <div class="flex-grow-1 overflow-hidden ms-3">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <h6 class="fs-15 flex-grow-1 mb-0"><a class="text-dark" href="{% url 'service_consultation_list' %}">Service Consultation</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end card body -->
+                    </div>
+                </div><!-- end col -->
+
+                <div class="col-xl-3">
+                    <div class="card card-animate">
+                        <div class="card-body bg-light">
+                            <div class="d-flex align-items-center">
+                                <div class="avatar-sm flex-shrink-0">
+                                    <span class="avatar-title bg-info-subtle text-info rounded-2 fs-2">
+                                        <i class="ri-feedback-line"></i>
+                                    </span>
+                                </div>
+                                <div class="flex-grow-1 overflow-hidden ms-3">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <h6 class="fs-15 flex-grow-1 mb-0"><a class="text-dark" href="{% url 'testimonial_list' %}">Testimonial</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end card body -->
+                    </div>
+                </div><!-- end col -->
+            </div>
+            <!-- end row -->
+        </div><!-- end col -->
+    </div>
+</div>
+
+<!-- Project Section -->
+<div class="card mt-4" id="project-section">
+    <div class="card-header">
+        <div class="category-header">
+            <h5>Project</h5>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="col-xxl-12">
+            <div class="row">    
+                <div class="col-xl-3">
+                    <div class="card card-animate">
+                        <div class="card-body bg-light">
+                            <div class="d-flex align-items-center">
+                                <div class="avatar-sm flex-shrink-0">
+                                    <span class="avatar-title bg-warning-subtle text-warning rounded-2 fs-2">
+                                        <i class="ri-folder-line"></i>
+                                    </span>
+                                </div>
+                                <div class="flex-grow-1 overflow-hidden ms-3">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <h6 class="fs-15 flex-grow-1 mb-0"><a class="text-dark" href="{% url 'project_category_list' %}">Project Category</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end card body -->
+                    </div>
+                </div><!-- end col -->
+
+                <div class="col-xl-3">
+                    <div class="card card-animate">
+                        <div class="card-body bg-light">
+                            <div class="d-flex align-items-center">
+                                <div class="avatar-sm flex-shrink-0">
+                                    <span class="avatar-title bg-danger-subtle text-danger rounded-2 fs-2">
+                                        <i class="ri-briefcase-line"></i>
+                                    </span>
+                                </div>
+                                <div class="flex-grow-1 overflow-hidden ms-3">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <h6 class="fs-15 flex-grow-1 mb-0"><a class="text-dark" href="{% url 'portfolio_project_list'%}">Portfolio Project</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end card body -->
+                    </div>
+                </div><!-- end col -->
+
+                <div class="col-xl-3">
+                    <div class="card card-animate">
+                        <div class="card-body bg-light">
+                            <div class="d-flex align-items-center">
+                                <div class="avatar-sm flex-shrink-0">
+                                    <span class="avatar-title bg-secondary-subtle text-secondary rounded-2 fs-2">
+                                        <i class="ri-image-line"></i>
+                                    </span>
+                                </div>
+                                <div class="flex-grow-1 overflow-hidden ms-3">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <h6 class="fs-15 flex-grow-1 mb-0"><a class="text-dark" href="#">Project Image</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end card body -->
+                    </div>
+                </div><!-- end col -->
+            </div>
+            <!-- end row -->
+        </div><!-- end col -->
+    </div>
+</div>
+
+<!-- Result Section -->
+<div class="card mt-4" id="result-section">
+    <div class="card-header">
+        <div class="category-header">
+            <h5>Result</h5>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="col-xxl-12">
+            <div class="row">    
+                <div class="col-xl-3">
+                    <div class="card card-animate">
+                        <div class="card-body bg-light">
+                            <div class="d-flex align-items-center">
+                                <div class="avatar-sm flex-shrink-0">
+                                    <span class="avatar-title bg-purple-subtle text-purple rounded-2 fs-2">
+                                        <i class="ri-bar-chart-line"></i>
+                                    </span>
+                                </div>
+                                <div class="flex-grow-1 overflow-hidden ms-3">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <h6 class="fs-15 flex-grow-1 mb-0"><a class="text-dark" href="{% url 'result_statistic_list' %}">Result Statistic</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end card body -->
+                    </div>
+                </div><!-- end col -->
+            </div>
+            <!-- end row -->
+        </div><!-- end col -->
+    </div>
+</div>
+
+{% endblock %}

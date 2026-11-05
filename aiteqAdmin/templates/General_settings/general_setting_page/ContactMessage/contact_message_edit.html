@@ -1,0 +1,55 @@
+<form method="POST" class="needs-validation contact_message_edit_form" 
+      id="contact_message_edit_form" novalidate 
+      action="{% url 'update_contact_message' contact_message.id %}">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="mb-3">
+                <label for="name" class="form-label fw-semibold">Name <b class="text-danger">*</b></label>
+                <input type="text" class="form-control" name="name" value="{{ contact_message.name }}" 
+                       id="name" placeholder="Ex: John Doe" required>
+                <small id="nameError" style="color: red; font-size: 11px;"></small>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="mb-3">
+                <label for="email" class="form-label fw-semibold">Email <b class="text-danger">*</b></label>
+                <input type="email" class="form-control" name="email" value="{{ contact_message.email }}" 
+                       id="email" placeholder="Ex: john@example.com" required>
+                <small id="emailError" style="color: red; font-size: 11px;"></small>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="mb-3">
+                <label for="subject" class="form-label fw-semibold">Subject <b class="text-danger">*</b></label>
+                <input type="text" class="form-control" name="subject" value="{{ contact_message.subject }}" 
+                       id="subject" placeholder="Ex: Inquiry" required>
+                <small id="subjectError" style="color: red; font-size: 11px;"></small>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="mb-3">
+                <label for="message" class="form-label fw-semibold">Message <b class="text-danger">*</b></label>
+                <textarea class="form-control" name="message" id="message" rows="4" 
+                          placeholder="Type your message..." required>{{ contact_message.message }}</textarea>
+                <small id="messageError" style="color: red; font-size: 11px;"></small>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="mb-3">
+                <label for="phone" class="form-label fw-semibold">Phone</label>
+                <input type="text" class="form-control" name="phone" value="{{ contact_message.phone }}" 
+                       id="phone" placeholder="Ex: 1234567890">
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <button class="btn btn-primary" type="submit">Save</button>
+        <button class="btn btn-light" data-bs-dismiss="modal" type="button">Cancel</button>
+    </div>
+</form>

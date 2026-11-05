@@ -139,10 +139,6 @@ GitHub.sublime-settings
 .history
 
 
-# But keep __init__.py so the directory is still recognized as a package
-# migrations
-migrations
-
 .idea/
 # VSCode
 

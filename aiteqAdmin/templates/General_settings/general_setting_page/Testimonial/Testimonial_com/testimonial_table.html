@@ -1,0 +1,158 @@
+{% for testimonial in testimonials %}
+<tr>
+    <!-- Serial Number -->
+    <td>
+        {{ forloop.counter|add:testimonials.start_index|add:"-1" }}
+    </td>
+
+    <!-- Name & Image -->
+    <td>
+        <div style="display:flex;align-items:center;gap:8px;">
+            {% if testimonial.image %}
+                <img src="{{ testimonial.image.url }}"
+                     alt="{{ testimonial.name }}"
+                     style="width:40px;height:40px;object-fit:cover;border-radius:4px;">
+            {% else %}
+                <div style="width:40px;height:40px;display:flex;align-items:center;
+                            justify-content:center;background:#f8f9fa;border-radius:4px;">
+                    <i class="ri-user-line"></i>
+                </div>
+            {% endif %}
+            <span>{{ testimonial.name }}</span>
+        </div>
+    </td>
+
+    <!-- Role -->
+    <td>{{ testimonial.role }}</td>
+
+    <!-- Company -->
+    <td>{{ testimonial.company|default:"—" }}</td>
+
+    <!-- Rating -->
+    <td>
+        {% for i in "12345" %}
+            {% if forloop.counter <= testimonial.rating %}
+                <i class="ri-star-fill text-warning"></i>
+            {% else %}
+                <i class="ri-star-line text-muted"></i>
+            {% endif %}
+        {% endfor %}
+    </td>
+
+    <!-- Status -->
+    <td class="text-center">
+        <span hx-get="{% url 'toggle_testimonial_status' testimonial.id %}"
+              hx-target="this"
+              hx-swap="outerHTML"
+              class="badge {% if testimonial.is_active %}bg-success{% else %}bg-danger{% endif %}"
+              style="cursor:pointer;">
+            {% if testimonial.is_active %}Active{% else %}Deactive{% endif %}
+        </span>
+    </td>
+
+    <!-- Actions -->
+    <td class="text-center">
+
+        <!-- Edit -->
+        <button type="button"
+                class="btn btn-primary btn-sm"
+                data-bs-toggle="modal"
+                data-bs-target="#myModalEdit-{{ testimonial.id }}"
+                hx-get="{% url 'get_details_testimonial' %}"
+                hx-trigger="click"
+                hx-vals='{"get_edit":"{{ testimonial.id }}"}'
+                hx-target="#testimonial_edit_body-{{ testimonial.id }}"
+                hx-swap="innerHTML">
+            <i class="ri-pencil-fill"></i>
+        </button>
+
+        <!-- Delete -->
+        <button type="button"
+                class="btn btn-danger btn-sm"
+                data-bs-toggle="modal"
+                data-bs-target="#myModalDelete-{{ testimonial.id }}"
+                hx-get="{% url 'get_details_testimonial' %}"
+                hx-trigger="click"
+                hx-vals='{"get_delete":"{{ testimonial.id }}"}'
+                hx-target="#testimonial_delete_body-{{ testimonial.id }}"
+                hx-swap="innerHTML">
+            <i class="ri-delete-bin-line"></i>
+        </button>
+    </td>
+</tr>
+
+<!-- ================= EDIT MODAL ================= -->
+<div class="modal fade" id="myModalEdit-{{ testimonial.id }}" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white">Edit Testimonial</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="testimonial_edit_body-{{ testimonial.id }}">
+                {% include 'components/edit_form_loader.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================= DELETE MODAL ================= -->
+<div class="modal fade" id="myModalDelete-{{ testimonial.id }}" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title text-white">Delete Testimonial</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="testimonial_delete_body-{{ testimonial.id }}">
+                {% include 'components/edit_form_loader.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% empty %}
+    {% include 'components/no_table_data_tr.html' with span_num=7 %}
+{% endfor %}
+
+<div class="d-flex justify-content-center pt-2"
+     id="pagination_div_testimonial"
+     hx-swap-oob="true">
+
+<ul class="pagination pagination-separated pagination-sm">
+
+{% if testimonials.has_previous %}
+<li class="page-item">
+    <a class="page-link"
+       hx-get="{% url 'get_details_testimonial' %}?page={{ testimonials.previous_page_number }}"
+       hx-target="#testimonial-table-body"
+       hx-swap="innerHTML">Previous</a>
+</li>
+{% else %}
+<li class="page-item disabled"><span class="page-link">Previous</span></li>
+{% endif %}
+
+{% for page in testimonials.paginator.page_range %}
+    {% if page >= testimonials.number|add:-2 and page <= testimonials.number|add:2 %}
+    <li class="page-item {% if page == testimonials.number %}active{% endif %}">
+        <a class="page-link"
+           hx-get="{% url 'get_details_testimonial' %}?page={{ page }}"
+           hx-target="#testimonial-table-body"
+           hx-swap="innerHTML">{{ page }}</a>
+    </li>
+    {% endif %}
+{% endfor %}
+
+{% if testimonials.has_next %}
+<li class="page-item">
+    <a class="page-link"
+       hx-get="{% url 'get_details_testimonial' %}?page={{ testimonials.next_page_number }}"
+       hx-target="#testimonial-table-body"
+       hx-swap="innerHTML">Next</a>
+</li>
+{% else %}
+<li class="page-item disabled"><span class="page-link">Next</span></li>
+{% endif %}
+
+</ul>
+</div>

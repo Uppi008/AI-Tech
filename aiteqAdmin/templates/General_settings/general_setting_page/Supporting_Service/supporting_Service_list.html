@@ -1,0 +1,164 @@
+{% extends 'aiteq/base_admin.html' %}
+{% block title %}Supporting Services{% endblock %}
+{% load static %}
+
+
+{% block content %}
+
+
+
+<div class="app-content-header mt-3 pt-3">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-6">
+        <h4 class="mb-0">Supporting Services</h4>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-end">
+          <li class="breadcrumb-item"><a href="{% url 'general_settings' %}">Settings</a></li>
+          <li class="breadcrumb-item active">Supporting Services</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+
+        <!-- Add / Import / Export / Search -->
+        <div class="row align-items-center mb-3">
+          <div class="col-md-8">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addServiceModal">
+              <i class="ri-add-line"></i> Add Supporting Service
+            </button>
+
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#serviceImportModal">
+              <i class="las la-file-download"></i> Import
+            </button>
+
+            <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#serviceExportModal">
+              <i class="las la-file-export"></i> Export
+            </button>
+          </div>
+
+          <div class="col-md-4">
+            <input type="text" class="form-control" id="search_input_service"
+                   hx-get="{% url 'get_details_supporting_service' %}"
+                   hx-trigger="input delay:500ms"
+                   hx-target="#service-table-body"
+                   placeholder="Search by title">
+          </div>
+        </div>
+
+        <!-- TABLE -->
+        <div class="table-responsive">
+          <table class="table table-nowrap mb-0">
+            <thead class="bg-primary">
+              <tr>
+                <th class="text-white">S.No</th>
+                <th class="text-white">Title</th>
+                <th class="text-white">description</th>
+                <th class="text-white text-center">badge</th>
+                <th class="text-white text-center">gradient start</th>
+                <th class="text-white text-center">gradient end</th>
+                <th class="text-white text-center">badge color</th>
+                <th class="text-white text-center">Created On</th>
+                <th class="text-white text-center">Status</th>
+                <th class="text-white text-center">Actions</th>
+              </tr>
+            </thead>
+
+            <tbody id="service-table-body"
+                  hx-get="{% url 'get_details_supporting_service' %}"
+                  hx-trigger="load once"
+                  hx-swap="innerHTML">
+              {% include 'components/searching_recording.html' with span_num=10 %}
+            </tbody>
+          </table>
+        </div>
+
+         <div class="d-flex justify-content-center" id="paginatin_div_service">
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD SERVICE MODAL -->
+<div class="modal fade" id="addServiceModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <h5 class="text-white">Add Supporting Service</h5>
+        <button class="btn-close bg-white" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <form method="POST" id="serviceForm" action="{% url 'supporting_service_list' %}">
+          {% csrf_token %}
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label>Title *</label>
+              <input type="text" name="title" class="form-control" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label>Icon Class *</label>
+              <input type="text" name="icon" class="form-control" placeholder="fa-solid fa-cogs" required>
+            </div>
+
+            <div class="col-md-12 mb-3">
+              <label>Description *</label>
+              <textarea name="description" class="form-control" rows="3" required></textarea>
+            </div>
+
+            <div class="col-md-4 mb-3">
+              <label>Badge Text</label>
+              <input type="text" name="badge_text" class="form-control">
+            </div>
+
+            <div class="col-md-4 mb-3">
+              <label>Gradient Start</label>
+              <input type="color" name="gradient_start" class="form-control">
+            </div>
+
+            <div class="col-md-4 mb-3">
+              <label>Gradient End</label>
+              <input type="color" name="gradient_end" class="form-control">
+            </div>
+
+            <div class="col-md-4 mb-3">
+              <label>Badge Color</label>
+              <input type="color" name="badge_color" class="form-control">
+            </div>
+
+            <div class="col-md-4 mb-3">
+              <label>Order</label>
+              <input type="number" name="order" class="form-control" value="0">
+            </div>
+
+            <div class="col-md-4 mb-3 d-flex align-items-center">
+              <div class="form-check mt-4">
+                <input class="form-check-input" type="checkbox" name="status" checked>
+                <label class="form-check-label">Active</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <button class="btn btn-primary">Create</button>
+            <button class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

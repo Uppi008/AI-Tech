@@ -1,0 +1,170 @@
+{% extends 'aiteq/base_admin.html' %}
+{% block title %}Portfolio Project{% endblock %}
+{% load static %}
+
+{% block content %}
+
+<div class="app-content-header mt-3 pt-3">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-6"><h4 class="mb-0">Portfolio Project</h4></div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-end">
+          <li class="breadcrumb-item"><a href="{% url 'general_settings' %}">Settings</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'general_settings' %}#Courses&Trainings">Courses & Trainings</a></li>
+          <li class="breadcrumb-item active">Portfolio Project</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+
+        <!-- Buttons + Search -->
+        <div class="row align-items-center mb-3">
+          <div class="col-12 col-md-8 mb-2 mb-md-0">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModalCreateProject">
+              <i class="ri-add-line align-bottom me-1"></i> Add Portfolio Project
+            </button>
+           
+          </div>
+          <div class="col-12 col-md-4">
+            <input type="text" class="form-control" id="search_input_course" name="search"
+                   hx-get="{% url 'get_portfolio_project_details'%}"
+                   hx-trigger="input change delay:500ms"
+                   hx-target="#table-body-course-cat"
+                   hx-swap="innerHTML"
+                   placeholder="Search...">
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-responsive">
+          <table class="table mb-0 table-nowrap">
+            <thead>
+              <tr class="bg-primary">
+                <th class="text-white">S.No</th>
+                <th class="text-white">title</th>
+                <th class="text-white">Short Description</th>
+                <th class="text-white">client</th>
+                <th class="text-white">Category</th>
+                <th class="text-white">technologies</th>
+                <th class="text-white text-center">Status</th>
+                <th class="text-white text-center">Created At</th>
+                <th class="text-white text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="table-body-course-cat"
+                   hx-get="{% url 'get_portfolio_project_details' %}"
+                   hx-trigger="load once"
+                   hx-target="this"
+                   hx-swap="innerHTML">
+              {% include 'components/searching_recording.html' with span_num=8 %}
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center pt-2" id="pagination_div_projects" hx-swap-oob="true">
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Modal -->
+<!-- Add Portfolio Project Modal -->
+<div id="myModalCreateProject" class="modal fade" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary pb-3">
+        <h5 class="modal-title text-white mb-0">Add Portfolio Project</h5>
+        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button" style="background-color: white;"></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" enctype="multipart/form-data" class="needs-validation" novalidate action="{% url 'portfolio_project_list' %}">
+          {% csrf_token %}
+
+          <!-- Project Title -->
+          <div class="mb-3">
+            <label for="title" class="form-label fw-semibold">Project Title <b class="text-danger">*</b></label>
+            <input type="text" class="form-control" name="title" id="title" placeholder="Ex: AI Chatbot" required>
+          </div>
+
+          <!-- Short Description -->
+          <div class="mb-3">
+            <label for="short_description" class="form-label fw-semibold">Short Description</label>
+            <textarea class="form-control" name="short_description" id="short_description" rows="2"></textarea>
+          </div>
+
+          <!-- Description -->
+          <div class="mb-3">
+            <label for="description" class="form-label fw-semibold">Description <b class="text-danger">*</b></label>
+            <textarea class="form-control" name="description" id="description" rows="4" required></textarea>
+          </div>
+
+          <!-- Category -->
+          <div class="mb-3">
+            <label for="category" class="form-label fw-semibold">Category <b class="text-danger">*</b></label>
+            <select class="form-select" name="category" id="category" required>
+              <option value="">Select Category</option>
+              {% for cat in categories %}
+                <option value="{{ cat.id }}">{{ cat.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <!-- Client -->
+          <div class="mb-3">
+            <label for="client" class="form-label fw-semibold">Client</label>
+            <input type="text" class="form-control" name="client" id="client" placeholder="Ex: ABC Corp">
+          </div>
+
+          <!-- Project Date -->
+          <div class="mb-3">
+            <label for="project_date" class="form-label fw-semibold">Project Date <b class="text-danger">*</b></label>
+            <input type="date" class="form-control" name="project_date" id="project_date" required>
+          </div>
+
+          <!-- Technologies -->
+          <div class="mb-3">
+            <label for="technologies" class="form-label fw-semibold">Technologies</label>
+            <input type="text" class="form-control" name="technologies" id="technologies" placeholder="Ex: Python, Django, HTMX">
+          </div>
+
+          <!-- Featured -->
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" name="is_featured" id="is_featured">
+            <label class="form-check-label" for="is_featured">Mark as Featured</label>
+          </div>
+
+          <!-- Image Upload -->
+          <div class="mb-3">
+            <label for="image" class="form-label fw-semibold">Project Image <b class="text-danger">*</b></label>
+            <input type="file" class="form-control" name="image" id="image" accept="image/*" required>
+          </div>
+
+          <!-- Order -->
+          <div class="mb-3">
+            <label for="order" class="form-label fw-semibold">Order</label>
+            <input type="number" class="form-control" name="order" id="order" value="0">
+          </div>
+
+          <div class="text-center gap-2">
+            <button class="btn btn-primary" type="submit">Create</button>
+            <button class="btn btn-light" data-bs-dismiss="modal" type="button">Cancel</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

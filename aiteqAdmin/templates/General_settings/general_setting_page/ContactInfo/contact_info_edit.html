@@ -1,0 +1,131 @@
+{% extends 'aiteq/base_admin.html' %}
+{% block title %} Contact Info {% endblock %}
+{% block content %}
+
+<div class="app-content-header mt-3 pt-3">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-6">
+        <h4 class="mb-0">Contact Info</h4>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-end">
+          <li class="breadcrumb-item"><a href="{% url 'general_settings' %}">Settings</a></li>
+          <li class="breadcrumb-item active">Contact Info</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-8">
+    <div class="card">
+      <div class="card-body">
+
+        <form method="POST" class="needs-validation" novalidate>
+          {% csrf_token %}
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Company Name <span class="text-danger">*</span></label>
+                <input type="text" name="company_name" class="form-control" value="{{ contact_info.company_name }}" maxlength="100" required>
+                <div class="invalid-feedback">Company name is required.</div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Phone <span class="text-danger">*</span></label>
+                <input type="text" name="phone" class="form-control" value="{{ contact_info.phone }}" placeholder="+1 (555) 123-4567" required>
+                <div class="invalid-feedback">Please enter a valid phone number.</div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Email <span class="text-danger">*</span></label>
+                <input type="email" name="email" class="form-control" value="{{ contact_info.email }}" required>
+                <div class="invalid-feedback">Please enter a valid email address.</div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Location <span class="text-danger">*</span></label>
+                <input type="text" name="location" class="form-control" value="{{ contact_info.location }}" placeholder="City, State, Country" required>
+                <div class="invalid-feedback">Location is required.</div>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Address <span class="text-danger">*</span></label>
+                <textarea name="address" class="form-control" rows="2" required>{{ contact_info.address }}</textarea>
+                <div class="invalid-feedback">Address is required.</div>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Map Embed Link</label>
+                <input type="url" name="map_link" class="form-control" value="{{ contact_info.map_link|default:'' }}" placeholder="https://www.google.com/maps/embed?...">
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Facebook URL</label>
+                <input type="url" name="facebook" class="form-control" value="{{ contact_info.facebook|default:'' }}" placeholder="https://facebook.com/...">
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label fw-semibold">LinkedIn URL</label>
+                <input type="url" name="linkedin" class="form-control" value="{{ contact_info.linkedin|default:'' }}" placeholder="https://linkedin.com/...">
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Twitter URL</label>
+                <input type="url" name="twitter" class="form-control" value="{{ contact_info.twitter|default:'' }}" placeholder="https://twitter.com/...">
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Instagram URL</label>
+                <input type="url" name="instagram" class="form-control" value="{{ contact_info.instagram|default:'' }}" placeholder="https://instagram.com/...">
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    (function () {
+        const forms = document.querySelectorAll('.needs-validation');
+        forms.forEach(form => {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    })();
+</script>
+{% endblock %}

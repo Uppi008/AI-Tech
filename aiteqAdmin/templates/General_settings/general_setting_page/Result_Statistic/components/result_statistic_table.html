@@ -1,0 +1,136 @@
+{% for stat in stats %}
+<tr>
+    <!-- Serial Number -->
+    <td>
+        {{ forloop.counter|add:stats.start_index|add:"-1" }}
+    </td>
+
+    <!-- Icon -->
+    <td><i class="{{ stat.icon }} fs-4 text-primary"></i></td>
+
+    <!-- Title -->
+    <td>{{ stat.title }}</td>
+
+    <!-- Value -->
+    <td><strong>{{ stat.value }}</strong></td>
+
+    <!-- Order -->
+    <td>{{ stat.order }}</td>
+
+    <!-- Status -->
+    <td class="text-center">
+        <span hx-get="{% url 'toggle_result_statistic_status' stat.id %}"
+              hx-target="this"
+              hx-swap="outerHTML"
+              class="badge {% if stat.is_active %}bg-success{% else %}bg-danger{% endif %}"
+              style="cursor:pointer;">
+            {% if stat.is_active %}Active{% else %}Deactive{% endif %}
+        </span>
+    </td>
+
+    <!-- Actions -->
+    <td class="text-center">
+
+        <!-- Edit -->
+        <button type="button"
+                class="btn btn-primary btn-sm"
+                data-bs-toggle="modal"
+                data-bs-target="#myModalEdit-{{ stat.id }}"
+                hx-get="{% url 'get_details_result_statistic' %}"
+                hx-trigger="click"
+                hx-vals='{"get_edit":"{{ stat.id }}"}'
+                hx-target="#result_statistic_edit_body-{{ stat.id }}"
+                hx-swap="innerHTML">
+            <i class="ri-pencil-fill"></i>
+        </button>
+
+        <!-- Delete -->
+        <button type="button"
+                class="btn btn-danger btn-sm"
+                data-bs-toggle="modal"
+                data-bs-target="#myModalDelete-{{ stat.id }}"
+                hx-get="{% url 'get_details_result_statistic' %}"
+                hx-trigger="click"
+                hx-vals='{"get_delete":"{{ stat.id }}"}'
+                hx-target="#result_statistic_delete_body-{{ stat.id }}"
+                hx-swap="innerHTML">
+            <i class="ri-delete-bin-line"></i>
+        </button>
+    </td>
+</tr>
+
+<!-- ================= EDIT MODAL ================= -->
+<div class="modal fade" id="myModalEdit-{{ stat.id }}" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white">Edit Result Statistic</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="result_statistic_edit_body-{{ stat.id }}">
+                {% include 'components/edit_form_loader.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================= DELETE MODAL ================= -->
+<div class="modal fade" id="myModalDelete-{{ stat.id }}" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title text-white">Delete Result Statistic</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="result_statistic_delete_body-{{ stat.id }}">
+                {% include 'components/edit_form_loader.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% empty %}
+    {% include 'components/no_table_data_tr.html' with span_num=7 %}
+{% endfor %}
+
+<div class="d-flex justify-content-center pt-2"
+     id="pagination_div_result_statistic"
+     hx-swap-oob="true">
+
+<ul class="pagination pagination-separated pagination-sm">
+
+{% if stats.has_previous %}
+<li class="page-item">
+    <a class="page-link"
+       hx-get="{% url 'get_details_result_statistic' %}?page={{ stats.previous_page_number }}"
+       hx-target="#result-statistic-table-body"
+       hx-swap="innerHTML">Previous</a>
+</li>
+{% else %}
+<li class="page-item disabled"><span class="page-link">Previous</span></li>
+{% endif %}
+
+{% for page in stats.paginator.page_range %}
+    {% if page >= stats.number|add:-2 and page <= stats.number|add:2 %}
+    <li class="page-item {% if page == stats.number %}active{% endif %}">
+        <a class="page-link"
+           hx-get="{% url 'get_details_result_statistic' %}?page={{ page }}"
+           hx-target="#result-statistic-table-body"
+           hx-swap="innerHTML">{{ page }}</a>
+    </li>
+    {% endif %}
+{% endfor %}
+
+{% if stats.has_next %}
+<li class="page-item">
+    <a class="page-link"
+       hx-get="{% url 'get_details_result_statistic' %}?page={{ stats.next_page_number }}"
+       hx-target="#result-statistic-table-body"
+       hx-swap="innerHTML">Next</a>
+</li>
+{% else %}
+<li class="page-item disabled"><span class="page-link">Next</span></li>
+{% endif %}
+
+</ul>
+</div>

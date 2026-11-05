@@ -1,0 +1,110 @@
+<form method="POST" 
+      action="{% url 'update_portfolio_project' project.id %}" 
+      class="needs-validation portfolio_project_edit" 
+      id="portfolio_project_edit" 
+      novalidate 
+      enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <!-- Title -->
+    <div class="mb-3">
+        <label class="form-label">Title <b class="text-danger">*</b></label>
+        <input type="text" id="u_title" name="u_title" class="form-control" 
+               placeholder="Ex: AI Chatbot"
+               value="{{ project.title }}" required>
+        <small id="u_titleError" style="color:red; font-size:11px;"></small>
+    </div>
+
+    <!-- Category -->
+    <div class="mb-3">
+        <label class="form-label">Category <b class="text-danger">*</b></label>
+        <select class="form-select" name="u_category" id="u_category" required>
+            <option value="">Select Category</option>
+            {% for cat in categories %}
+                <option value="{{ cat.id }}" {% if project.category.id == cat.id %}selected{% endif %}>
+                    {{ cat.name }}
+                </option>
+            {% endfor %}
+        </select>
+        <small id="u_categoryError" style="color:red; font-size:11px;"></small>
+    </div>
+
+    <!-- Client -->
+    <div class="mb-3">
+        <label class="form-label">Client</label>
+        <input type="text" id="u_client" name="u_client" class="form-control" 
+               placeholder="Ex: ABC Corp" value="{{ project.client }}">
+    </div>
+
+    <!-- Project Date -->
+    <div class="mb-3">
+        <label class="form-label">Project Date <b class="text-danger">*</b></label>
+        <input type="date" id="u_project_date" name="u_project_date" class="form-control"
+               value="{{ project.project_date }}" required>
+        <small id="u_project_dateError" style="color:red; font-size:11px;"></small>
+    </div>
+
+    <!-- Technologies -->
+    <div class="mb-3">
+        <label class="form-label">Technologies</label>
+        <input type="text" id="u_technologies" name="u_technologies" class="form-control" 
+               placeholder="Ex: Python, Django, HTMX" value="{{ project.technologies }}">
+    </div>
+
+    <!-- Featured & Active -->
+    <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="u_is_featured" name="u_is_featured" 
+               {% if project.is_featured %}checked{% endif %}>
+        <label class="form-check-label" for="u_is_featured">Mark as Featured</label>
+    </div>
+
+    <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="u_is_active" name="u_is_active" 
+               {% if project.is_active %}checked{% endif %}>
+        <label class="form-check-label" for="u_is_active">Active</label>
+    </div>
+
+    <!-- Order -->
+    <div class="mb-3">
+        <label class="form-label">Display Order</label>
+        <input type="number" class="form-control" id="u_order" name="u_order" value="{{ project.order }}">
+    </div>
+
+    <!-- Image -->
+    <div class="mb-3">
+        <label class="form-label">Project Image <b class="text-danger">*</b> <sub class="text-info"><tt>(PNG, JPG)</tt></sub></label>
+        <div class="d-flex align-items-center">
+            <input type="file" class="form-control me-3" name="u_image" id="u_image" accept="image/*" style="max-width:650px;">
+            {% if project.image %}
+                <div>
+                    <img src="{{ project.image.url }}" 
+                         alt="{{ project.title }}"
+                         style="width:40px; height:40px; object-fit:cover; border-radius:6px;">
+                </div>
+            {% endif %}
+        </div>
+        <small id="u_imageError" style="color:red; font-size:11px;"></small>
+    </div>
+
+    <!-- Short Description -->
+    <div class="mb-3">
+        <label class="form-label">Short Description <b class="text-danger">*</b></label>
+        <textarea name="u_short_description" rows="2" id="u_short_description" class="form-control" 
+                  placeholder="Ex: Brief project description">{{ project.short_description }}</textarea>
+        <small id="u_short_descriptionError" style="color:red; font-size:11px;"></small>
+    </div>
+
+    <!-- Long Description -->
+    <div class="mb-3">
+        <label class="form-label">Description <b class="text-danger">*</b></label>
+        <textarea name="u_description" rows="4" id="u_description" class="form-control ckeditor-classic" 
+                  placeholder="Ex: Detailed project description">{{ project.description }}</textarea>
+        <small id="u_descriptionError" style="color:red; font-size:11px;"></small>
+    </div>
+
+    <!-- Buttons -->
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" data-bs-dismiss="modal" class="btn btn-light">Cancel</button>
+    </div>
+</form>

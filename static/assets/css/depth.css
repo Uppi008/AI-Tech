@@ -1,0 +1,648 @@
+/* ==========================================================================
+   AI Tech — Depth UI layer (3D depth · 4D motion · 5D interaction)
+   Loaded after every page's own styles so it can layer on top of them.
+   ========================================================================== */
+
+:root {
+    --grid-rgb: 67, 97, 238;
+    --card-sheen: rgba(255, 255, 255, 0.9);
+    --glass: rgba(255, 255, 255, 0.72);
+    --glass-border: rgba(255, 255, 255, 0.85);
+    --elev-1: inset 0 1px 0 rgba(255, 255, 255, 0.8),
+              0 1px 2px rgba(20, 20, 50, 0.05),
+              0 10px 28px -14px rgba(20, 20, 50, 0.22);
+    --elev-2: inset 0 1px 0 rgba(255, 255, 255, 0.8),
+              0 2px 4px rgba(20, 20, 50, 0.05),
+              0 34px 60px -22px rgba(40, 50, 140, 0.38);
+    --tile-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.35),
+                   inset 0 -4px 0 rgba(0, 0, 0, 0.18),
+                   0 14px 26px -10px rgba(30, 30, 90, 0.5);
+    --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+[data-theme="dark"] {
+    --grid-rgb: 76, 201, 240;
+    --card-sheen: rgba(255, 255, 255, 0.035);
+    --glass: rgba(20, 20, 34, 0.62);
+    --glass-border: rgba(255, 255, 255, 0.09);
+    --elev-1: inset 0 1px 0 rgba(255, 255, 255, 0.05),
+              0 1px 2px rgba(0, 0, 0, 0.4),
+              0 12px 30px -14px rgba(0, 0, 0, 0.7);
+    --elev-2: inset 0 1px 0 rgba(255, 255, 255, 0.07),
+              0 0 0 1px rgba(76, 201, 240, 0.22),
+              0 34px 60px -22px rgba(0, 0, 0, 0.75),
+              0 20px 50px -25px rgba(76, 201, 240, 0.4);
+    --tile-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.25),
+                   inset 0 -4px 0 rgba(0, 0, 0, 0.3),
+                   0 14px 30px -10px rgba(0, 0, 0, 0.7);
+}
+
+/* --------------------------------------------------------------------------
+   Scroll progress (4D)
+   -------------------------------------------------------------------------- */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    z-index: 1040;
+    background: var(--gradient-accent);
+    transform-origin: 0 50%;
+    transform: scaleX(0);
+    box-shadow: 0 0 12px rgba(var(--grid-rgb), 0.7);
+    pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   Floating glass navbar
+   -------------------------------------------------------------------------- */
+.navbar {
+    transition: padding 0.35s var(--ease-out), margin 0.35s var(--ease-out),
+                width 0.35s var(--ease-out), border-radius 0.35s var(--ease-out),
+                background 0.35s ease, box-shadow 0.35s ease;
+}
+
+.navbar-scrolled {
+    width: calc(100% - 24px);
+    max-width: 1240px;
+    margin: 10px auto 0;
+    border-radius: 18px;
+    border: 1px solid var(--glass-border) !important;
+    background: var(--glass) !important;
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    box-shadow: 0 18px 40px -18px rgba(20, 20, 60, 0.45) !important;
+}
+
+.navbar-brand img {
+    box-shadow: var(--tile-shadow);
+    transition: transform 0.5s var(--ease-out);
+}
+
+.navbar-brand:hover img {
+    transform: perspective(300px) rotateY(-18deg) rotateX(8deg);
+}
+
+/* --------------------------------------------------------------------------
+   3D buttons
+   -------------------------------------------------------------------------- */
+.btn {
+    transition: transform 0.25s var(--ease-out), box-shadow 0.25s ease,
+                background 0.25s ease, color 0.25s ease, border-color 0.25s ease,
+                translate 0.35s var(--ease-out);
+}
+
+.btn:active {
+    transform: translateY(1px) scale(0.98) !important;
+}
+
+.btn-gradient {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35),
+                inset 0 -3px 0 rgba(0, 0, 0, 0.2),
+                0 12px 26px -8px rgba(67, 97, 238, 0.6);
+}
+
+.btn-gradient::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 60%;
+    height: 100%;
+    z-index: -1;
+    background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.7s ease;
+}
+
+.btn-gradient:hover::before {
+    left: 140%;
+}
+
+.btn-outline-brand {
+    background: var(--glass);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.btn-light {
+    box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.1), 0 12px 26px -10px rgba(0, 0, 0, 0.45);
+}
+
+.theme-toggle,
+.back-to-top {
+    transition: translate 0.35s var(--ease-out), transform 0.3s ease, opacity 0.3s ease,
+                visibility 0.3s ease, border-color 0.25s ease, color 0.25s ease;
+    box-shadow: var(--elev-1);
+}
+
+/* --------------------------------------------------------------------------
+   Section texture & headings
+   -------------------------------------------------------------------------- */
+.section-alt {
+    background-image: radial-gradient(rgba(var(--grid-rgb), 0.13) 1px, transparent 1.3px);
+    background-size: 24px 24px;
+}
+
+.section-eyebrow {
+    border: 1px solid rgba(var(--grid-rgb), 0.25);
+    box-shadow: 0 8px 20px -12px rgba(var(--grid-rgb), 0.8);
+    backdrop-filter: blur(6px);
+}
+
+h1 .text-gradient,
+h2 .text-gradient {
+    filter: drop-shadow(0 10px 24px rgba(var(--grid-rgb), 0.35));
+}
+
+/* --------------------------------------------------------------------------
+   Card elevation (applies to every card family in the site)
+   -------------------------------------------------------------------------- */
+:is(.service-card, .support-card, .category-card, .project-card, .stat-card,
+    .feature-card, .team-card, .industry-card, .usecase-card, .portfolio-card,
+    .result-card, .related-card, .feature-item-detail, .nav-card, .info-card,
+    .testimonial-card, .mission-card, .contact-card, .detail-card,
+    .highlights-card, .tech-item) {
+    background-image: linear-gradient(180deg, var(--card-sheen), transparent 45%);
+    box-shadow: var(--elev-1);
+}
+
+:is(.service-card, .support-card, .category-card, .project-card, .stat-card,
+    .feature-card, .team-card, .industry-card, .usecase-card, .portfolio-card,
+    .result-card, .related-card, .feature-item-detail, .nav-card,
+    .tech-item):hover {
+    box-shadow: var(--elev-2);
+}
+
+/* --------------------------------------------------------------------------
+   Pointer tilt (5D) — JS adds .tilt on fine-pointer devices only
+   -------------------------------------------------------------------------- */
+.tilt {
+    position: relative;
+    transform-style: preserve-3d;
+    will-change: transform;
+    transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) !important;
+    transition: transform 0.6s var(--ease-out), box-shadow 0.3s ease,
+                border-color 0.3s ease !important;
+}
+
+.tilt.tilt-active {
+    transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))
+               translate3d(0, -6px, 0) scale(1.015) !important;
+    transition: transform 0.12s linear, box-shadow 0.3s ease, border-color 0.3s ease !important;
+    box-shadow: var(--elev-2);
+    border-color: rgba(var(--grid-rgb), 0.55) !important;
+}
+
+.tilt::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%),
+                rgba(255, 255, 255, 0.28), transparent 50%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+}
+
+[data-theme="dark"] .tilt::after {
+    background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%),
+                rgba(var(--grid-rgb), 0.18), transparent 55%);
+}
+
+.tilt.tilt-active::after {
+    opacity: 1;
+}
+
+/* Layers inside a tilted card float above it */
+.tilt :is(.stat-icon, .service-icon-wrapper, .category-icon, .feature-icon,
+          .team-icon, .industry-icon, .feature-icon-detail, .related-icon,
+          .service-icon-circle, .rounded-3) {
+    transform: translateZ(40px);
+}
+
+.tilt :is(h3, h4, h5, .stat-number, .result-number) {
+    transform: translateZ(22px);
+}
+
+/* --------------------------------------------------------------------------
+   Extruded icon tiles (3D)
+   -------------------------------------------------------------------------- */
+:is(.stat-icon, .service-icon-wrapper, .category-icon, .feature-icon, .value-icon,
+    .team-icon, .industry-icon, .contact-icon, .feature-icon-detail, .related-icon,
+    .detail-icon, .service-icon-circle, .process-step-number, .social-link) {
+    position: relative;
+    box-shadow: var(--tile-shadow) !important;
+}
+
+:is(.stat-icon, .service-icon-wrapper, .category-icon, .feature-icon, .value-icon,
+    .team-icon, .industry-icon, .contact-icon, .feature-icon-detail, .related-icon,
+    .detail-icon, .service-icon-circle, .process-step-number)::after {
+    content: '';
+    position: absolute;
+    inset: 0 0 50% 0;
+    border-radius: inherit;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0));
+    pointer-events: none;
+}
+
+.value-item:hover .value-icon,
+.team-card:hover .team-icon {
+    animation: tileSpin 0.9s var(--ease-out);
+}
+
+@keyframes tileSpin {
+    from { transform: perspective(400px) rotateY(0); }
+    to { transform: perspective(400px) rotateY(360deg); }
+}
+
+.detail-icon {
+    animation: floatY 6s ease-in-out infinite;
+}
+
+@keyframes floatY {
+    0%, 100% { transform: translateY(0) rotateX(0); }
+    50% { transform: translateY(-12px) rotateX(10deg); }
+}
+
+/* --------------------------------------------------------------------------
+   Hero stage: WebGL canvas + perspective floor (3D + 4D)
+   -------------------------------------------------------------------------- */
+.depth-hero {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.depth-hero > .container {
+    position: relative;
+    z-index: 2;
+    will-change: translate, opacity;
+}
+
+.depth-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+}
+
+.depth-canvas.is-ready {
+    opacity: 1;
+}
+
+.depth-hero:not(.hero-section) .depth-canvas.is-ready {
+    opacity: 0.55;
+}
+
+/* On narrow screens the globe sits behind body copy — keep it quieter */
+@media (max-width: 991px) {
+    .depth-hero .depth-canvas.is-ready {
+        opacity: 0.4;
+    }
+}
+
+.depth-floor {
+    position: absolute;
+    left: -50%;
+    right: -50%;
+    bottom: 0;
+    height: 60%;
+    z-index: 1;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(var(--grid-rgb), 0.35) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(var(--grid-rgb), 0.35) 1px, transparent 1px);
+    background-size: 64px 64px;
+    transform-origin: 50% 100%;
+    transform: perspective(480px) rotateX(62deg);
+    -webkit-mask-image: linear-gradient(to top, #000 0%, rgba(0, 0, 0, 0.5) 35%, transparent 80%);
+    mask-image: linear-gradient(to top, #000 0%, rgba(0, 0, 0, 0.5) 35%, transparent 80%);
+    animation: floorRun 3.5s linear infinite;
+}
+
+@keyframes floorRun {
+    from { background-position: 0 0, 0 0; }
+    to { background-position: 0 64px, 0 0; }
+}
+
+/* Home hero: 3D video stage with floating chips */
+.hero-stage {
+    position: relative;
+    perspective: 1400px;
+    isolation: isolate;
+    padding: 28px 0;
+}
+
+.hero-stage::before {
+    content: '';
+    position: absolute;
+    inset: 8% 4%;
+    z-index: -1;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(var(--grid-rgb), 0.5), transparent);
+    filter: blur(40px);
+    animation: glowPulse 5s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    0%, 100% { opacity: 0.6; transform: scale(0.95); }
+    50% { opacity: 1; transform: scale(1.05); }
+}
+
+.hero-visual {
+    transform: perspective(1400px) rotateX(var(--rx, 4deg)) rotateY(var(--ry, -10deg));
+    transition: transform 0.6s var(--ease-out);
+    box-shadow: 0 0 0 1px var(--card-border),
+                0 50px 90px -30px rgba(40, 50, 140, 0.55),
+                0 30px 60px -30px rgba(var(--grid-rgb), 0.6) !important;
+}
+
+.hero-visual::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(115deg, rgba(255, 255, 255, 0.22) 0%, transparent 35%);
+}
+
+.hero-chip {
+    position: absolute;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 16px 9px 9px;
+    border-radius: 14px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text-color);
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 20px 40px -16px rgba(20, 20, 60, 0.5);
+    animation: chipFloat 6s ease-in-out infinite;
+    transition: translate 0.5s var(--ease-out);
+    white-space: nowrap;
+}
+
+.hero-chip i {
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background: var(--gradient-accent);
+    box-shadow: var(--tile-shadow);
+}
+
+.hero-chip--1 { top: 0; left: -14px; }
+.hero-chip--2 { top: 44%; right: -18px; animation-delay: -2s; }
+.hero-chip--3 { bottom: 0; left: 14%; animation-delay: -4s; }
+
+@keyframes chipFloat {
+    0%, 100% { transform: translateY(0) translateZ(60px); }
+    50% { transform: translateY(-12px) translateZ(60px); }
+}
+
+@media (max-width: 991px) {
+    .hero-visual { --ry: -6deg; }
+}
+
+@media (max-width: 575px) {
+    .hero-chip { font-size: 0.72rem; padding: 6px 10px 6px 6px; gap: 6px; }
+    .hero-chip i { width: 24px; height: 24px; font-size: 0.7rem; }
+    .hero-chip--1 { left: 4px; }
+    .hero-chip--2 { right: 4px; }
+}
+
+/* --------------------------------------------------------------------------
+   Gradient panels: CTA + stats band (animated 3D grid)
+   -------------------------------------------------------------------------- */
+.final-cta,
+.stats-container {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    background: linear-gradient(120deg, var(--secondary-color), var(--primary-color),
+                #5b3fd6, var(--secondary-color)) !important;
+    background-size: 300% 300% !important;
+    animation: gradientShift 14s ease infinite;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25),
+                0 40px 80px -30px rgba(58, 12, 163, 0.6);
+}
+
+.final-cta::before,
+.stats-container::before {
+    content: '';
+    position: absolute;
+    left: -50%;
+    right: -50%;
+    bottom: 0;
+    height: 75%;
+    z-index: -1;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.16) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.16) 1px, transparent 1px);
+    background-size: 52px 52px;
+    transform-origin: 50% 100%;
+    transform: perspective(420px) rotateX(60deg);
+    -webkit-mask-image: linear-gradient(to top, #000, transparent 85%);
+    mask-image: linear-gradient(to top, #000, transparent 85%);
+    animation: ctaFloor 3s linear infinite;
+}
+
+.final-cta::after,
+.stats-container::after {
+    content: '';
+    position: absolute;
+    width: 340px;
+    height: 340px;
+    top: -140px;
+    right: -80px;
+    z-index: -1;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.45),
+                rgba(76, 201, 240, 0.25) 40%, transparent 70%);
+    filter: blur(6px);
+    animation: orbFloat 9s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+@keyframes ctaFloor {
+    from { background-position: 0 0, 0 0; }
+    to { background-position: 0 52px, 0 0; }
+}
+
+@keyframes orbFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-40px, 30px) scale(1.12); }
+}
+
+/* --------------------------------------------------------------------------
+   Tech marquee as a receding 3D strip
+   -------------------------------------------------------------------------- */
+.marquee-container {
+    transform: perspective(1000px) rotateX(16deg);
+    padding: 20px 0 30px;
+}
+
+.tech-item {
+    transition: transform 0.35s var(--ease-out), box-shadow 0.3s ease;
+}
+
+/* --------------------------------------------------------------------------
+   Testimonials as a stacked deck
+   -------------------------------------------------------------------------- */
+#testimonialCarousel .carousel-item {
+    padding: 10px 0 44px;
+}
+
+.testimonial-card {
+    box-shadow: 0 14px 0 -6px rgba(var(--grid-rgb), 0.22),
+                0 28px 0 -12px rgba(var(--grid-rgb), 0.1),
+                var(--elev-2) !important;
+}
+
+/* --------------------------------------------------------------------------
+   Services: connected 3D timeline
+   -------------------------------------------------------------------------- */
+.process-step {
+    position: relative;
+    transition: translate 0.35s var(--ease-out), opacity 0.7s ease, transform 0.7s ease;
+}
+
+.process-step:hover {
+    translate: 8px 0;
+}
+
+.process-step:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 25px;
+    top: 84px;
+    bottom: -28px;
+    width: 2px;
+    background: linear-gradient(var(--primary-color), rgba(var(--grid-rgb), 0));
+}
+
+.process-step:hover .process-step-number {
+    animation: tileSpin 0.9s var(--ease-out);
+}
+
+/* --------------------------------------------------------------------------
+   Portfolio: 3D filter entrance + image depth
+   -------------------------------------------------------------------------- */
+.portfolio-item.depth-pop {
+    animation: depthPop 0.6s var(--ease-out) both;
+}
+
+@keyframes depthPop {
+    from { opacity: 0; transform: perspective(900px) rotateY(-28deg) translateZ(-120px); }
+    to { opacity: 1; transform: none; }
+}
+
+.filter-btn {
+    box-shadow: var(--elev-1);
+}
+
+.filter-btn.active {
+    box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.2), 0 12px 24px -10px rgba(67, 97, 238, 0.6);
+}
+
+/* --------------------------------------------------------------------------
+   Forms & modals: glass depth
+   -------------------------------------------------------------------------- */
+.form-control,
+.form-select {
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+    transform: translateY(-1px);
+    box-shadow: 0 0 0 0.2rem rgba(var(--grid-rgb), 0.18),
+                0 12px 24px -14px rgba(var(--grid-rgb), 0.7) !important;
+}
+
+.modal.fade .modal-dialog {
+    transform: perspective(1200px) rotateX(-14deg) translateY(30px) scale(0.96);
+    transition: transform 0.45s var(--ease-out);
+}
+
+.modal.show .modal-dialog {
+    transform: none;
+}
+
+.modal-content {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 50px 100px -30px rgba(0, 0, 0, 0.55);
+}
+
+.map-container {
+    box-shadow: var(--elev-2);
+}
+
+/* --------------------------------------------------------------------------
+   3D entrance for AOS fade-up (4D)
+   -------------------------------------------------------------------------- */
+[data-aos][data-aos="fade-up"] {
+    transform: perspective(1200px) translate3d(0, 60px, -60px) rotateX(16deg);
+}
+
+[data-aos][data-aos][data-aos="fade-up"].aos-animate {
+    transform: perspective(1200px) translate3d(0, 0, 0) rotateX(0);
+}
+
+/* --------------------------------------------------------------------------
+   Footer edge glow
+   -------------------------------------------------------------------------- */
+footer {
+    position: relative;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+    box-shadow: 0 0 24px 2px rgba(76, 201, 240, 0.5);
+}
+
+/* --------------------------------------------------------------------------
+   Accessibility: honour reduced motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+    }
+
+    .marquee-track { animation: none !important; }
+    [data-aos][data-aos][data-aos="fade-up"] { transform: none; }
+}
